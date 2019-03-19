@@ -64,7 +64,7 @@ class ModuleInfoAnalyzer : public edm::EDAnalyzer {
      
       // from HLTEventAnalyzerAOD.h
       /// module config parameters
-      std::string   processName_;
+      //std::string   processName_;
       std::string   triggerName_;
       edm::InputTag triggerResultsTag_;
       edm::InputTag triggerEventTag_;
@@ -111,7 +111,7 @@ class ModuleInfoAnalyzer : public edm::EDAnalyzer {
 
 //This should match your configuration python file
 ModuleInfoAnalyzer::ModuleInfoAnalyzer(const edm::ParameterSet& ps):
-processName_(ps.getParameter<std::string>("processName")),
+//processName_(ps.getParameter<std::string>("processName")),
 triggerName_(ps.getParameter<std::string>("triggerName")),
 triggerResultsTag_(ps.getParameter<edm::InputTag>("triggerResults")),
 triggerEventTag_(ps.getParameter<edm::InputTag>("triggerEvent"))
@@ -139,6 +139,7 @@ ModuleInfoAnalyzer::~ModuleInfoAnalyzer()
 void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 //--------------------------------------------------------------------------
 {
+	/*
  using namespace std;
   using namespace edm;
 
@@ -175,7 +176,7 @@ void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& i
 
   
   }   
- 
+ */
 }//------------------- beginRun()
 
 
@@ -226,7 +227,7 @@ void ModuleInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Eve
   cout<<"Currently analyzing trigger "<<triggerName<<endl;
 
   //Check the current configuration to see how many total triggers there are
-  const unsigned int n(hltConfig_.size());
+  //const unsigned int n(hltConfig_.size());
   //Get the trigger index for the current trigger
   const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName));
  
