@@ -109,34 +109,16 @@ Then follow these steps:
 
 - Obtain the code from git (in sparse mode) and move it to the `src` area:
 
-  ```   
-  git clone -b 2011 --no-checkout git://github.com/cms-opendata-analyses/trigger_examples.git
-  cd trigger_examples
-  git config core.sparseCheckout true
-  echo 'TriggerInfo/TriggerInfoAnalyzer' > .git/info/sparse-checkout
-  git checkout   
-  mv TriggerInfo ../.
-  cd ..
-  rm -rf trigger_examples    
+  ```
+  git clone git://github.com/asdru30/TriggerInfoTool.git
+  cd TriggerInfoTool
   ```
   
-  or (if you use ssh key):
 
-  ```   
-  git clone -b 2011 --no-checkout git@github.com:cms-opendata-analyses/trigger_examples.git
-  cd trigger_examples
-  git config core.sparseCheckout true
-  echo 'TriggerInfo/TriggerInfoAnalyzer' > .git/info/sparse-checkout
-  git checkout  
-  mv TriggerInfo ../. 
-  cd ..
-  rm -rf trigger_examples
-  ```
-
-- Go to the TriggerInfo/TriggerInfoAnalyzer area.  Note that the code lives under `src`
+- Go to the TriggerInfoTool/GeneralInfoAnalyzer area.  Note that the code lives under `src`
 
   ```
-  cd TriggerInfo/TriggerInfoAnalyzer
+  cd GeneralInfoAnalyzer
   ```
 
 - Compile everything:
