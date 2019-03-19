@@ -68,7 +68,7 @@ You should now see the `cms-opendata-conddb.cern.ch` link in the `/cvmfs` area.
 - Run the CMSSW executable in the background
 
 ```
-cmsRun triggerinfoanalyzer_cfg.py > full.log 2>&1 &
+cmsRun moduleinfoanalyzer_cfg.py > full.log 2>&1 &
 ```
 
 - Check the development of the job:
