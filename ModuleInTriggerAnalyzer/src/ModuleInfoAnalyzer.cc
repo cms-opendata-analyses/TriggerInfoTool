@@ -64,7 +64,6 @@ class ModuleInfoAnalyzer : public edm::EDAnalyzer {
      
       // from HLTEventAnalyzerAOD.h
       /// module config parameters
-      //std::string   processName_;
       std::string   triggerName_;
       edm::InputTag triggerResultsTag_;
       edm::InputTag triggerEventTag_;
@@ -111,7 +110,6 @@ class ModuleInfoAnalyzer : public edm::EDAnalyzer {
 
 //This should match your configuration python file
 ModuleInfoAnalyzer::ModuleInfoAnalyzer(const edm::ParameterSet& ps):
-//processName_(ps.getParameter<std::string>("processName")),
 triggerName_(ps.getParameter<std::string>("triggerName")),
 triggerResultsTag_(ps.getParameter<edm::InputTag>("triggerResults")),
 triggerEventTag_(ps.getParameter<edm::InputTag>("triggerEvent"))
@@ -139,44 +137,7 @@ ModuleInfoAnalyzer::~ModuleInfoAnalyzer()
 void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 //--------------------------------------------------------------------------
 {
-	/*
- using namespace std;
-  using namespace edm;
-
-
-  //If the hltConfig can be initialized, then the below is an example of
-  //how to extract the config information for the trigger from the 
-  //so-called provenance.
-
-  // The trigger configuration can change from 
-  // run to run (during the run is the same),
-  // so it needs to be called here.
-
-  ///   "init" return value indicates whether intitialisation has succeeded
-  ///   "changed" parameter indicates whether the config has actually changed
-
-  bool changed(true);
-  if (hltConfig_.init(iRun,iSetup,processName_,changed)) {
-    if (changed) {
-      // check if trigger name in (new) config
-      if (triggerName_!="@") { // "@" means: analyze all triggers in config
-	const unsigned int n(hltConfig_.size());
-	const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName_));
-	if (triggerIndex>=n) {
-	  cout << "HLTEventAnalyzerAOD::analyze:"
-	       << " TriggerName " << triggerName_ 
-	       << " not available in (new) config!" << endl;
-	  cout << "Available TriggerNames are: " << endl;
-	  hltConfig_.dump("Triggers");
-	}
-      }
-
-    }
-
-
-  
-  }   
- */
+	
 }//------------------- beginRun()
 
 
@@ -226,8 +187,6 @@ void ModuleInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Eve
 
   cout<<"Currently analyzing trigger "<<triggerName<<endl;
 
-  //Check the current configuration to see how many total triggers there are
-  //const unsigned int n(hltConfig_.size());
   //Get the trigger index for the current trigger
   const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName));
  
