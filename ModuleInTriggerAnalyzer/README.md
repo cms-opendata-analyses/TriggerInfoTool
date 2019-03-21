@@ -30,7 +30,7 @@ Then follow these steps:
   cmsenv
   ```
 
-- Obtain the code from git (in sparse mode) and move it to the `src` area:
+- Obtain the code from git and move it to the `src` area:
 
   ```
   git clone git://github.com/asdru30/TriggerInfoTool.git
