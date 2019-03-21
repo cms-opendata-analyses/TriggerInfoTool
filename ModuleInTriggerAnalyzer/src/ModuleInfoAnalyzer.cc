@@ -140,37 +140,10 @@ void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& i
 //--------------------------------------------------------------------------
 {
 	using namespace std;
-  using namespace edm;
+	using namespace edm;
+	bool changed(true);
+	hltConfig_.init(iRun,iSetup,processName_,changed);
 
-
-  bool changed(true);
-  if (hltConfig_.init(iRun,iSetup,processName_,changed)) {
-    if (changed) {
-      // check if trigger name in (new) config
-      if (triggerName_!="@") { // "@" means: analyze all triggers in config
-	const unsigned int n(hltConfig_.size());
-	const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName_));
-	if (triggerIndex>=n) {
-	  cout << "HLTEventAnalyzerAOD::analyze:"
-	       << " TriggerName " << triggerName_ 
-	       << " not available in (new) config!" << endl;
-	  cout << "Available TriggerNames are: " << endl;
-	  hltConfig_.dump("Triggers");
-	}
-      }
-
-    }
-
-
-  
-  } else {
-    cout << "HLTEventAnalyzerAOD::analyze:"
-	 << " config extraction failure with process name "
-	 << processName_ << endl;
-  }
-  
-
-	
 }//------------------- beginRun()
 
 
