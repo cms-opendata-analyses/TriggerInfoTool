@@ -1,3 +1,11 @@
+# How to to get the last active module of a trigger or set of triggers
+
+This example shows a simple way to obtain the last active module (filter) of a trigger.
+
+If a specific trigger is being considered, this can be set directly from the configuration file (python).
+
+If all the triggers are being considered, the "@" character must be set in the configuration file, so the analyzer will take all the triggers of the file into account.
+
 ## Usage Instruction
 
 First you have to create a [VM](http://opendata.cern.ch/VM/CMS "CMS Open Data Portal") from the CMS Open Data website. 
