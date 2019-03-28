@@ -115,13 +115,11 @@ ModuleInfoAnalyzer::~ModuleInfoAnalyzer()
 void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 //--------------------------------------------------------------------------
 {
- master
   using namespace std;
   using namespace edm;
 
 	bool changed(true);
 	hltConfig_.init(iRun,iSetup,"HLT",changed);
-
 }//------------------- beginRun()
 
 
