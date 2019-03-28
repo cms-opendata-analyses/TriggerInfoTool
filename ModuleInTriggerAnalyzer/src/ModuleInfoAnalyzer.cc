@@ -64,10 +64,7 @@ class ModuleInfoAnalyzer : public edm::EDAnalyzer {
      
       // from HLTEventAnalyzerAOD.h
       /// module config parameters
-	std::string   processName_;
       std::string   triggerName_;
-      edm::InputTag triggerResultsTag_;
-      edm::InputTag triggerEventTag_;
 
       // additional class data memebers
       // these are actually the containers where we will store
@@ -111,10 +108,7 @@ class ModuleInfoAnalyzer : public edm::EDAnalyzer {
 
 //This should match your configuration python file
 ModuleInfoAnalyzer::ModuleInfoAnalyzer(const edm::ParameterSet& ps):
-processName_(ps.getParameter<std::string>("processName")),
-triggerName_(ps.getParameter<std::string>("triggerName")),
-triggerResultsTag_(ps.getParameter<edm::InputTag>("triggerResults")),
-triggerEventTag_(ps.getParameter<edm::InputTag>("triggerEvent"))
+triggerName_(ps.getParameter<std::string>("triggerName"))
 {
    //now do what ever initialization is needed
 
@@ -143,7 +137,7 @@ void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& i
   using namespace edm;
 
 	bool changed(true);
-	hltConfig_.init(iRun,iSetup,processName_,changed);
+	hltConfig_.init(iRun,iSetup,"HLT",changed);
 }//------------------- beginRun()
 
 
@@ -163,7 +157,8 @@ void ModuleInfoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup
    // and assigned to triggerResultsTag_ and triggerEventTag_
  
    // After that, a simple sanity check is done.
- 
+   InputTag triggerEventTag_("hltTriggerSummaryAOD","","HLT");
+   InputTag triggerResultsTag_("TriggerResults","","HLT");
    iEvent.getByLabel(triggerResultsTag_,triggerResultsHandle_);
    iEvent.getByLabel(triggerEventTag_,triggerEventHandle_);
    
