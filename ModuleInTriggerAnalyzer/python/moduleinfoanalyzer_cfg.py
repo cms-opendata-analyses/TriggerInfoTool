@@ -21,7 +21,7 @@ process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
 process.demo = cms.EDAnalyzer('ModuleInfoAnalyzer',
                               triggerName = cms.string("@") 
                  #If you are considering all the triggers, enter "@" in triggerName             
-                 #if you are considering a specific trigger you can set it instead of "@". Example: "hltSingleJet190Regional"
+                 #if you are considering a specific trigger you can set it instead of "@". Example: "AlCa_RPCMuonNoHits_v6"
                              )
 #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideRecoDataTable
 
