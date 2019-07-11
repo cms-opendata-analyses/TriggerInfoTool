@@ -1,4 +1,4 @@
-# HLT Trigger Info Analyzer
+# How to know if the Trigger was accepted
 ## Usage Instruction
 
 First you have to create a [VM](http://opendata.cern.ch/VM/CMS "CMS Open Data Portal") from the CMS Open Data website. 
@@ -31,10 +31,10 @@ Then follow these steps:
   ```
   
 
-- Go to the TriggerInfoTool/GeneralInfoAnalyzer area.  Note that the code lives under `src`
+- Go to the TriggerInfoTool/TriggerPrescalesAnalyzer area.  Note that the code lives under `src`
 
   ```
-  cd GeneralInfoAnalyzer
+  cd TriggerPrescalesAnalyzer
   ```
 
 - Compile everything:
@@ -46,7 +46,7 @@ Then follow these steps:
 - Make a soft link to the python configuration file
 
 ```
-ln -s python/triggerinfoanalyzer_cfg.py .
+ln -s python/prescalesinfoanalyzer_cfg.py .
 ```
 
 - Make symbolic links to the conditions database
@@ -69,7 +69,7 @@ You should now see the `cms-opendata-conddb.cern.ch` link in the `/cvmfs` area.
 - Run the CMSSW executable in the background
 
 ```
-cmsRun triggerinfoanalyzer_cfg.py > full.log 2>&1 &
+cmsRun prescalesinfoanalyzer_cfg.py > full.log 2>&1 &
 ```
 
 - Check the development of the job:
