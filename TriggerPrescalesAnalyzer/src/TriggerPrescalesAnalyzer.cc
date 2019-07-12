@@ -91,17 +91,22 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	//void analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::PFJetCollection> &jets);
 	void analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::CaloJetCollection> &jets);//Jet analysis
 	bool checkTriggerPass(const edm::Event& iEvent, const std::string& triggerName);//Check if the trigger passed
-	
-	std::string   filterName_;//declare de filter (module) of the trigger         
-	int numjet;//number of jets in the event
-	
+	void analyzeTriggObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, const edm::InputTag &trigEventTag_);//declare a function to do the trigger analysis
+	       
 	//declare the variables for save data in the ROOT files
 	TFile *myfile;
 	TTree *mytree;
 	
+	int numjet;//number of jets in the event
+	
+	int numtrigobj; //number of trigger objects in the event
+
 	//declare histograms and variables that will go into the root files
-	TH1D *trig_vs_pt;//Histogram
-	std::vector<float> jet_pt; 
+	TH1D *trighist_pt;
+	TH1D *trig_vs_pt;
+	
+	std::vector<float> jet_pt;
+	std::vector<float> trigobj_pt;
 	
 	edm::Service<TFileService> fs;//to access the TFileService object in a framework module
 	
@@ -112,10 +117,11 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	std::string   triggerName_;
 	edm::InputTag triggerResultsTag_;
 	edm::InputTag triggerEventTag_;
+	std::string   filterName_;//declare de filter (module) of the trigger  
 	
 	// these are actually the containers where we will store the trigger information
 	edm::Handle<edm::TriggerResults>   triggerResultsHandle_;
-	//edm::Handle<trigger::TriggerEvent> triggerEventHandle_;
+	edm::Handle<trigger::TriggerEvent> triggerEventHandle_;
 	
 	HLTConfigProvider hltConfig_;
 };
@@ -126,7 +132,8 @@ jetInput_(iConfig.getParameter<edm::InputTag>("JetInputCollection")),
 processName_(iConfig.getParameter<std::string>("processName")),
 triggerName_(iConfig.getParameter<std::string>("triggerName")),
 triggerResultsTag_(iConfig.getParameter<edm::InputTag>("triggerResults")),
-triggerEventTag_(iConfig.getParameter<edm::InputTag>("triggerEvent"))
+triggerEventTag_(iConfig.getParameter<edm::InputTag>("triggerEvent")),
+filterName_(iConfig.getParameter<std::string>("filterName"))
 {
 	using namespace std;
 	using namespace edm;
@@ -142,7 +149,12 @@ triggerEventTag_(iConfig.getParameter<edm::InputTag>("triggerEvent"))
 		<<"		ProcessName = "<< processName_ << endl
 		<<"		TriggerName = "<< triggerName_ << endl
 		<<"		TriggerResultsTag = "<< triggerResultsTag_.encode() << endl
-		<<"		TriggerEventTag = "<< triggerEventTag_.encode() << endl;
+		<<"		TriggerEventTag = "<< triggerEventTag_.encode() << endl
+		<<"		FilterName = "<<filterName_<<endl;
+		
+	
+		
+	
 }
 
 TriggerPrescalesAnalyzer::~TriggerPrescalesAnalyzer()
@@ -162,6 +174,9 @@ void TriggerPrescalesAnalyzer::beginJob()//Everything ROOT related
 
 	trig_vs_pt = fs->make <TH1D>("Trig vs pt", "Trig vs pt ", 100,0,500);
 	mytree->Branch("jet_pt",&jet_pt);
+	
+	trighist_pt = fs->make <TH1D>("trighist_pt", "obj pt ", 100,0,5000 );
+	mytree->Branch("trigobj_pt",&trigobj_pt);
 }//-----------------------------------------------------------beginJob()
 
 // ------------ method called when starting to processes a run  --------
@@ -224,15 +239,18 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
 		return;
 	}   	 
 	
-	cout<<"*****************************Hey I passed the trigger"<<endl;
+	cout<<"********************************************************************************************************************Hey I passed the trigger"<<endl;
 	
 	//Continue to analyze the data
-	//Declare the handle (container) to store jets.	
 	
 	//Handle<reco::PFJetCollection> myjets;
-	Handle<reco::CaloJetCollection> myjets;
+	Handle<reco::CaloJetCollection> myjets;//Declare the handle (container) to store jets.	
 	iEvent.getByLabel(jetInput_, myjets);
 	analyzeJets(iEvent,myjets);
+	
+	Handle<trigger::TriggerEvent> mytrigEvent;//Declare the handle (container) to store trigger objects.
+	iEvent.getByLabel(triggerEventTag_,mytrigEvent);
+	analyzeTriggObject(iEvent,mytrigEvent,triggerEventTag_);   	
 	
 	mytree->Fill(); //Now, the information is stored.
 	
@@ -300,7 +318,7 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 	//}
 //}//--------------------------------------------------------analyzeJets()
 
-bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event& iEvent, const std::string& triggerName)//The method i need to make, take the maximun of the jet pT
+bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event& iEvent, const std::string& triggerName)
 {
 	using namespace std;
 	
@@ -320,6 +338,28 @@ bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event& iEvent, const 
 	
 	return acceptedTrigger;	
 }//---------------------------------------------------checkTriggerPass()
+
+void TriggerPrescalesAnalyzer::analyzeTriggObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, const edm::InputTag &trigEventTag_)
+{
+	numtrigobj = 0;
+	trigobj_pt.clear();
+
+	trigger::size_type filterIndex = trigEvent->filterIndex(edm::InputTag(filterName_,"",trigEventTag_.process()));
+	
+	if(filterIndex < trigEvent->sizeFilters()) {
+		const trigger::Keys& trigKeys = trigEvent->filterKeys(filterIndex); 
+		const trigger::TriggerObjectCollection & trigObjColl(trigEvent->getObjects());
+		
+		//now loop of the trigger objects passing filter
+		for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt) {
+			const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
+			trigobj_pt.push_back(trigobj.pt());
+
+			trighist_pt->Fill(trigobj.pt());
+			numtrigobj=numtrigobj+1;
+		}	
+	}//end filter size check
+}//-------------------------------------------------analyzeTriggObject()
 
 // ------------ method called when ending the processing of a run  ------------
 void TriggerPrescalesAnalyzer::endRun(edm::Run const&, edm::EventSetup const&)

@@ -26,6 +26,7 @@ process.gettriggerinfo = cms.EDAnalyzer('TriggerPrescalesAnalyzer'
                               ,triggerName = cms.string("HLT_Jet110_v3")         
                               ,triggerResults = cms.InputTag("TriggerResults","","HLT")
                               ,triggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
+                              ,filterName = cms.string("hltSingleJet190Regional")
                               )
 
 #configure the TFileservice, in order to save histograms.
