@@ -207,18 +207,50 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 				const unsigned int n(hltConfig_.size());
 				const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName_));
 				//const unsigned int triggerIndex(hltConfig_.triggerIndex(m_triggerSelector));//To have fun with wild cards
-				if (triggerIndex>=n) {
+				while (triggerIndex>=n) {
 					cout<<"HLTEventAnalyzerAOD::analyze:"
 						<<" TriggerName "<<triggerName_ 
 						//<<" TriggerName "<<m_triggerSelector//To have fun with wild cards
 						<<" not available in (new) config!"<<endl;
-					cout<<"Available TriggerNames are: "<<endl;
-					hltConfig_.dump("Triggers");
-					if (triggerName_ == "HLT_Jet190_v2") {
-						triggerName_ = "HLT_Jet190_v3";
+					triggerName_ = "HLT_Jet190_v1";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
 					}
-					if (triggerName_ == "HLT_Jet190_v1") {
-						triggerName_ = "HLT_Jet190_v2";
+					triggerName_ = "HLT_Jet190_v2";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
+					}
+					triggerName_ = "HLT_Jet190_v3";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
+					}
+					triggerName_ = "HLT_Jet190_v4";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
+					}
+					triggerName_ = "HLT_Jet190_v5";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
+					}
+					triggerName_ = "HLT_Jet190_v6";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
+					}
+					triggerName_ = "HLT_Jet190_v9";
+					if (hltConfig_.triggerIndex(triggerName_)<n) {
+						cout<<"Trigger name: "<<triggerName_<<endl;
+						break;
+					}
+					if (hltConfig_.triggerIndex(triggerName_)>=n) {
+						cout<<"Available TriggerNames are: "<<endl;
+						hltConfig_.dump("Triggers");
+						break;
 					}
 				}	
 			}	
