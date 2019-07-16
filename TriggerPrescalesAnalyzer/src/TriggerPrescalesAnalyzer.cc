@@ -94,9 +94,12 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	
 	//Methods used for the analysis
 	//void analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::PFJetCollection> &jets);
-	void analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::CaloJetCollection> &jets);//Jet analysis
+	void analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::CaloJetCollection> &jets, int prescaleValue);//Jet analysis
 	bool checkTriggerPass(const edm::Event& iEvent, const std::string& triggerName);//Check if the trigger passed
-	void analyzeTriggObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent);//declare a function to do the trigger analysis
+	void analyzeTriggObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, int prescaleValue);//declare a function to do the trigger analysis
+
+	void getPrescales(const edm::Event&, const edm::EventSetup&, const std::string& triggerName);
+
 	
 	//declare the variables for save data in the ROOT files
 	TFile *myfile;
@@ -105,6 +108,8 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	int numjet;//number of jets in the event
 	
 	int numtrigobj; //number of trigger objects in the event
+	
+	int totalPrescale;
 
 	//declare histograms and variables that will go into the root files
 	TH1D *trighist_pt;
@@ -214,37 +219,37 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 						<<" not available in (new) config!"<<endl;
 					triggerName_ = "HLT_Jet190_v1";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					triggerName_ = "HLT_Jet190_v2";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					triggerName_ = "HLT_Jet190_v3";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					triggerName_ = "HLT_Jet190_v4";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					triggerName_ = "HLT_Jet190_v5";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					triggerName_ = "HLT_Jet190_v6";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					triggerName_ = "HLT_Jet190_v9";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Trigger name: "<<triggerName_<<endl;
+						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
 					if (hltConfig_.triggerIndex(triggerName_)>=n) {
@@ -300,15 +305,17 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
 	cout<<"********************************************************************************************************************Hey I passed the trigger"<<endl;
 	
 	//Continue to analyze the data
-	
+		
+	getPrescales(iEvent, iSetup, triggerName_);
+		
 	//Handle<reco::PFJetCollection> myjets;
 	Handle<reco::CaloJetCollection> myjets;//Declare the handle (container) to store jets.	
 	iEvent.getByLabel(jetInput_, myjets);
-	analyzeJets(iEvent,myjets);
+	analyzeJets(iEvent,myjets, totalPrescale);
 	
 	Handle<trigger::TriggerEvent> mytrigEvent;//Declare the handle (container) to store trigger objects.
 	iEvent.getByLabel(triggerEventTag_,mytrigEvent);
-	analyzeTriggObject(iEvent,mytrigEvent);
+	analyzeTriggObject(iEvent,mytrigEvent, totalPrescale);
 	
 	mytree->Fill(); //Now, the information is stored.
 	
@@ -324,19 +331,19 @@ bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event& iEvent, const 
 	assert(triggerIndex==iEvent.triggerNames(*triggerResultsHandle_).triggerIndex(triggerName));//check that the trigger in the event and in the configuration agree
 	
 	bool acceptedTrigger = triggerResultsHandle_->accept(triggerIndex);//Was the trigger accepted? 1 == True, 0 == False.
-	bool runTrigger = triggerResultsHandle_->wasrun(triggerIndex);//Was the trigger run? 1 == True, 0 == False.
-	bool errorTrigger = triggerResultsHandle_->error(triggerIndex);//Was the trigger with an error? 1 == True, 0 == False.
+	//bool runTrigger = triggerResultsHandle_->wasrun(triggerIndex);//Was the trigger run? 1 == True, 0 == False.
+	//bool errorTrigger = triggerResultsHandle_->error(triggerIndex);//Was the trigger with an error? 1 == True, 0 == False.
 	
 	cout<<"Currently analyzing trigger: "<<triggerName<<endl;//Prints trigger name
 	
-	cout<<"The trigger was accepted: "<<acceptedTrigger<<endl
-		<<" The trigger was run: "<<runTrigger<<endl
-		<<" The trigger had an error: "<<errorTrigger<<endl;
+	//cout<<"The trigger was accepted: "<<acceptedTrigger<<endl
+		//<<" The trigger was run: "<<runTrigger<<endl
+		//<<" The trigger had an error: "<<errorTrigger<<endl;
 	
 	return acceptedTrigger;	
 }//---------------------------------------------------checkTriggerPass()
 
-void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::CaloJetCollection> &jets)
+void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::Handle<reco::CaloJetCollection> &jets, int prescaleValue)
 {
 	using namespace std;
 	
@@ -358,10 +365,13 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 		
 		//std::cout<<"Maximum value: "<<*std::max_element(jet_pt.begin(), jet_pt.end())<<"First value: "<<jet_pt.front()<<std::endl; //Shows the max and first value of the vector
 		
-		trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()));//Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), weight)
+		//trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()),prescales.first*prescales.second);//Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), weight)
+		//trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()));
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), prescaleValue);
 		
-		if (*std::max_element(jet_pt.begin(), jet_pt.end()) < 100) {
-		cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me"<<endl;
+		if (*std::max_element(jet_pt.begin(), jet_pt.end()) < 40) {
+			cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me"<<endl;
 		}
 	}
 }//--------------------------------------------------------analyzeJets()
@@ -397,7 +407,7 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 	//}
 //}//--------------------------------------------------------analyzeJets()
 
-void TriggerPrescalesAnalyzer::analyzeTriggObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent)
+void TriggerPrescalesAnalyzer::analyzeTriggObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, int prescaleValue)
 {
 	using namespace std;
 	numtrigobj = 0;
@@ -414,12 +424,46 @@ void TriggerPrescalesAnalyzer::analyzeTriggObject(const edm::Event& iEvent, cons
 			const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
 			trigobj_pt.push_back(trigobj.pt());
 
-			trighist_pt->Fill(trigobj.pt());
+			//trighist_pt->Fill(trigobj.pt());
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			trighist_pt->Fill(trigobj.pt(), prescaleValue);
 			cout<<"Trigger Pt: "<<trigobj.pt()<<endl;
 			numtrigobj=numtrigobj+1;
 		}
 	}//end filter size check
 }//-------------------------------------------------analyzeTriggObject()
+
+void TriggerPrescalesAnalyzer::getPrescales(const edm::Event& iEvent, const edm::EventSetup& iSetup, const std::string& triggerName)
+{
+	using namespace std;
+	using namespace edm;
+	using namespace reco;
+	using namespace trigger;
+	
+	//Check the current configuration to see how many total triggers there are
+	const unsigned int n(hltConfig_.size());
+	//Get the trigger index for the current trigger
+	const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName));
+	//check that the trigger in the event and in the configuration agree
+	assert(triggerIndex==iEvent.triggerNames(*triggerResultsHandle_).triggerIndex(triggerName));
+	
+	// abort on invalid trigger name
+	if (triggerIndex>=n) {
+		cout << "HLTEventAnalyzerAOD::analyzeTrigger: path "
+		<< triggerName << " - not found!" << endl;
+		return;
+	}
+	
+	const std::pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,triggerName));
+	
+	totalPrescale = prescales.first*prescales.second;
+	
+	cout << "The trigger: "<< triggerName<<" has prescale values L1T,HLT: " 
+	<< prescales.first << "," << prescales.second<< endl
+	<<"The total prescale value is: "<<totalPrescale<<endl;
+	
+	return;
+}
 
 // ------------ method called when ending the processing of a run  ------------
 void TriggerPrescalesAnalyzer::endRun(edm::Run const&, edm::EventSetup const&)
