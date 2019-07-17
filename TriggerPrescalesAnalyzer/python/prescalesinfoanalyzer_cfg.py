@@ -1,14 +1,15 @@
 import FWCore.ParameterSet.Config as cms
 import FWCore.PythonUtilities.LumiList as LumiList 
 
-goodJSON = 'Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt'
+#goodJSON = 'Cert_160404-180252_7TeV_ReRecoNov08_Collisions11_JSON.txt'
+goodJSON = 'JsonRun163337.json'
 myLumis = LumiList.LumiList(filename = goodJSON).getCMSSWString().split(',')
 
 process = cms.Process("TriggerInfo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(150) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(5000) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
@@ -60,10 +61,10 @@ process.gettriggerinfo = cms.EDAnalyzer('TriggerPrescalesAnalyzer'
     #,JetInputCollection = cms.InputTag("ak5PFJets")
     ,JetInputCollection = cms.InputTag("ak5CaloJets")
     ,processName = cms.string("HLT")
-    #,triggerName = cms.string("HLT_Jet190_v1")
+    ,triggerName = cms.string("HLT_Jet190_v1")
     ,triggerResults = cms.InputTag("TriggerResults","","HLT")
     ,triggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
-    ,filterName = cms.string("hltSingleJet150Regional")
+    ,filterName = cms.string("hltSingleJet190Regional")
 )
                               
 #configure the TFileservice, in order to save histograms.

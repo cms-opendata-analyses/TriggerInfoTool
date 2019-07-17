@@ -142,7 +142,7 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet& iCon
 //m_triggerSelector(triggerExpression::parse( iConfig.getParameter<std::string>("triggerSelection") ) ),
 jetInput_(iConfig.getParameter<edm::InputTag>("JetInputCollection")),
 processName_(iConfig.getParameter<std::string>("processName")),
-triggerName_("HLT_Jet150_v1"),
+triggerName_(iConfig.getParameter<std::string>("triggerName")),
 triggerResultsTag_(iConfig.getParameter<edm::InputTag>("triggerResults")),
 triggerEventTag_(iConfig.getParameter<edm::InputTag>("triggerEvent")),
 filterName_(iConfig.getParameter<std::string>("filterName"))
@@ -212,37 +212,37 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 						<<" TriggerName "<<triggerName_ 
 						//<<" TriggerName "<<m_triggerSelector//To have fun with wild cards
 						<<" not available in (new) config!"<<endl;
-					triggerName_ = "HLT_Jet150_v1";
+					triggerName_ = "HLT_Jet190_v1";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
-					triggerName_ = "HLT_Jet150_v2";
+					triggerName_ = "HLT_Jet190_v2";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
-					triggerName_ = "HLT_Jet150_v3";
+					triggerName_ = "HLT_Jet190_v3";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
-					triggerName_ = "HLT_Jet150_v4";
+					triggerName_ = "HLT_Jet190_v4";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
-					triggerName_ = "HLT_Jet150_v5";
+					triggerName_ = "HLT_Jet190_v5";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
-					triggerName_ = "HLT_Jet150_v6";
+					triggerName_ = "HLT_Jet190_v6";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
 					}
-					triggerName_ = "HLT_Jet150_v9";
+					triggerName_ = "HLT_Jet190_v9";
 					if (hltConfig_.triggerIndex(triggerName_)<n) {
 						cout<<"Now trying the trigger: "<<triggerName_<<endl;
 						break;
@@ -351,11 +351,11 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 		for (reco::CaloJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
 			jet_pt.push_back(itjet->pt());//Fill the vector
 			
-			cout<<"Jet Pt: "<<itjet->pt()
-				<<" -- Px: "<<itjet->px()
-				<<" -- Py: "<<itjet->py()
-				<<" -- Pz: "<<itjet->pz()
-				<<" -- Energy: "<<itjet->energy()<<endl;			
+			//cout<<"Jet Pt: "<<itjet->pt()
+				//<<" -- Px: "<<itjet->px()
+				//<<" -- Py: "<<itjet->py()
+				//<<" -- Pz: "<<itjet->pz()
+				//<<" -- Energy: "<<itjet->energy()<<endl;			
 		}
 		
 		//std::cout<<"Maximum value: "<<*std::max_element(jet_pt.begin(), jet_pt.end())<<"First value: "<<jet_pt.front()<<std::endl; //Shows the max and first value of the vector
@@ -365,9 +365,9 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), prescales.first*prescales.second);
 		
-		if (*std::max_element(jet_pt.begin(), jet_pt.end()) < 40) {
-			cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me"<<endl;
-		}
+		//if (*std::max_element(jet_pt.begin(), jet_pt.end()) < 40) {
+			//cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me"<<endl;
+		//}
 	}
 }//--------------------------------------------------------analyzeJets()
 
