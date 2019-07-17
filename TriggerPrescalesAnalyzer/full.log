@@ -1,96 +1,148 @@
-17-Jul-2019 00:11:12 CEST  Initiating request to open file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/000D4260-D23E-E311-A850-02163E008D77.root
-17-Jul-2019 00:11:13 CEST  Successfully opened file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/000D4260-D23E-E311-A850-02163E008D77.root
+17-Jul-2019 16:08:02 CEST  Initiating request to open file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/000D4260-D23E-E311-A850-02163E008D77.root
+17-Jul-2019 16:08:03 CEST  Successfully opened file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/000D4260-D23E-E311-A850-02163E008D77.root
 Here is the information passed to the constructor:
 HLTEventAnalyzerAOD configuration: 
 		Jet Input Collection = ak5CaloJets
 		ProcessName = HLT
-		TriggerName = HLT_Jet190_v1
+		TriggerName = HLT_Jet150_v1
 		TriggerResultsTag = TriggerResults::HLT
 		TriggerEventTag = hltTriggerSummaryAOD::HLT
-		FilterName = hltSingleJet190Regional
-Begin processing the 1st record. Run 160578, Event 38142433, LumiSection 366 at 17-Jul-2019 00:11:18.988 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 2nd record. Run 160578, Event 38147225, LumiSection 366 at 17-Jul-2019 00:11:19.005 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 3rd record. Run 160578, Event 38174649, LumiSection 366 at 17-Jul-2019 00:11:19.007 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 4th record. Run 160578, Event 38191801, LumiSection 366 at 17-Jul-2019 00:11:19.008 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 5th record. Run 160578, Event 38098328, LumiSection 366 at 17-Jul-2019 00:11:19.010 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 6th record. Run 160578, Event 38176104, LumiSection 366 at 17-Jul-2019 00:11:19.011 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 7th record. Run 160578, Event 38107491, LumiSection 366 at 17-Jul-2019 00:11:19.013 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 8th record. Run 160578, Event 38128499, LumiSection 366 at 17-Jul-2019 00:11:19.014 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 9th record. Run 160578, Event 38154235, LumiSection 366 at 17-Jul-2019 00:11:19.016 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 10th record. Run 160578, Event 38157979, LumiSection 366 at 17-Jul-2019 00:11:19.017 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 11th record. Run 160578, Event 38099725, LumiSection 366 at 17-Jul-2019 00:11:19.018 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 12th record. Run 160578, Event 38106325, LumiSection 366 at 17-Jul-2019 00:11:19.019 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 13th record. Run 160578, Event 38120997, LumiSection 366 at 17-Jul-2019 00:11:19.020 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 14th record. Run 160578, Event 38160429, LumiSection 366 at 17-Jul-2019 00:11:19.021 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 15th record. Run 160578, Event 38188509, LumiSection 366 at 17-Jul-2019 00:11:19.022 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 16th record. Run 160578, Event 38192069, LumiSection 366 at 17-Jul-2019 00:11:19.023 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 17th record. Run 160578, Event 38109501, LumiSection 366 at 17-Jul-2019 00:11:19.024 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 18th record. Run 160578, Event 38113781, LumiSection 366 at 17-Jul-2019 00:11:19.025 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 19th record. Run 160578, Event 38175269, LumiSection 366 at 17-Jul-2019 00:11:19.026 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 20th record. Run 160578, Event 38180197, LumiSection 366 at 17-Jul-2019 00:11:19.028 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 21st record. Run 160578, Event 38191237, LumiSection 366 at 17-Jul-2019 00:11:19.031 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 22nd record. Run 160578, Event 38138708, LumiSection 366 at 17-Jul-2019 00:11:19.032 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 23rd record. Run 160578, Event 38174284, LumiSection 366 at 17-Jul-2019 00:11:19.033 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 24th record. Run 160578, Event 38134128, LumiSection 366 at 17-Jul-2019 00:11:19.034 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 25th record. Run 160578, Event 38144824, LumiSection 366 at 17-Jul-2019 00:11:19.034 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 26th record. Run 160578, Event 38179816, LumiSection 366 at 17-Jul-2019 00:11:19.036 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 27th record. Run 160578, Event 38182072, LumiSection 366 at 17-Jul-2019 00:11:19.037 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 28th record. Run 160578, Event 38116066, LumiSection 366 at 17-Jul-2019 00:11:19.037 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 29th record. Run 160578, Event 38088329, LumiSection 366 at 17-Jul-2019 00:11:19.038 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 30th record. Run 160578, Event 38127041, LumiSection 366 at 17-Jul-2019 00:11:19.039 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 31st record. Run 160578, Event 38141569, LumiSection 366 at 17-Jul-2019 00:11:19.040 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 32nd record. Run 160578, Event 38143481, LumiSection 366 at 17-Jul-2019 00:11:19.041 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 33rd record. Run 160578, Event 38139862, LumiSection 366 at 17-Jul-2019 00:11:19.042 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 34th record. Run 160578, Event 38147374, LumiSection 366 at 17-Jul-2019 00:11:22.606 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 35th record. Run 160578, Event 38125983, LumiSection 366 at 17-Jul-2019 00:11:22.608 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 36th record. Run 160578, Event 38128999, LumiSection 366 at 17-Jul-2019 00:11:22.611 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 37th record. Run 160578, Event 38152951, LumiSection 366 at 17-Jul-2019 00:11:22.614 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 38th record. Run 160578, Event 38180831, LumiSection 366 at 17-Jul-2019 00:11:22.617 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 39th record. Run 160578, Event 38173386, LumiSection 366 at 17-Jul-2019 00:11:22.620 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 40th record. Run 160578, Event 38184830, LumiSection 366 at 17-Jul-2019 00:11:22.623 CEST
-Currently analyzing trigger: HLT_Jet190_v1
+		FilterName = hltSingleJet150Regional
+Begin processing the 1st record. Run 160578, Event 38142433, LumiSection 366 at 17-Jul-2019 16:08:08.562 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 2nd record. Run 160578, Event 38147225, LumiSection 366 at 17-Jul-2019 16:08:08.578 CEST
+Currently analyzing trigger: HLT_Jet150_v1
 ********************************************************************************************************************Hey I passed the trigger
-The trigger: HLT_Jet190_v1 has prescale values L1T,HLT: 1,1
+Jet Pt: 6.7638 -- Px: 3.58751 -- Py: -5.734 -- Pz: -96.1306 -- Energy: 96.3853
+Jet Pt: 6.05372 -- Px: 5.0466 -- Py: -3.34355 -- Pz: 85.2445 -- Energy: 85.4765
+Jet Pt: 3.6966 -- Px: -2.02759 -- Py: -3.09091 -- Pz: -22.0893 -- Energy: 22.4136
+Jet Pt: 3.59268 -- Px: -3.58281 -- Py: 0.266125 -- Pz: 55.0186 -- Energy: 55.143
+Jet Pt: 3.53297 -- Px: -1.40669 -- Py: 3.24085 -- Pz: -15.8879 -- Energy: 16.2891
+Jet Pt: 3.3176 -- Px: 0.556184 -- Py: -3.27065 -- Pz: -5.84263 -- Energy: 6.72188
+Jet Pt: 3.2035 -- Px: -1.81159 -- Py: -2.64207 -- Pz: 1.83476 -- Energy: 3.69462
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
 The total prescale value is: 1
+Fired trigger Pt value: 175.871
+Begin processing the 3rd record. Run 160578, Event 38174649, LumiSection 366 at 17-Jul-2019 16:08:08.633 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 4th record. Run 160578, Event 38191801, LumiSection 366 at 17-Jul-2019 16:08:08.634 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 5th record. Run 160578, Event 38098328, LumiSection 366 at 17-Jul-2019 16:08:08.636 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 6th record. Run 160578, Event 38176104, LumiSection 366 at 17-Jul-2019 16:08:08.637 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 7th record. Run 160578, Event 38107491, LumiSection 366 at 17-Jul-2019 16:08:08.638 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 8th record. Run 160578, Event 38128499, LumiSection 366 at 17-Jul-2019 16:08:08.639 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 9th record. Run 160578, Event 38154235, LumiSection 366 at 17-Jul-2019 16:08:08.639 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 10th record. Run 160578, Event 38157979, LumiSection 366 at 17-Jul-2019 16:08:08.640 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 11th record. Run 160578, Event 38099725, LumiSection 366 at 17-Jul-2019 16:08:08.641 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 12th record. Run 160578, Event 38106325, LumiSection 366 at 17-Jul-2019 16:08:08.642 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 13th record. Run 160578, Event 38120997, LumiSection 366 at 17-Jul-2019 16:08:08.643 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 14th record. Run 160578, Event 38160429, LumiSection 366 at 17-Jul-2019 16:08:08.644 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 15th record. Run 160578, Event 38188509, LumiSection 366 at 17-Jul-2019 16:08:08.645 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 16th record. Run 160578, Event 38192069, LumiSection 366 at 17-Jul-2019 16:08:08.646 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 17th record. Run 160578, Event 38109501, LumiSection 366 at 17-Jul-2019 16:08:08.646 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 18th record. Run 160578, Event 38113781, LumiSection 366 at 17-Jul-2019 16:08:08.648 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 19th record. Run 160578, Event 38175269, LumiSection 366 at 17-Jul-2019 16:08:08.651 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 20th record. Run 160578, Event 38180197, LumiSection 366 at 17-Jul-2019 16:08:08.652 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 21st record. Run 160578, Event 38191237, LumiSection 366 at 17-Jul-2019 16:08:08.655 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 22nd record. Run 160578, Event 38138708, LumiSection 366 at 17-Jul-2019 16:08:08.657 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 23rd record. Run 160578, Event 38174284, LumiSection 366 at 17-Jul-2019 16:08:08.658 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 24th record. Run 160578, Event 38134128, LumiSection 366 at 17-Jul-2019 16:08:08.659 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 25th record. Run 160578, Event 38144824, LumiSection 366 at 17-Jul-2019 16:08:08.661 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 26th record. Run 160578, Event 38179816, LumiSection 366 at 17-Jul-2019 16:08:08.662 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 27th record. Run 160578, Event 38182072, LumiSection 366 at 17-Jul-2019 16:08:08.663 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 28th record. Run 160578, Event 38116066, LumiSection 366 at 17-Jul-2019 16:08:08.664 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 29th record. Run 160578, Event 38088329, LumiSection 366 at 17-Jul-2019 16:08:08.666 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 30th record. Run 160578, Event 38127041, LumiSection 366 at 17-Jul-2019 16:08:08.667 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 135.24 -- Px: 132.041 -- Py: 29.2407 -- Pz: 610.767 -- Energy: 625.751
+Jet Pt: 119.827 -- Px: -118.388 -- Py: -18.5155 -- Pz: -10.1525 -- Energy: 122.252
+Jet Pt: 6.9496 -- Px: 4.92896 -- Py: 4.89921 -- Pz: -0.606331 -- Energy: 7.11998
+Jet Pt: 6.33845 -- Px: 5.1543 -- Py: -3.68906 -- Pz: 130.347 -- Energy: 130.514
+Jet Pt: 5.35828 -- Px: -4.0706 -- Py: -3.48444 -- Pz: 1.19581 -- Energy: 5.68392
+Jet Pt: 4.94159 -- Px: 3.26697 -- Py: -3.7076 -- Pz: -23.7209 -- Energy: 24.2614
+Jet Pt: 4.93343 -- Px: -4.63469 -- Py: 1.69067 -- Pz: -24.3642 -- Energy: 24.9032
+Jet Pt: 4.52196 -- Px: 4.31511 -- Py: -1.35203 -- Pz: -8.74032 -- Energy: 9.90041
+Jet Pt: 4.50641 -- Px: -0.987709 -- Py: 4.39683 -- Pz: -118.584 -- Energy: 118.677
+Jet Pt: 4.38316 -- Px: -1.24986 -- Py: -4.20119 -- Pz: 8.23338 -- Energy: 9.36129
+Jet Pt: 4.20945 -- Px: -3.87805 -- Py: 1.63712 -- Pz: 58.7962 -- Energy: 58.9546
+Jet Pt: 4.19441 -- Px: 4.07454 -- Py: 0.995584 -- Pz: -30.851 -- Energy: 31.1528
+Jet Pt: 4.13978 -- Px: 0.95636 -- Py: 4.0278 -- Pz: -50.2773 -- Energy: 50.4579
+Jet Pt: 3.97816 -- Px: -0.481944 -- Py: -3.94886 -- Pz: 21.3943 -- Energy: 21.7737
+Jet Pt: 3.93853 -- Px: -3.67994 -- Py: 1.40359 -- Pz: -177.963 -- Energy: 178.009
+Jet Pt: 3.71841 -- Px: 3.23266 -- Py: 1.8375 -- Pz: 7.38952 -- Energy: 8.31309
+Jet Pt: 3.55911 -- Px: -3.37303 -- Py: -1.13575 -- Pz: 57.3629 -- Energy: 57.4748
+Jet Pt: 3.42701 -- Px: -0.91838 -- Py: 3.30166 -- Pz: 46.6785 -- Energy: 46.8123
+Jet Pt: 3.34113 -- Px: 2.85813 -- Py: -1.7304 -- Pz: -107.535 -- Energy: 107.591
+Jet Pt: 3.27219 -- Px: 0.699685 -- Py: 3.19651 -- Pz: 214.754 -- Energy: 214.78
+Jet Pt: 3.2462 -- Px: -1.44619 -- Py: 2.90626 -- Pz: -0.973983 -- Energy: 3.447
+Jet Pt: 3.12638 -- Px: -3.12527 -- Py: 0.0832801 -- Pz: -4.58018 -- Energy: 5.56946
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 161.571
+Fired trigger Pt value: 157.327
+Begin processing the 31st record. Run 160578, Event 38141569, LumiSection 366 at 17-Jul-2019 16:08:11.987 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 32nd record. Run 160578, Event 38143481, LumiSection 366 at 17-Jul-2019 16:08:11.990 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 33rd record. Run 160578, Event 38139862, LumiSection 366 at 17-Jul-2019 16:08:11.993 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 34th record. Run 160578, Event 38147374, LumiSection 366 at 17-Jul-2019 16:08:11.996 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 35th record. Run 160578, Event 38125983, LumiSection 366 at 17-Jul-2019 16:08:11.999 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 124.689 -- Px: 68.1418 -- Py: -104.422 -- Pz: 63.4421 -- Energy: 141.302
+Jet Pt: 91.3855 -- Px: 12.8871 -- Py: 90.4723 -- Pz: 246.457 -- Energy: 263.487
+Jet Pt: 49.0217 -- Px: -47.8044 -- Py: 10.8565 -- Pz: 19.2912 -- Energy: 55.3824
+Jet Pt: 6.63788 -- Px: -6.08889 -- Py: -2.64328 -- Pz: 3.72671 -- Energy: 7.69466
+Jet Pt: 6.38486 -- Px: 1.9468 -- Py: -6.08082 -- Pz: -87.4567 -- Energy: 87.7022
+Jet Pt: 5.42575 -- Px: 1.10467 -- Py: 5.31211 -- Pz: -45.0032 -- Energy: 45.3324
+Jet Pt: 5.15925 -- Px: -4.26108 -- Py: 2.90879 -- Pz: 12.7987 -- Energy: 13.8441
+Jet Pt: 3.75593 -- Px: -2.25032 -- Py: -3.00716 -- Pz: -90.2993 -- Energy: 90.3792
+Jet Pt: 3.43509 -- Px: -2.76235 -- Py: -2.04188 -- Pz: -0.675698 -- Energy: 3.59507
+Jet Pt: 3.23867 -- Px: 3.17426 -- Py: 0.642696 -- Pz: 10.8068 -- Energy: 11.2966
+Jet Pt: 3.05161 -- Px: -1.8554 -- Py: -2.42277 -- Pz: -3.15141 -- Energy: 4.39915
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 166.022
+Begin processing the 36th record. Run 160578, Event 38128999, LumiSection 366 at 17-Jul-2019 16:08:12.004 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 37th record. Run 160578, Event 38152951, LumiSection 366 at 17-Jul-2019 16:08:12.007 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 38th record. Run 160578, Event 38180831, LumiSection 366 at 17-Jul-2019 16:08:12.008 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 39th record. Run 160578, Event 38173386, LumiSection 366 at 17-Jul-2019 16:08:12.010 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 40th record. Run 160578, Event 38184830, LumiSection 366 at 17-Jul-2019 16:08:12.011 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
 Jet Pt: 295.758 -- Px: 216.39 -- Py: 201.615 -- Pz: 34.0214 -- Energy: 298.8
 Jet Pt: 173.579 -- Px: -115.351 -- Py: -129.706 -- Pz: -79.5241 -- Energy: 195.693
 Jet Pt: 17.3821 -- Px: -16.3104 -- Py: 6.00898 -- Pz: 66.0265 -- Energy: 68.4261
@@ -101,190 +153,241 @@ Jet Pt: 5.99128 -- Px: 1.11693 -- Py: 5.88624 -- Pz: 0.550351 -- Energy: 6.09864
 Jet Pt: 4.72176 -- Px: 3.06875 -- Py: 3.58856 -- Pz: 13.78 -- Energy: 14.6055
 Jet Pt: 3.46231 -- Px: -3.41921 -- Py: -0.544645 -- Pz: -1.68761 -- Energy: 3.92638
 Jet Pt: 3.20918 -- Px: 3.10966 -- Py: -0.792979 -- Pz: -53.5537 -- Energy: 53.6583
-Trigger Pt: 334.969
-Trigger Pt: 216.048
-Begin processing the 41st record. Run 160578, Event 38093939, LumiSection 366 at 17-Jul-2019 00:11:22.814 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 42nd record. Run 160578, Event 38093427, LumiSection 366 at 17-Jul-2019 00:11:22.815 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 43rd record. Run 160578, Event 38113371, LumiSection 366 at 17-Jul-2019 00:11:22.817 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-********************************************************************************************************************Hey I passed the trigger
-The trigger: HLT_Jet190_v1 has prescale values L1T,HLT: 1,1
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
 The total prescale value is: 1
+Fired trigger Pt value: 334.969
+Fired trigger Pt value: 216.048
+Begin processing the 41st record. Run 160578, Event 38093939, LumiSection 366 at 17-Jul-2019 16:08:12.014 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 42nd record. Run 160578, Event 38093427, LumiSection 366 at 17-Jul-2019 16:08:12.015 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 109.528 -- Px: -79.3816 -- Py: 75.4654 -- Pz: -298.437 -- Energy: 318.915
+Jet Pt: 78.6711 -- Px: 70.1818 -- Py: -35.5479 -- Pz: -141.472 -- Energy: 162.36
+Jet Pt: 43.7655 -- Px: 34.9082 -- Py: -26.3976 -- Pz: 9.385 -- Energy: 45.2892
+Jet Pt: 37.6371 -- Px: -36.3094 -- Py: 9.90859 -- Pz: -162.204 -- Energy: 166.663
+Jet Pt: 4.55822 -- Px: 4.558 -- Py: -0.0443132 -- Pz: -18.3776 -- Energy: 18.9552
+Jet Pt: 4.54325 -- Px: 3.26538 -- Py: 3.15887 -- Pz: -59.5869 -- Energy: 59.7682
+Jet Pt: 4.39566 -- Px: 4.39275 -- Py: 0.160034 -- Pz: 0.0481251 -- Energy: 4.43873
+Jet Pt: 4.02304 -- Px: -3.82716 -- Py: -1.24004 -- Pz: -5.97789 -- Energy: 7.23154
+Jet Pt: 3.95286 -- Px: -3.78575 -- Py: 1.1372 -- Pz: -100.855 -- Energy: 100.939
+Jet Pt: 3.86411 -- Px: 0.726157 -- Py: -3.79527 -- Pz: 1.3909 -- Energy: 4.16866
+Jet Pt: 3.77499 -- Px: 3.76154 -- Py: -0.318367 -- Pz: -3.11803 -- Energy: 4.94506
+Jet Pt: 3.42665 -- Px: 1.33255 -- Py: 3.15693 -- Pz: -12.3401 -- Energy: 12.8474
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 154.509
+Begin processing the 43rd record. Run 160578, Event 38113371, LumiSection 366 at 17-Jul-2019 16:08:12.017 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
 Jet Pt: 7.82296 -- Px: 5.17833 -- Py: -5.86375 -- Pz: -4.40059 -- Energy: 9.00711
 Jet Pt: 7.50483 -- Px: 0.90463 -- Py: 7.45011 -- Pz: -128.076 -- Energy: 128.316
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me
-Trigger Pt: 213.271
-Begin processing the 44th record. Run 160578, Event 38150915, LumiSection 366 at 17-Jul-2019 00:11:22.839 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 45th record. Run 160578, Event 38182523, LumiSection 366 at 17-Jul-2019 00:11:22.844 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 46th record. Run 160578, Event 38192515, LumiSection 366 at 17-Jul-2019 00:11:22.846 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 47th record. Run 160578, Event 38101580, LumiSection 366 at 17-Jul-2019 00:11:22.847 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 48th record. Run 160578, Event 38104404, LumiSection 366 at 17-Jul-2019 00:11:22.849 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 49th record. Run 160578, Event 38122604, LumiSection 366 at 17-Jul-2019 00:11:22.850 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 50th record. Run 160578, Event 38136116, LumiSection 366 at 17-Jul-2019 00:11:22.852 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 51st record. Run 160578, Event 38120015, LumiSection 366 at 17-Jul-2019 00:11:22.854 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 52nd record. Run 160578, Event 38127175, LumiSection 366 at 17-Jul-2019 00:11:22.855 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 53rd record. Run 160578, Event 38143111, LumiSection 366 at 17-Jul-2019 00:11:22.856 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 54th record. Run 160578, Event 38232456, LumiSection 367 at 17-Jul-2019 00:11:22.860 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 55th record. Run 160578, Event 38252064, LumiSection 367 at 17-Jul-2019 00:11:22.861 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 56th record. Run 160578, Event 38239794, LumiSection 367 at 17-Jul-2019 00:11:22.863 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 57th record. Run 160578, Event 38263906, LumiSection 367 at 17-Jul-2019 00:11:22.865 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 58th record. Run 160578, Event 38277882, LumiSection 367 at 17-Jul-2019 00:11:22.867 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 59th record. Run 160578, Event 38239547, LumiSection 367 at 17-Jul-2019 00:11:22.869 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 60th record. Run 160578, Event 38243771, LumiSection 367 at 17-Jul-2019 00:11:22.870 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 61st record. Run 160578, Event 38248051, LumiSection 367 at 17-Jul-2019 00:11:22.872 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 62nd record. Run 160578, Event 38249531, LumiSection 367 at 17-Jul-2019 00:11:22.874 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 63rd record. Run 160578, Event 38268451, LumiSection 367 at 17-Jul-2019 00:11:22.875 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 64th record. Run 160578, Event 38286371, LumiSection 367 at 17-Jul-2019 00:11:22.876 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 65th record. Run 160578, Event 38299475, LumiSection 367 at 17-Jul-2019 00:11:22.877 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 66th record. Run 160578, Event 38197957, LumiSection 367 at 17-Jul-2019 00:11:22.878 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 67th record. Run 160578, Event 38210693, LumiSection 367 at 17-Jul-2019 00:11:22.879 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 68th record. Run 160578, Event 38231445, LumiSection 367 at 17-Jul-2019 00:11:22.880 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 69th record. Run 160578, Event 38233333, LumiSection 367 at 17-Jul-2019 00:11:22.881 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 70th record. Run 160578, Event 38297685, LumiSection 367 at 17-Jul-2019 00:11:22.883 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 71st record. Run 160578, Event 38217311, LumiSection 367 at 17-Jul-2019 00:11:22.884 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 72nd record. Run 160578, Event 38282375, LumiSection 367 at 17-Jul-2019 00:11:22.885 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 73rd record. Run 160578, Event 38246820, LumiSection 367 at 17-Jul-2019 00:11:22.886 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 74th record. Run 160578, Event 38245188, LumiSection 367 at 17-Jul-2019 00:11:22.887 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 75th record. Run 160578, Event 38254084, LumiSection 367 at 17-Jul-2019 00:11:22.888 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 76th record. Run 160578, Event 38216948, LumiSection 367 at 17-Jul-2019 00:11:22.889 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 77th record. Run 160578, Event 38243596, LumiSection 367 at 17-Jul-2019 00:11:22.890 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 78th record. Run 160578, Event 38288300, LumiSection 367 at 17-Jul-2019 00:11:22.892 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 79th record. Run 160578, Event 38288788, LumiSection 367 at 17-Jul-2019 00:11:22.892 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 80th record. Run 160578, Event 38300484, LumiSection 367 at 17-Jul-2019 00:11:22.893 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 81st record. Run 160578, Event 38210200, LumiSection 367 at 17-Jul-2019 00:11:22.894 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 82nd record. Run 160578, Event 38216096, LumiSection 367 at 17-Jul-2019 00:11:22.895 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 83rd record. Run 160578, Event 38250328, LumiSection 367 at 17-Jul-2019 00:11:22.896 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 84th record. Run 160578, Event 38259272, LumiSection 367 at 17-Jul-2019 00:11:22.896 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 85th record. Run 160578, Event 38224707, LumiSection 367 at 17-Jul-2019 00:11:22.898 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 86th record. Run 160578, Event 38252019, LumiSection 367 at 17-Jul-2019 00:11:22.899 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 87th record. Run 160578, Event 38254699, LumiSection 367 at 17-Jul-2019 00:11:22.900 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 88th record. Run 160578, Event 38269787, LumiSection 367 at 17-Jul-2019 00:11:22.901 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 89th record. Run 160578, Event 38279131, LumiSection 367 at 17-Jul-2019 00:11:22.901 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 90th record. Run 160578, Event 38280643, LumiSection 367 at 17-Jul-2019 00:11:22.902 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 91st record. Run 160578, Event 38215942, LumiSection 367 at 17-Jul-2019 00:11:22.903 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 92nd record. Run 160578, Event 38232694, LumiSection 367 at 17-Jul-2019 00:11:22.904 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 93rd record. Run 160578, Event 38243054, LumiSection 367 at 17-Jul-2019 00:11:22.905 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 94th record. Run 160578, Event 38268166, LumiSection 367 at 17-Jul-2019 00:11:22.907 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 95th record. Run 160578, Event 38273446, LumiSection 367 at 17-Jul-2019 00:11:22.908 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 96th record. Run 160578, Event 38301406, LumiSection 367 at 17-Jul-2019 00:11:22.909 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 97th record. Run 160578, Event 38215654, LumiSection 367 at 17-Jul-2019 00:11:22.911 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 98th record. Run 160578, Event 38278126, LumiSection 367 at 17-Jul-2019 00:11:22.912 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 99th record. Run 160578, Event 38198613, LumiSection 367 at 17-Jul-2019 00:11:22.913 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 100th record. Run 160578, Event 38210333, LumiSection 367 at 17-Jul-2019 00:11:22.913 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 101st record. Run 160578, Event 38225717, LumiSection 367 at 17-Jul-2019 00:11:22.914 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 102nd record. Run 160578, Event 38237261, LumiSection 367 at 17-Jul-2019 00:11:22.915 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 103rd record. Run 160578, Event 38297109, LumiSection 367 at 17-Jul-2019 00:11:22.918 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 104th record. Run 160578, Event 38220890, LumiSection 367 at 17-Jul-2019 00:11:22.920 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 105th record. Run 160578, Event 38258231, LumiSection 367 at 17-Jul-2019 00:11:22.921 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 106th record. Run 160578, Event 38233729, LumiSection 367 at 17-Jul-2019 00:11:22.922 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 107th record. Run 160578, Event 38236329, LumiSection 367 at 17-Jul-2019 00:11:22.923 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 108th record. Run 160578, Event 38269745, LumiSection 367 at 17-Jul-2019 00:11:22.924 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 109th record. Run 160578, Event 38268537, LumiSection 367 at 17-Jul-2019 00:11:22.925 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 110th record. Run 160578, Event 38241425, LumiSection 367 at 17-Jul-2019 00:11:22.926 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 111th record. Run 160578, Event 38303657, LumiSection 367 at 17-Jul-2019 00:11:22.927 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 112th record. Run 160578, Event 38379736, LumiSection 368 at 17-Jul-2019 00:11:22.929 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 113th record. Run 160578, Event 38325052, LumiSection 368 at 17-Jul-2019 00:11:22.930 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 114th record. Run 160578, Event 38374188, LumiSection 368 at 17-Jul-2019 00:11:22.931 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 115th record. Run 160578, Event 38409500, LumiSection 368 at 17-Jul-2019 00:11:22.932 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 116th record. Run 160578, Event 38342747, LumiSection 368 at 17-Jul-2019 00:11:22.933 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 117th record. Run 160578, Event 38347987, LumiSection 368 at 17-Jul-2019 00:11:22.934 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 118th record. Run 160578, Event 38345635, LumiSection 368 at 17-Jul-2019 00:11:22.935 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 119th record. Run 160578, Event 38404003, LumiSection 368 at 17-Jul-2019 00:11:22.936 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 120th record. Run 160578, Event 38335071, LumiSection 368 at 17-Jul-2019 00:11:22.938 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 121st record. Run 160578, Event 38358279, LumiSection 368 at 17-Jul-2019 00:11:22.938 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 122nd record. Run 160578, Event 38341886, LumiSection 368 at 17-Jul-2019 00:11:22.940 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 123rd record. Run 160578, Event 38346054, LumiSection 368 at 17-Jul-2019 00:11:22.941 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 124th record. Run 160578, Event 38335918, LumiSection 368 at 17-Jul-2019 00:11:22.942 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 125th record. Run 160578, Event 38381143, LumiSection 368 at 17-Jul-2019 00:11:22.943 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 126th record. Run 160578, Event 38320377, LumiSection 368 at 17-Jul-2019 00:11:22.944 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-********************************************************************************************************************Hey I passed the trigger
-The trigger: HLT_Jet190_v1 has prescale values L1T,HLT: 1,1
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
 The total prescale value is: 1
+Fired trigger Pt value: 213.271
+Begin processing the 44th record. Run 160578, Event 38150915, LumiSection 366 at 17-Jul-2019 16:08:12.019 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 45th record. Run 160578, Event 38182523, LumiSection 366 at 17-Jul-2019 16:08:12.020 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 46th record. Run 160578, Event 38192515, LumiSection 366 at 17-Jul-2019 16:08:12.021 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 47th record. Run 160578, Event 38101580, LumiSection 366 at 17-Jul-2019 16:08:12.022 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 48th record. Run 160578, Event 38104404, LumiSection 366 at 17-Jul-2019 16:08:12.023 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 49th record. Run 160578, Event 38122604, LumiSection 366 at 17-Jul-2019 16:08:12.024 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 50th record. Run 160578, Event 38136116, LumiSection 366 at 17-Jul-2019 16:08:12.025 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 51st record. Run 160578, Event 38120015, LumiSection 366 at 17-Jul-2019 16:08:12.026 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 52nd record. Run 160578, Event 38127175, LumiSection 366 at 17-Jul-2019 16:08:12.027 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 53rd record. Run 160578, Event 38143111, LumiSection 366 at 17-Jul-2019 16:08:12.028 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 54th record. Run 160578, Event 38232456, LumiSection 367 at 17-Jul-2019 16:08:12.029 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 55th record. Run 160578, Event 38252064, LumiSection 367 at 17-Jul-2019 16:08:12.030 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 56th record. Run 160578, Event 38239794, LumiSection 367 at 17-Jul-2019 16:08:12.030 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 57th record. Run 160578, Event 38263906, LumiSection 367 at 17-Jul-2019 16:08:12.031 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 58th record. Run 160578, Event 38277882, LumiSection 367 at 17-Jul-2019 16:08:12.032 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 59th record. Run 160578, Event 38239547, LumiSection 367 at 17-Jul-2019 16:08:12.033 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 60th record. Run 160578, Event 38243771, LumiSection 367 at 17-Jul-2019 16:08:12.034 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 61st record. Run 160578, Event 38248051, LumiSection 367 at 17-Jul-2019 16:08:12.034 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 62nd record. Run 160578, Event 38249531, LumiSection 367 at 17-Jul-2019 16:08:12.035 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 63rd record. Run 160578, Event 38268451, LumiSection 367 at 17-Jul-2019 16:08:12.036 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 64th record. Run 160578, Event 38286371, LumiSection 367 at 17-Jul-2019 16:08:12.037 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 65th record. Run 160578, Event 38299475, LumiSection 367 at 17-Jul-2019 16:08:12.038 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 66th record. Run 160578, Event 38197957, LumiSection 367 at 17-Jul-2019 16:08:12.039 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 133.612 -- Px: 53.5379 -- Py: -122.417 -- Pz: 426.294 -- Energy: 447.169
+Jet Pt: 96.1087 -- Px: -20.619 -- Py: 93.8709 -- Pz: 233.007 -- Energy: 252.367
+Jet Pt: 28.4489 -- Px: -28.3283 -- Py: 2.61666 -- Pz: 62.6912 -- Energy: 69.0987
+Jet Pt: 20.4903 -- Px: -5.08827 -- Py: -19.8485 -- Pz: 72.3372 -- Energy: 75.2506
+Jet Pt: 10.7617 -- Px: 10.6477 -- Py: -1.56207 -- Pz: -435.038 -- Energy: 435.176
+Jet Pt: 4.64255 -- Px: 4.13555 -- Py: 2.10963 -- Pz: 6.78369 -- Energy: 8.2758
+Jet Pt: 3.94956 -- Px: 3.27556 -- Py: -2.20674 -- Pz: 114.843 -- Energy: 114.913
+Jet Pt: 3.71727 -- Px: -1.36043 -- Py: 3.45939 -- Pz: -44.8492 -- Energy: 45.0148
+Jet Pt: 3.69921 -- Px: 1.05151 -- Py: 3.54662 -- Pz: 7.22199 -- Energy: 8.14066
+Jet Pt: 3.28539 -- Px: 3.10596 -- Py: 1.07087 -- Pz: -73.6677 -- Energy: 73.7443
+Jet Pt: 3.15769 -- Px: 2.67504 -- Py: -1.67785 -- Pz: -76.4812 -- Energy: 76.5497
+Jet Pt: 3.12913 -- Px: -1.20763 -- Py: -2.88671 -- Pz: -60.4979 -- Energy: 60.5854
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 178.089
+Begin processing the 67th record. Run 160578, Event 38210693, LumiSection 367 at 17-Jul-2019 16:08:12.041 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 68th record. Run 160578, Event 38231445, LumiSection 367 at 17-Jul-2019 16:08:12.042 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 69th record. Run 160578, Event 38233333, LumiSection 367 at 17-Jul-2019 16:08:12.042 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 70th record. Run 160578, Event 38297685, LumiSection 367 at 17-Jul-2019 16:08:12.043 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 71st record. Run 160578, Event 38217311, LumiSection 367 at 17-Jul-2019 16:08:12.044 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 72nd record. Run 160578, Event 38282375, LumiSection 367 at 17-Jul-2019 16:08:12.045 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 73rd record. Run 160578, Event 38246820, LumiSection 367 at 17-Jul-2019 16:08:12.045 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 74th record. Run 160578, Event 38245188, LumiSection 367 at 17-Jul-2019 16:08:12.046 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 75th record. Run 160578, Event 38254084, LumiSection 367 at 17-Jul-2019 16:08:12.047 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 145.619 -- Px: 140.326 -- Py: -38.9035 -- Pz: 31.706 -- Energy: 150.17
+Jet Pt: 119.43 -- Px: -119.362 -- Py: -4.02349 -- Pz: 1339.05 -- Energy: 1344.54
+Jet Pt: 17.9167 -- Px: -15.8737 -- Py: 8.30867 -- Pz: 147.809 -- Energy: 148.923
+Jet Pt: 7.30219 -- Px: -5.6598 -- Py: 4.61397 -- Pz: -3.44185 -- Energy: 8.26668
+Jet Pt: 7.07387 -- Px: -0.884414 -- Py: 7.01837 -- Pz: -7.53583 -- Energy: 10.4
+Jet Pt: 3.00528 -- Px: 1.97776 -- Py: 2.26277 -- Pz: -15.0497 -- Energy: 15.3737
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 182.909
+Begin processing the 76th record. Run 160578, Event 38216948, LumiSection 367 at 17-Jul-2019 16:08:12.048 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 77th record. Run 160578, Event 38243596, LumiSection 367 at 17-Jul-2019 16:08:12.049 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 78th record. Run 160578, Event 38288300, LumiSection 367 at 17-Jul-2019 16:08:12.053 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 79th record. Run 160578, Event 38288788, LumiSection 367 at 17-Jul-2019 16:08:12.055 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 80th record. Run 160578, Event 38300484, LumiSection 367 at 17-Jul-2019 16:08:12.057 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 81st record. Run 160578, Event 38210200, LumiSection 367 at 17-Jul-2019 16:08:12.059 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 82nd record. Run 160578, Event 38216096, LumiSection 367 at 17-Jul-2019 16:08:12.060 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 83rd record. Run 160578, Event 38250328, LumiSection 367 at 17-Jul-2019 16:08:12.061 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 84th record. Run 160578, Event 38259272, LumiSection 367 at 17-Jul-2019 16:08:12.061 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 85th record. Run 160578, Event 38224707, LumiSection 367 at 17-Jul-2019 16:08:12.062 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 86th record. Run 160578, Event 38252019, LumiSection 367 at 17-Jul-2019 16:08:12.063 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 87th record. Run 160578, Event 38254699, LumiSection 367 at 17-Jul-2019 16:08:12.064 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 88th record. Run 160578, Event 38269787, LumiSection 367 at 17-Jul-2019 16:08:12.065 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 89th record. Run 160578, Event 38279131, LumiSection 367 at 17-Jul-2019 16:08:12.066 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 90th record. Run 160578, Event 38280643, LumiSection 367 at 17-Jul-2019 16:08:12.067 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 91st record. Run 160578, Event 38215942, LumiSection 367 at 17-Jul-2019 16:08:12.069 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 92nd record. Run 160578, Event 38232694, LumiSection 367 at 17-Jul-2019 16:08:12.071 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 93rd record. Run 160578, Event 38243054, LumiSection 367 at 17-Jul-2019 16:08:12.072 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 94th record. Run 160578, Event 38268166, LumiSection 367 at 17-Jul-2019 16:08:12.073 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 95th record. Run 160578, Event 38273446, LumiSection 367 at 17-Jul-2019 16:08:12.074 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 96th record. Run 160578, Event 38301406, LumiSection 367 at 17-Jul-2019 16:08:12.075 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 97th record. Run 160578, Event 38215654, LumiSection 367 at 17-Jul-2019 16:08:12.076 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 98th record. Run 160578, Event 38278126, LumiSection 367 at 17-Jul-2019 16:08:12.077 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 99th record. Run 160578, Event 38198613, LumiSection 367 at 17-Jul-2019 16:08:12.078 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 100th record. Run 160578, Event 38210333, LumiSection 367 at 17-Jul-2019 16:08:12.079 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 101st record. Run 160578, Event 38225717, LumiSection 367 at 17-Jul-2019 16:08:12.080 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 102nd record. Run 160578, Event 38237261, LumiSection 367 at 17-Jul-2019 16:08:12.081 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 103rd record. Run 160578, Event 38297109, LumiSection 367 at 17-Jul-2019 16:08:12.082 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 104th record. Run 160578, Event 38220890, LumiSection 367 at 17-Jul-2019 16:08:12.084 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 105th record. Run 160578, Event 38258231, LumiSection 367 at 17-Jul-2019 16:08:12.088 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 106th record. Run 160578, Event 38233729, LumiSection 367 at 17-Jul-2019 16:08:12.089 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 107th record. Run 160578, Event 38236329, LumiSection 367 at 17-Jul-2019 16:08:12.090 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 108th record. Run 160578, Event 38269745, LumiSection 367 at 17-Jul-2019 16:08:12.091 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 109th record. Run 160578, Event 38268537, LumiSection 367 at 17-Jul-2019 16:08:12.092 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 110th record. Run 160578, Event 38241425, LumiSection 367 at 17-Jul-2019 16:08:12.093 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 111th record. Run 160578, Event 38303657, LumiSection 367 at 17-Jul-2019 16:08:12.093 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 112th record. Run 160578, Event 38379736, LumiSection 368 at 17-Jul-2019 16:08:12.095 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 113th record. Run 160578, Event 38325052, LumiSection 368 at 17-Jul-2019 16:08:12.096 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 114th record. Run 160578, Event 38374188, LumiSection 368 at 17-Jul-2019 16:08:12.097 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 115th record. Run 160578, Event 38409500, LumiSection 368 at 17-Jul-2019 16:08:12.098 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 116th record. Run 160578, Event 38342747, LumiSection 368 at 17-Jul-2019 16:08:12.099 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 104.65 -- Px: -69.9936 -- Py: -77.7982 -- Pz: 241.69 -- Energy: 263.627
+Jet Pt: 86.112 -- Px: 64.795 -- Py: 56.7176 -- Pz: 63.1289 -- Energy: 107.426
+Jet Pt: 14.8869 -- Px: 7.90359 -- Py: 12.6155 -- Pz: -6.60974 -- Energy: 16.6002
+Jet Pt: 3.48171 -- Px: -0.973831 -- Py: 3.34274 -- Pz: 22.2544 -- Energy: 22.5272
+Jet Pt: 3.32192 -- Px: -0.453376 -- Py: 3.29083 -- Pz: -1.23569 -- Energy: 3.59876
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 150.867
+Begin processing the 117th record. Run 160578, Event 38347987, LumiSection 368 at 17-Jul-2019 16:08:12.100 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 118th record. Run 160578, Event 38345635, LumiSection 368 at 17-Jul-2019 16:08:12.102 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 119th record. Run 160578, Event 38404003, LumiSection 368 at 17-Jul-2019 16:08:12.103 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 120th record. Run 160578, Event 38335071, LumiSection 368 at 17-Jul-2019 16:08:12.104 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 121st record. Run 160578, Event 38358279, LumiSection 368 at 17-Jul-2019 16:08:12.105 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 122nd record. Run 160578, Event 38341886, LumiSection 368 at 17-Jul-2019 16:08:12.105 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 123rd record. Run 160578, Event 38346054, LumiSection 368 at 17-Jul-2019 16:08:12.106 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 124th record. Run 160578, Event 38335918, LumiSection 368 at 17-Jul-2019 16:08:12.107 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 125th record. Run 160578, Event 38381143, LumiSection 368 at 17-Jul-2019 16:08:12.108 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 126th record. Run 160578, Event 38320377, LumiSection 368 at 17-Jul-2019 16:08:12.109 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
 Jet Pt: 289.127 -- Px: 65.5178 -- Py: -281.605 -- Pz: 11.5063 -- Energy: 290.562
 Jet Pt: 262.02 -- Px: 3.44202 -- Py: 261.998 -- Pz: -79.1483 -- Energy: 275.261
 Jet Pt: 23.7089 -- Px: -15.5109 -- Py: 17.9311 -- Pz: -0.0961024 -- Energy: 24.1116
@@ -297,57 +400,70 @@ Jet Pt: 4.01678 -- Px: 0.370139 -- Py: -3.99969 -- Pz: 88.6807 -- Energy: 88.776
 Jet Pt: 3.97308 -- Px: -2.12354 -- Py: 3.35796 -- Pz: -10.7678 -- Energy: 11.5153
 Jet Pt: 3.3148 -- Px: -1.33171 -- Py: -3.03553 -- Pz: -0.183348 -- Energy: 3.39445
 Jet Pt: 3.12118 -- Px: -1.86151 -- Py: 2.50531 -- Pz: 14.4659 -- Energy: 14.8224
-Trigger Pt: 342.112
-Trigger Pt: 313.892
-Begin processing the 127th record. Run 160578, Event 38413637, LumiSection 368 at 17-Jul-2019 00:11:22.973 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 128th record. Run 160578, Event 38312153, LumiSection 368 at 17-Jul-2019 00:11:22.977 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 129th record. Run 160578, Event 38403233, LumiSection 368 at 17-Jul-2019 00:11:22.981 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 130th record. Run 160578, Event 38342238, LumiSection 368 at 17-Jul-2019 00:11:22.985 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 131st record. Run 160578, Event 38356085, LumiSection 368 at 17-Jul-2019 00:11:22.988 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 132nd record. Run 160578, Event 38366453, LumiSection 368 at 17-Jul-2019 00:11:22.989 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 133rd record. Run 160578, Event 38395469, LumiSection 368 at 17-Jul-2019 00:11:22.990 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 134th record. Run 160578, Event 38411741, LumiSection 368 at 17-Jul-2019 00:11:22.992 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 135th record. Run 160578, Event 38374282, LumiSection 368 at 17-Jul-2019 00:11:22.993 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 136th record. Run 160578, Event 38376906, LumiSection 368 at 17-Jul-2019 00:11:22.995 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 137th record. Run 160578, Event 38385402, LumiSection 368 at 17-Jul-2019 00:11:22.996 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 138th record. Run 160578, Event 38392515, LumiSection 368 at 17-Jul-2019 00:11:23.001 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 139th record. Run 160578, Event 38325600, LumiSection 368 at 17-Jul-2019 00:11:23.003 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 140th record. Run 160578, Event 38344952, LumiSection 368 at 17-Jul-2019 00:11:23.005 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 141st record. Run 160578, Event 38347216, LumiSection 368 at 17-Jul-2019 00:11:23.006 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 142nd record. Run 160578, Event 38372560, LumiSection 368 at 17-Jul-2019 00:11:23.007 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 143rd record. Run 160578, Event 38310266, LumiSection 368 at 17-Jul-2019 00:11:23.008 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 144th record. Run 160578, Event 38328170, LumiSection 368 at 17-Jul-2019 00:11:23.010 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 145th record. Run 160578, Event 38406858, LumiSection 368 at 17-Jul-2019 00:11:23.012 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 146th record. Run 160578, Event 38411082, LumiSection 368 at 17-Jul-2019 00:11:23.013 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 147th record. Run 160578, Event 38334572, LumiSection 368 at 17-Jul-2019 00:11:23.015 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 148th record. Run 160578, Event 38339812, LumiSection 368 at 17-Jul-2019 00:11:23.016 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 149th record. Run 160578, Event 38360580, LumiSection 368 at 17-Jul-2019 00:11:23.017 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-Begin processing the 150th record. Run 160578, Event 38463711, LumiSection 369 at 17-Jul-2019 00:11:23.018 CEST
-Currently analyzing trigger: HLT_Jet190_v1
-17-Jul-2019 00:11:23 CEST  Closed file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/000D4260-D23E-E311-A850-02163E008D77.root
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 342.112
+Fired trigger Pt value: 313.892
+Begin processing the 127th record. Run 160578, Event 38413637, LumiSection 368 at 17-Jul-2019 16:08:12.110 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 128th record. Run 160578, Event 38312153, LumiSection 368 at 17-Jul-2019 16:08:12.111 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 129th record. Run 160578, Event 38403233, LumiSection 368 at 17-Jul-2019 16:08:12.112 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 130th record. Run 160578, Event 38342238, LumiSection 368 at 17-Jul-2019 16:08:12.113 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 131st record. Run 160578, Event 38356085, LumiSection 368 at 17-Jul-2019 16:08:12.114 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 132nd record. Run 160578, Event 38366453, LumiSection 368 at 17-Jul-2019 16:08:12.115 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 133rd record. Run 160578, Event 38395469, LumiSection 368 at 17-Jul-2019 16:08:12.116 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 134th record. Run 160578, Event 38411741, LumiSection 368 at 17-Jul-2019 16:08:12.118 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 135th record. Run 160578, Event 38374282, LumiSection 368 at 17-Jul-2019 16:08:12.119 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 136th record. Run 160578, Event 38376906, LumiSection 368 at 17-Jul-2019 16:08:12.120 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 137th record. Run 160578, Event 38385402, LumiSection 368 at 17-Jul-2019 16:08:12.121 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 138th record. Run 160578, Event 38392515, LumiSection 368 at 17-Jul-2019 16:08:12.122 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 139th record. Run 160578, Event 38325600, LumiSection 368 at 17-Jul-2019 16:08:12.123 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+********************************************************************************************************************Hey I passed the trigger
+Jet Pt: 119.434 -- Px: 8.4823 -- Py: -119.132 -- Pz: 28.6637 -- Energy: 123.294
+Jet Pt: 84.4348 -- Px: 23.4088 -- Py: 81.125 -- Pz: 1209.87 -- Energy: 1212.86
+Jet Pt: 44.6103 -- Px: -37.6246 -- Py: 23.968 -- Pz: 58.0352 -- Energy: 74.0458
+Jet Pt: 15.9331 -- Px: 15.1061 -- Py: 5.06647 -- Pz: 48.8869 -- Energy: 51.553
+Jet Pt: 4.55038 -- Px: -2.97478 -- Py: 3.44335 -- Pz: -41.9883 -- Energy: 42.2496
+Jet Pt: 4.06675 -- Px: 3.0703 -- Py: 2.66678 -- Pz: 33.7313 -- Energy: 33.9845
+Jet Pt: 3.01833 -- Px: 1.21162 -- Py: 2.76447 -- Pz: 10.4959 -- Energy: 10.9335
+The trigger: HLT_Jet150_v1 has prescale values L1T,HLT: 1,1
+The total prescale value is: 1
+Fired trigger Pt value: 157.137
+Begin processing the 140th record. Run 160578, Event 38344952, LumiSection 368 at 17-Jul-2019 16:08:12.125 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 141st record. Run 160578, Event 38347216, LumiSection 368 at 17-Jul-2019 16:08:12.126 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 142nd record. Run 160578, Event 38372560, LumiSection 368 at 17-Jul-2019 16:08:12.126 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 143rd record. Run 160578, Event 38310266, LumiSection 368 at 17-Jul-2019 16:08:12.127 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 144th record. Run 160578, Event 38328170, LumiSection 368 at 17-Jul-2019 16:08:12.128 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 145th record. Run 160578, Event 38406858, LumiSection 368 at 17-Jul-2019 16:08:12.129 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 146th record. Run 160578, Event 38411082, LumiSection 368 at 17-Jul-2019 16:08:12.130 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 147th record. Run 160578, Event 38334572, LumiSection 368 at 17-Jul-2019 16:08:12.130 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 148th record. Run 160578, Event 38339812, LumiSection 368 at 17-Jul-2019 16:08:12.131 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 149th record. Run 160578, Event 38360580, LumiSection 368 at 17-Jul-2019 16:08:12.132 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+Begin processing the 150th record. Run 160578, Event 38463711, LumiSection 369 at 17-Jul-2019 16:08:12.135 CEST
+Currently analyzing trigger: HLT_Jet150_v1
+17-Jul-2019 16:08:12 CEST  Closed file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/000D4260-D23E-E311-A850-02163E008D77.root
 
 =============================================
 
