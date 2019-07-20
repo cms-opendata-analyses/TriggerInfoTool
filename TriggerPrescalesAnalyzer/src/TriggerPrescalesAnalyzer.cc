@@ -70,29 +70,6 @@
 #include "FWCore/Common/interface/TriggerResultsByName.h"
 #include <cassert>
 
-//Wildcards
-#include "DataFormats/Common/interface/Handle.h"
-#include "DataFormats/Provenance/interface/ModuleDescription.h"
-#include "FWCore/Framework/interface/ESHandle.h"
-#include "FWCore/Utilities/interface/Exception.h"
-#include "FWCore/MessageLogger/interface/MessageLogger.h"
-//#include "FWCore/ServiceRegistry/interface/PathContext.h"
-
-//#include "FWCore/ServiceRegistry/interface/PlaceInPathContext.h"
-
-//#include "FWCore/ServiceRegistry/interface/ModuleCallingContext.h"
-
-#include "CondFormats/HLTObjects/interface/AlCaRecoTriggerBits.h"
-#include "CondFormats/DataRecord/interface/AlCaRecoTriggerBitsRcd.h"
-
-
-#include "FWCore/Utilities/interface/RegexMatch.h"
-#include "FWCore/Framework/interface/ESWatcher.h"
-#include "DataFormats/Provenance/interface/ParameterSetID.h"
-#include "FWCore/ParameterSet/interface/ConfigurationDescriptions.h"
-//#include "HLTrigger/HLTfilters/plugins/HLTHighLevel.h "
-
-
 //
 // class declaration
 //
@@ -104,6 +81,7 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	
 	virtual void beginJob();
 	virtual void beginRun(edm::Run const&, edm::EventSetup const&);
+	//virtual void beginRun(edm::Run const&, edm::EventSetup const&, const edm::TriggerNames& triggerNames, const edm::TriggerResults& result);
 	virtual void analyze(const edm::Event&, const edm::EventSetup&);
 	virtual void endRun(edm::Run const&, edm::EventSetup const&);
 	virtual void endJob();
@@ -132,16 +110,15 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 
 	//declare histograms and variables that will go into the root files
 	TH1D *trighist_pt;
-	TH1D *trig_vs_pt;
 	
-	TH1D *HJet190_NP;
-	TH1D *HJet190_P;
+	TH1D *HJet_NP;
+	TH1D *HJet_P;
 	
-	std::vector<float> jet_pt;
+	std::vector<float> Jet_pt;
 	std::vector<float> trigobj_pt;	
 	
-	std::vector<float> jet190_pt_NP;
-	std::vector<float> jet190_pt_P;	
+	std::vector<float> Jet_pt_NP;
+	std::vector<float> Jet_pt_P;	
 		
 	edm::Service<TFileService> fs;//to access the TFileService object in a framework module
 		
@@ -150,6 +127,7 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	edm::InputTag jetInput_;//declare the input tag for the jet collection
 	std::string   processName_;
 	std::string   triggerName_;
+	std::vector<int> triggerVersion_;
 	edm::InputTag triggerResultsTag_;
 	edm::InputTag triggerEventTag_;
 	std::string   filterName_;//declare de filter (module) of the trigger  
@@ -159,6 +137,7 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	edm::Handle<trigger::TriggerEvent> triggerEventHandle_;
 	
 	HLTConfigProvider hltConfig_;
+	
 };
 
 //This should match your configuration python file
@@ -166,9 +145,12 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet& iCon
 jetInput_(iConfig.getParameter<edm::InputTag>("JetInputCollection")),
 processName_(iConfig.getParameter<std::string>("processName")),
 triggerName_(iConfig.getParameter<std::string>("triggerName")),
+triggerVersion_(iConfig.getParameter<std::vector<int>>("triggerVersion")),
 triggerResultsTag_(iConfig.getParameter<edm::InputTag>("triggerResults")),
 triggerEventTag_(iConfig.getParameter<edm::InputTag>("triggerEvent")),
 filterName_(iConfig.getParameter<std::string>("filterName"))
+//HLTPatterns_(iConfig.getParameter<std::vector<std::string> >("HLTPaths")),
+//HLTPathsByName_()
 {
 	using namespace std;
 	using namespace edm;
@@ -186,6 +168,9 @@ filterName_(iConfig.getParameter<std::string>("filterName"))
 		<<"		TriggerResultsTag = "<< triggerResultsTag_.encode() << endl
 		<<"		TriggerEventTag = "<< triggerEventTag_.encode() << endl
 		<<"		FilterName = "<<filterName_<<endl;
+		
+	//triggerName_ = triggerName_.pop_back();
+	//triggerName_ = triggerName_ + "1";
 }
 
 TriggerPrescalesAnalyzer::~TriggerPrescalesAnalyzer()
@@ -202,20 +187,18 @@ void TriggerPrescalesAnalyzer::beginJob()//Everything ROOT related
 
 	myfile = new TFile("TriggerPrescaleExample.root","RECREATE");
 	mytree = new TTree("mytree","Trigger accept information");
-
-	trig_vs_pt = fs->make <TH1D>("Trig vs pt", "Trig vs pt ", 100,0,500);
-	mytree->Branch("jet_pt",&jet_pt);
 	
 	trighist_pt = fs->make <TH1D>("trighist_pt", "obj pt ", 100,0,500);
 	mytree->Branch("trigobj_pt",&trigobj_pt);
 	
-	HJet190_NP = fs->make <TH1D>("HLT_Jet190_NoPrescale", "Jet 190 No Prescale", 100,0,500);
-	mytree->Branch("Jet190_NP",&jet_pt);
-	HJet190_P = fs->make <TH1D>("HLT_Jet190_Prescale", "Jet 190 Prescale", 100,0,500);
-	mytree->Branch("Jet190_P",&jet_pt);
+	HJet_NP = fs->make <TH1D>("HLT_Jet_NoPrescale", "Jet No Prescale", 100,0,500);
+	mytree->Branch("Jet_NP",&Jet_pt);
+	HJet_P = fs->make <TH1D>("HLT_Jet_Prescale", "Jet Prescale", 100,0,500);
+	mytree->Branch("Jet_P",&Jet_pt);
 }//-----------------------------------------------------------beginJob()
 
 // ------------ method called when starting to processes a run  --------
+//void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup, const edm::TriggerNames& triggerNames, const edm::TriggerResults& result)
 void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& iSetup)
 {
 	using namespace std;
@@ -232,64 +215,26 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 			if (triggerName_!="@") {
 				const unsigned int n(hltConfig_.size());
 				const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName_));
-				while (triggerIndex>=n) {
+				if (triggerIndex>=n) {
 					cout<<"HLTEventAnalyzerAOD::analyze:"
 						<<" TriggerName "<<triggerName_ 
 						<<" not available in (new) config!"<<endl;
-					triggerName_ = "HLT_Jet190_v1";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
+					for (unsigned int i = 0; i<triggerVersion_.size(); i++) {
+						if (i == 0) {
+							triggerName_.replace(triggerName_.length()-1, to_string(triggerVersion_[i]).length(), to_string(triggerVersion_[i]));
+							cout<<"Now trying the trigger: "<<triggerName_<<endl;
+						}else{
+							triggerName_.replace(triggerName_.length()-to_string(triggerVersion_[i-1]).length(), to_string(triggerVersion_[i-1]).length(), to_string(triggerVersion_[i]));
+							cout<<"Now trying the trigger: "<<triggerName_<<endl;
+						}
+						if (hltConfig_.triggerIndex(triggerName_)<n) {
+							break;
+						}
 					}
-					triggerName_ = "HLT_Jet190_v2";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v3";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v4";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v5";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v6";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v7";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v8";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v9";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
-					triggerName_ = "HLT_Jet190_v10";
-					if (hltConfig_.triggerIndex(triggerName_)<n) {
-						cout<<"Now trying the trigger: "<<triggerName_<<endl;
-						break;
-					}
+					
 					if (hltConfig_.triggerIndex(triggerName_)>=n) {
 						cout<<"Available TriggerNames are: "<<endl;
 						hltConfig_.dump("Triggers");
-						break;
 					}
 				}	
 			}	
@@ -298,30 +243,7 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 		cout<<"HLTEventAnalyzerAOD::analyze:"
 		<<" config extraction failure with process name "
 		<<processName_ << endl;
-	}
-	
-	//for (auto const& pattern : HLTPatterns_) {
-		//if (edm::is_glob(pattern)) {
-			//// found a glob pattern, expand it
-			//std::vector<std::vector<std::string>::const_iterator> matches =
-			//edm::regexMatch(triggerNames.triggerNames(), pattern);
-			//if (matches.empty()) {
-				//cout<<"Pattern does not match any trigger paths"<<endl;
-			//} else {
-			//// store the matching patterns
-			//for (auto const& match : matches)
-			//HLTPathsByName_.push_back(*match);
-			//cout<<"*match is: "<<*match<<endl;
-			//}
-		//} else {
-			//// found a trigger name, just copy it
-			//HLTPathsByName_.push_back(pattern);
-			//cout<<"Found a trigger name, just copy it: "<<pattern<<endl;
-		//}
-	//}
-	
-	//hltConfig_.dump("Triggers");
-	
+	}	
 }//-----------------------------------------------------------beginRun()
 
 // ------------ method called for each event  --------------------------
@@ -348,12 +270,11 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
 		return;
 	}
 	
-	cout<<"********************************************************************************************************************Hey I passed the trigger"<<endl;
+	//cout<<"********************************************************************************************************************Hey I passed the trigger"<<endl;
 	
 	//Continue to analyze the data
 			
 	Handle<reco::PFJetCollection> myjets;
-	//Handle<reco::CaloJetCollection> myjets;//Declare the handle (container) to store jets.	
 	iEvent.getByLabel(jetInput_, myjets);
 	analyzeJets(iEvent, iSetup, myjets);
 	
@@ -387,48 +308,13 @@ bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event& iEvent, const 
 	return acceptedTrigger;	
 }//---------------------------------------------------checkTriggerPass()
 
-//void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::EventSetup& iSetup, const edm::Handle<reco::CaloJetCollection> &jets)
-//{
-	//using namespace std;
-	
-	//numjet = 0;
-	//jet_pt.clear();
-		
-	//const std::pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,triggerName_));
-	
-	//if(jets.isValid()) {
-		//numjet=(*jets).size();// get the number of jets in the event
-		
-		//for (reco::CaloJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
-			//jet_pt.push_back(itjet->pt());//Fill the vector
-			
-			////cout<<"Jet Pt: "<<itjet->pt()
-				////<<" -- Px: "<<itjet->px()
-				////<<" -- Py: "<<itjet->py()
-				////<<" -- Pz: "<<itjet->pz()
-				////<<" -- Energy: "<<itjet->energy()<<endl;			
-		//}
-		
-		////std::cout<<"Maximum value: "<<*std::max_element(jet_pt.begin(), jet_pt.end())<<"First value: "<<jet_pt.front()<<std::endl; //Shows the max and first value of the vector
-		
-		////trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()),prescales.first*prescales.second);//Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), weight)
-		////trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()));
-		////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), prescales.first*prescales.second);
-		
-		////if (*std::max_element(jet_pt.begin(), jet_pt.end()) < 100) {
-			////cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Look at me"<<endl;
-		////}
-	//}
-//}//--------------------------------------------------------analyzeJets()
 
-//Commented because we are using Calo instead of PF (Particle Flow)
 void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::EventSetup& iSetup, const edm::Handle<reco::PFJetCollection> &jets)
 {
 	using namespace std;
 	
 	numjet = 0;
-	jet_pt.clear();
+	Jet_pt.clear();
 	
 	const std::pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,triggerName_));
 	
@@ -436,7 +322,7 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 		numjet=(*jets).size();// get the number of jets in the event
 		
 		for (reco::PFJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
-			jet_pt.push_back(itjet->pt());//Fill the vector
+			Jet_pt.push_back(itjet->pt());//Fill the vector
 			
 			//cout<<"Jet Pt: "<<itjet->pt()
 				//<<" -- Px: "<<itjet->px()
@@ -446,11 +332,9 @@ void TriggerPrescalesAnalyzer::analyzeJets(const edm::Event& iEvent, const edm::
 		}
 		
 		//std::cout<<"Maximum value: "<<*std::max_element(jet_pt.begin(), jet_pt.end())<<"First value: "<<jet_pt.front()<<std::endl; //Shows the max and first value of the vector
-		
-		trig_vs_pt->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), prescales.first*prescales.second);
-		
-		HJet190_NP->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()));
-		HJet190_P->Fill(*std::max_element(jet_pt.begin(), jet_pt.end()), prescales.first*prescales.second);
+				
+		HJet_NP->Fill(*std::max_element(Jet_pt.begin(), Jet_pt.end()));
+		HJet_P->Fill(*std::max_element(Jet_pt.begin(), Jet_pt.end()), prescales.first*prescales.second);
 	}
 }//--------------------------------------------------------analyzeJets()
 

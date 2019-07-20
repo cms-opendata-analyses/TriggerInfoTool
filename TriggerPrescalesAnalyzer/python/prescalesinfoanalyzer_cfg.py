@@ -6,7 +6,11 @@ process = cms.Process("TriggerInfo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100000) )
+#process.options = cms.untracked.PSet(
+    #wantSummary = cms.untracked.bool(True)
+#)
+
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(20000) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring( *(
@@ -310,7 +314,107 @@ process.source = cms.Source("PoolSource",
 'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4879C8F9-073F-E311-BA41-003048D462BA.root',
 'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/488645A1-173F-E311-A3BC-0025901AF548.root',
 'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/48908563-103F-E311-B390-02163E00C59C.root',
-'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/48A94B26-193F-E311-83C0-003048CF98CC.root'
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/48A94B26-193F-E311-83C0-003048CF98CC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/48B19C8C-BE3E-E311-A836-003048F1C82C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/48BDD4C5-0E3F-E311-BEDB-003048F1CA1C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/48C43D4D-EF3E-E311-89A9-02163E008F97.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A0CC207-F33E-E311-A616-02163E00A12C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A288D64-D73E-E311-A928-003048CF9E34.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A40DEF9-F13E-E311-BF08-02163E008F4B.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A421321-A83E-E311-9371-02163E00BF8F.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A7144E9-E33E-E311-9187-003048F1749C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A7C0863-E63E-E311-81F0-02163E00CDED.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A8941EB-EA3E-E311-B3CC-003048F1C53A.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4A90A4A0-073F-E311-957D-5404A640A63D.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4AA996F7-043F-E311-8EE6-02163E00CDE9.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4AAE4EAA-D63E-E311-81CA-00237DDC5F5C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4ACA82B5-163F-E311-87F5-003048F1C5C0.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4AF10750-F33E-E311-9EF2-003048F1E130.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C1E487C-113F-E311-8CE7-002590492692.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C476420-0A3F-E311-BFF7-02163E00C5B4.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C5530DA-023F-E311-BB45-003048CFB39E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C555B0F-163F-E311-8D2D-BCAEC518FF89.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C633C6A-033F-E311-9B3C-02163E00CD8C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C845969-023F-E311-AFE5-02163E00CE0E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4C8E397B-F23E-E311-9F91-002481E0DE30.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4CCD9647-C63E-E311-938F-003048F16B9C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4CDFD17E-0A3F-E311-9E01-02163E008CCC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4E14B08B-CA3E-E311-8686-02163E00AFD8.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4E303B44-103F-E311-81F1-0025904B3072.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4E59DB4A-0E3F-E311-B1BB-02163E00BB53.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4E672322-C83E-E311-B0C4-BCAEC518FF8F.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4E894170-F83E-E311-9A18-003048CFBA0E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4E93CBA1-FB3E-E311-9847-003048F0E512.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4ED7AA56-9C3E-E311-9DA4-0025901AB77A.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4ED8F1E3-DF3E-E311-8B66-02163E00ADA4.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4EE2D031-AE3E-E311-9AF2-02163E00C4BE.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/4EE64461-CA3E-E311-9829-003048FEB9C2.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5039715B-F43E-E311-9039-003048FEB996.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5046207B-F03E-E311-949D-003048F0E1CC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/505CB459-EA3E-E311-B3C2-02163E008D9F.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5094DAE0-AF3E-E311-A469-C860001BD930.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/52751EBE-CE3E-E311-81A3-003048CFAE10.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/528AC532-E43E-E311-96F3-003048F1B86E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/529C1899-DC3E-E311-B1FA-003048FF0128.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/52AC6707-DD3E-E311-84C1-003048F1C4AA.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/52BD9005-FA3E-E311-BE4C-003048F0E1B8.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/52BF05E9-EA3E-E311-9A3C-003048F16B9C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/52CF892E-B23E-E311-9B9E-003048CFAE10.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/52F8A325-C83E-E311-949F-0025901D5DB4.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/543D2CAC-FE3E-E311-B294-02163E008D8E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/54663AF6-EB3E-E311-83DE-02163E008F97.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/54790005-FA3E-E311-BA3C-003048F00AF2.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5489CC3C-D23E-E311-BEA4-02163E00BF94.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/548C9ACB-FE3E-E311-B617-003048F0E564.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/54CD3F57-003F-E311-9F46-02163E00A364.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/54DA64B4-163F-E311-8AD4-0025901AF348.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/56114161-FA3E-E311-975F-02163E008DA6.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/562DF1C6-6650-E311-ACE2-003048D3763E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/56348D1E-BF3E-E311-B4A2-5404A63886B1.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/56463208-CE3E-E311-ADA7-02163E00A45C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/58260081-F03E-E311-9DBB-003048FEB96E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/585594AB-073F-E311-B4DA-C860001BD8BC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/585E248C-FC3E-E311-9026-02163E00CADC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5862AE82-F03E-E311-8124-003048FEB8CE.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5864944E-DD3E-E311-800F-02163E0079A1.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/589749D1-E03E-E311-9E03-002481E0E4E2.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/589EEDD6-023F-E311-AA11-003048F1C7BE.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/58D95513-053F-E311-BE60-003048F122C2.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/58FF7C4D-FB3E-E311-8CB1-003048FEAF14.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5A20667E-043F-E311-8A74-02163E00BF7C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5A4D8D5F-0B3F-E311-9F5E-003048F003D8.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5AB7FBF7-EA3E-E311-8DAA-003048F1CA2A.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5AC4484E-DB3E-E311-B5DD-02163E00C783.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5AD383ED-E73E-E311-BA86-C860001BD8CC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5AEC8ED7-103F-E311-B7B6-BCAEC5364C42.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5C79B01A-E63E-E311-B6F9-02163E008F62.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5C80AB19-FE3E-E311-B34F-003048FEAF38.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5C9A21BE-EC3E-E311-8CF3-00259029DBB4.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5CA297EC-C23E-E311-9DEF-C860001BD89A.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5CE401C3-033F-E311-89A0-003048F23986.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5CF797D2-C83E-E311-9C22-BCAEC518FF8E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5E1FDC60-D63E-E311-AEDF-003048F1C540.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5E42DBAF-C43E-E311-81FB-C86000151BA8.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5E4C64EB-E13E-E311-A924-02163E008EC1.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5E6BE4AA-C43E-E311-BA28-C86000151BEC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5E892460-0B3F-E311-98B7-003048F1BF0E.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5E9DAE36-E23E-E311-AF28-003048F003DC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5EA883CF-0E3F-E311-B46C-003048FEAF30.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5EAB42DE-FC3E-E311-8B86-02163E00CDE5.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/5EAD9AED-CA3E-E311-A1DB-003048F16F46.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/602672BF-EC3E-E311-82F6-003048CF99C0.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/6080796F-F43E-E311-A156-003048F009D2.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/6087BDBC-0B3F-E311-A926-003048CFAFAC.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/60A45B74-D53E-E311-A7C9-003048F1C9C6.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/60E572AB-E63E-E311-B0A5-003048F2384C.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/60EDABA6-F53E-E311-AC77-003048F0E7B0.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/60F4B451-F43E-E311-BA79-003048F1C836.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/6202B5B9-173F-E311-93D1-003048F17A86.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/62099B1C-BE3E-E311-8FF4-02163E008D93.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/62AF149F-CB3E-E311-8D77-003048CF4C20.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/62CDA7CF-F83E-E311-AB46-02163E00CB41.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/62D74C7E-B93E-E311-ABD4-002481E73676.root',
+'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20000/64134359-FA3E-E311-80EB-0030489455EC.root'
 
 #    'file:00082EAF-C03D-E311-8E53-003048F00B1C.root' 
     ) )
@@ -326,18 +430,20 @@ process.source.lumisToProcess.extend(myLumis)
 
 #needed to get the actual prescale values used from the global tag
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+
 process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
 process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
+
 
 #configure the analyzer
 process.gettriggerinfo = cms.EDAnalyzer('TriggerPrescalesAnalyzer'
     ,JetInputCollection = cms.InputTag("ak5PFJets")
-    #,JetInputCollection = cms.InputTag("ak5CaloJets")
     ,processName = cms.string("HLT")
-    ,triggerName = cms.string("HLT_Jet190_v1")
+    ,triggerName = cms.string("HLT_Jet60_v?")
+    ,triggerVersion = cms.vint32(0,1,2,3,4,5,6,7,8,9,10)
     ,triggerResults = cms.InputTag("TriggerResults","","HLT")
     ,triggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
-    ,filterName = cms.string("hltSingleJet190Regional")
+    ,filterName = cms.string("hltSingleJet60Regional")
 )
                               
 #configure the TFileservice, in order to save histograms.
