@@ -142,9 +142,9 @@ process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
 process.demo = cms.EDAnalyzer('TriggerPrescalesAnalyzer'
     #,filterName = cms.vstring("hltSingleJet60Regional","hltSingleJet100Regional","hltSingleJet140Regional","hltSingleJet200Regional","hltSingleJet260Regional")
     ,filterName1 = cms.string("hltSingleJet60Regional")
-    ,filterName2 = cms.string("hltSingleJet100Regional")
-    ,filterName3 = cms.string("hltSingleJet140Regional")
-    ,filterName4 = cms.string("hltSingleJet200Regional")
+    ,filterName2 = cms.string("hltSingleJet90Regional")
+    ,filterName3 = cms.string("hltSingleJet110Regional")
+    ,filterName4 = cms.string("hltSingleJet190Regional")
 )
                               
 #configure the TFileservice, in order to save histograms.
