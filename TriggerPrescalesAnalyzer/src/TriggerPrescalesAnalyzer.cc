@@ -104,7 +104,7 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	bool checkTriggerPass(const edm::Event& iEvent, const std::string& triggerName);//Check if the trigger passed
 	//declare histograms and variables that will go into the root files
 
-  TH1D *h1;
+    TH1D *h1;
 	TH1D *H1;
 	TH1D *h2;
 	TH1D *H2;
@@ -127,7 +127,7 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	string filterName2_;
 	string filterName3_;
 	string filterName4_;
-
+	
 	Handle<TriggerResults> triggerResultsHandle_;
 
 	HLTConfigProvider hltConfig_;
@@ -177,7 +177,7 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 // ------------ method called for each event  --------------------------
 void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-
+   
     Jet_pt1.clear();
     Jet_pt2.clear();
     Jet_pt3.clear();
@@ -202,15 +202,15 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
 		cout<<"HLTEventAnalyzerAOD::analyze: Error in getting product/s from Event!"<<endl;
 		return;
 	}
-
-
+	
+    
     assert(triggerResultsHandle_->size()==hltConfig_.size());
 
   // Get all trigger names associated with the "Jet" dataset.
   const vector<string> triggerNames = hltConfig_.datasetContent("Jet");
 
 	for (unsigned i = 0; i < triggerNames.size(); i++) {
-  string name = triggerNames[i];
+    string name = triggerNames[i];
 
 	if (name.find("HLT_Jet60_v") != string::npos) {
 
@@ -232,7 +232,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
  			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
  			  Trigg_pt1.push_back(trigobj.pt());//Fill the vector
  		}
-
+ 		
  		h1->Fill(*std::max_element(Trigg_pt1.begin(), Trigg_pt1.end()), prescales.first*prescales.second);
  		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt1.begin(), Trigg_pt1.end())<<endl;
  	}
@@ -269,7 +269,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
  			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
  			  Trigg_pt2.push_back(trigobj.pt());//Fill the vector
  		}
-
+ 		
  		h2->Fill(*std::max_element(Trigg_pt2.begin(), Trigg_pt2.end()), prescales.first*prescales.second);
  		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt2.begin(), Trigg_pt2.end())<<endl;
  	}
@@ -303,7 +303,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
  			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
  			  Trigg_pt3.push_back(trigobj.pt());//Fill the vector
  		}
-
+ 		
  		h3->Fill(*std::max_element(Trigg_pt3.begin(), Trigg_pt3.end()), prescales.first*prescales.second);
  		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt3.begin(), Trigg_pt3.end())<<endl;
  	}
@@ -337,7 +337,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
  			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
  			  Trigg_pt4.push_back(trigobj.pt());//Fill the vector
  		}
-
+ 		
  		h4->Fill(*std::max_element(Trigg_pt4.begin(), Trigg_pt4.end()), prescales.first*prescales.second);
  		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt4.begin(), Trigg_pt4.end())<<endl;
  	}
