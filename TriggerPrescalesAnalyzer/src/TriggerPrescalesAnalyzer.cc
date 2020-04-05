@@ -91,6 +91,17 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	virtual void analyze(const edm::Event&, const edm::EventSetup&);
 	virtual void endRun(edm::Run const&, edm::EventSetup const&);
 	virtual void endJob();
+	void analyzePrescales(const edm::Event& iEvent
+    , const edm::EventSetup& iSetup
+	, const std::string& tname
+	, const edm::Handle<trigger::TriggerEvent> &trigEvent
+	, const std::string& filterName
+	, const edm::InputTag &trigEventTag
+	, const edm::Handle<reco::PFJetCollection> &jets
+	, TH1D* ht
+	, TH1D* hj
+	, const int &minPt
+	);
 
 	//the follwing are not being used here
 	virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
@@ -112,14 +123,6 @@ class TriggerPrescalesAnalyzer : public edm::EDAnalyzer {
 	TH1D *H3;
 	TH1D *h4;
 	TH1D *H4;
-	std::vector<float> Jet_pt1;
-	std::vector<float> Jet_pt2;
-	std::vector<float> Jet_pt3;
-	std::vector<float> Jet_pt4;
-	std::vector<float> Trigg_pt1;
-	std::vector<float> Trigg_pt2;
-	std::vector<float> Trigg_pt3;
-	std::vector<float> Trigg_pt4;
 
 	edm::Service<TFileService> fs;//to access the TFileService object in a framework module
 
@@ -176,8 +179,7 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 
 // ------------ method called for each event  --------------------------
 void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
-{
-  
+{ 
 	InputTag triggerEventTag_("hltTriggerSummaryAOD","","HLT");
 	InputTag triggerResultsTag_("TriggerResults","","HLT");
 	//Declare the handle (container) to store trigger objects.
@@ -203,153 +205,38 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
 
 	for (unsigned i = 0; i < triggerNames.size(); i++) {
     string name = triggerNames[i];
-	Jet_pt1.clear();
-        Jet_pt2.clear();
-        Jet_pt3.clear();
-        Jet_pt4.clear();
-        Trigg_pt1.clear();
-        Trigg_pt2.clear();
-        Trigg_pt3.clear();
-        Trigg_pt4.clear();
+    
 
 	if (name.find("HLT_Jet60_v") != string::npos) {
-
 	if (checkTriggerPass(iEvent, name)){
+		
+		analyzePrescales(iEvent,iSetup,name,triggerEventHandle_,filterName1_,triggerEventTag_,jets,h1,H1,60);
 
-  const  pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,name));
+    }}//end filter size check
 
- 	cout << "The trigger: "<< name<<" has prescale values L1T,HLT: "
- 	<< prescales.first << "," << prescales.second<< endl
- 	<<"The total prescale value is: "<<prescales.first*prescales.second<<endl;
 
- 	size_type filterIndex1 = triggerEventHandle_->filterIndex(InputTag(filterName1_,"",triggerEventTag_.process()));
+ 	if (name.find("HLT_Jet80_v") != string::npos) {
+	if (checkTriggerPass(iEvent, name)){
+		
+		analyzePrescales(iEvent,iSetup,name,triggerEventHandle_,filterName2_,triggerEventTag_,jets,h2,H2,80);
 
- 	if(filterIndex1 < triggerEventHandle_->sizeFilters()) {
- 	   const Keys& trigKeys = triggerEventHandle_->filterKeys(filterIndex1);
- 	   const TriggerObjectCollection & trigObjColl(triggerEventHandle_->getObjects());
- 		//now loop of the trigger objects passing filter
- 	  	for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt) {
- 			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
- 			  Trigg_pt1.push_back(trigobj.pt());//Fill the vector
- 		}
- 		
- 		h1->Fill(*std::max_element(Trigg_pt1.begin(), Trigg_pt1.end()), prescales.first*prescales.second);
- 		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt1.begin(), Trigg_pt1.end())<<endl;
- 	}
+ 	}}//end filter size check
 
-	for (reco::PFJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
-		if (itjet->pt() >= 60){
-		Jet_pt1.push_back(itjet->pt());//Fill the vector
-	    }
-	}
-	H1->Fill(*std::max_element(Jet_pt1.begin(), Jet_pt1.end()), prescales.first*prescales.second);
-
-}}//end filter size check
-
- 	//////////////////////////////////////////////////////
 
  	if (name.find("HLT_Jet110_v") != string::npos) {
-
 	if (checkTriggerPass(iEvent, name)){
+		
+		analyzePrescales(iEvent,iSetup,name,triggerEventHandle_,filterName3_,triggerEventTag_,jets,h3,H3,110);
 
-    const  pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,name));
-
- 	cout << "The trigger: "<< name<<" has prescale values L1T,HLT: "
- 	<< prescales.first << "," << prescales.second<< endl
- 	<<"The total prescale value is: "<<prescales.first*prescales.second<<endl;
-
- 	size_type filterIndex2 = triggerEventHandle_->filterIndex(edm::InputTag(filterName2_,"",triggerEventTag_.process()));
-
- 	if(filterIndex2 < triggerEventHandle_->sizeFilters()) {
- 	   const trigger::Keys& trigKeys = triggerEventHandle_->filterKeys(filterIndex2);
- 	   const trigger::TriggerObjectCollection & trigObjColl(triggerEventHandle_->getObjects());
-
- 		//now loop of the trigger objects passing filter
- 	  	for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt) {
- 			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
- 			  Trigg_pt2.push_back(trigobj.pt());//Fill the vector
- 		}
- 		
- 		h2->Fill(*std::max_element(Trigg_pt2.begin(), Trigg_pt2.end()), prescales.first*prescales.second);
- 		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt2.begin(), Trigg_pt2.end())<<endl;
- 	}
- 	for (reco::PFJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
-		if (itjet->pt() >= 110){
-		Jet_pt2.push_back(itjet->pt());//Fill the vector
-	    }
-	}
-	H2->Fill(*std::max_element(Jet_pt2.begin(), Jet_pt2.end()), prescales.first*prescales.second);
  	}}//end filter size check
 
 
  	if (name.find("HLT_Jet150_v") != string::npos) {
-
 	if (checkTriggerPass(iEvent, name)){
+		
+		analyzePrescales(iEvent,iSetup,name,triggerEventHandle_,filterName4_,triggerEventTag_,jets,h4,H4,150);
 
-    const  pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,name));
-
- 	cout << "The trigger: "<< name<<" has prescale values L1T,HLT: "
- 	<< prescales.first << "," << prescales.second<< endl
- 	<<"The total prescale value is: "<<prescales.first*prescales.second<<endl;
-
- 	size_type filterIndex3 = triggerEventHandle_->filterIndex(edm::InputTag(filterName3_,"",triggerEventTag_.process()));
-
- 	if(filterIndex3 < triggerEventHandle_->sizeFilters()) {
- 	   const trigger::Keys& trigKeys = triggerEventHandle_->filterKeys(filterIndex3);
- 	   const trigger::TriggerObjectCollection & trigObjColl(triggerEventHandle_->getObjects());
-
- 		//now loop of the trigger objects passing filter
- 	  	for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt) {
- 			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
- 			  Trigg_pt3.push_back(trigobj.pt());//Fill the vector
- 		}
- 		
- 		h3->Fill(*std::max_element(Trigg_pt3.begin(), Trigg_pt3.end()), prescales.first*prescales.second);
- 		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt3.begin(), Trigg_pt3.end())<<endl;
- 	}
- 	for (reco::PFJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
-		if (itjet->pt() >= 150){
-		Jet_pt3.push_back(itjet->pt());//Fill the vector
-	    }
-	}
-	H3->Fill(*std::max_element(Jet_pt3.begin(), Jet_pt3.end()), prescales.first*prescales.second);
  	}}//end filter size check
-
-
- 	if (name.find("HLT_Jet190_v") != string::npos) {
-
-	if (checkTriggerPass(iEvent, name)){
-
-	const  pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,name));
-
- 	cout << "The trigger: "<< name<<" has prescale values L1T,HLT: "
- 	<< prescales.first << "," << prescales.second<< endl
- 	<<"The total prescale value is: "<<prescales.first*prescales.second<<endl;
-
- 	size_type filterIndex4 = triggerEventHandle_->filterIndex(edm::InputTag(filterName4_,"",triggerEventTag_.process()));
-
- 	if(filterIndex4 < triggerEventHandle_->sizeFilters()) {
- 	   const trigger::Keys& trigKeys = triggerEventHandle_->filterKeys(filterIndex4);
- 	   const trigger::TriggerObjectCollection & trigObjColl(triggerEventHandle_->getObjects());
-
- 		//now loop of the trigger objects passing filter
- 	  	for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt) {
- 			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
- 			  Trigg_pt4.push_back(trigobj.pt());//Fill the vector
- 		}
- 		
- 		h4->Fill(*std::max_element(Trigg_pt4.begin(), Trigg_pt4.end()), prescales.first*prescales.second);
- 		cout<<"Fired trigger Pt value: "<<*std::max_element(Trigg_pt4.begin(), Trigg_pt4.end())<<endl;
- 	}
- 	for (reco::PFJetCollection::const_iterator itjet=jets->begin(); itjet!=jets->end(); ++itjet) {
-		if (itjet->pt() >= 190){
-		Jet_pt4.push_back(itjet->pt());//Fill the vector
-	    }
-	}
-	H4->Fill(*std::max_element(Jet_pt4.begin(), Jet_pt4.end()), prescales.first*prescales.second);
- 	}}//end filter size check
-
-    ////////////////////////////////////////////////////////////
 
 }
 	return;
@@ -363,6 +250,51 @@ bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event& iEvent, const 
 	cout<<"Currently analyzing trigger: "<<triggerName<<endl;//Prints trigger name
 	return acceptedTrigger;
 }//---------------------------------------------------checkTriggerPass()
+
+
+
+void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event& iEvent
+, const edm::EventSetup& iSetup
+, const std::string& tname
+, const edm::Handle<trigger::TriggerEvent> &trigEvent
+, const std::string& filterName
+, const edm::InputTag &trigEventTag
+, const edm::Handle<reco::PFJetCollection> &myjets
+,  TH1D* ht
+,  TH1D* hj
+, const int &minPt
+){
+
+const  pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,tname));
+
+ 	cout << "The trigger: "<< tname<<" has prescale values L1T,HLT: "
+ 	<< prescales.first << "," << prescales.second<< endl
+ 	<<"The total prescale value is: "<<prescales.first*prescales.second<<endl;
+
+ 	size_type filterIndex = trigEvent->filterIndex(InputTag(filterName,"",trigEventTag.process()));
+    double TriggPt = -999;
+ 	if(filterIndex < trigEvent->sizeFilters()) {
+ 	   const Keys& trigKeys = trigEvent->filterKeys(filterIndex);
+ 	   const TriggerObjectCollection & trigObjColl(trigEvent->getObjects());
+ 		//now loop of the trigger objects passing filter
+ 	  	for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt) {
+ 			  const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
+ 			  if (TriggPt <= trigobj.pt()){TriggPt=trigobj.pt();}
+ 		}
+ 		ht->Fill(TriggPt, prescales.first*prescales.second);
+ 		cout<<"Fired trigger Pt value: "<<TriggPt<<endl;
+ 	}
+    double JetPt = -999;
+	for (reco::PFJetCollection::const_iterator itjet=myjets->begin(); itjet!=myjets->end(); ++itjet) {
+		
+		if (JetPt <= itjet->pt()){JetPt=itjet->pt();}
+	    
+	}
+	if (JetPt >= minPt){
+	hj->Fill(JetPt, prescales.first*prescales.second);
+    }
+	
+}
 
 
 // ------------ method called when ending the processing of a run  ------------
