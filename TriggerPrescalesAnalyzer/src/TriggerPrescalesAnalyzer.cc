@@ -177,15 +177,7 @@ void TriggerPrescalesAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup co
 // ------------ method called for each event  --------------------------
 void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-   
-    Jet_pt1.clear();
-    Jet_pt2.clear();
-    Jet_pt3.clear();
-    Jet_pt4.clear();
-    Trigg_pt1.clear();
-    Trigg_pt2.clear();
-    Trigg_pt3.clear();
-    Trigg_pt4.clear();
+  
 	InputTag triggerEventTag_("hltTriggerSummaryAOD","","HLT");
 	InputTag triggerResultsTag_("TriggerResults","","HLT");
 	//Declare the handle (container) to store trigger objects.
@@ -211,6 +203,14 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event& iEvent, const edm::Even
 
 	for (unsigned i = 0; i < triggerNames.size(); i++) {
     string name = triggerNames[i];
+	Jet_pt1.clear();
+        Jet_pt2.clear();
+        Jet_pt3.clear();
+        Jet_pt4.clear();
+        Trigg_pt1.clear();
+        Trigg_pt2.clear();
+        Trigg_pt3.clear();
+        Trigg_pt4.clear();
 
 	if (name.find("HLT_Jet60_v") != string::npos) {
 
