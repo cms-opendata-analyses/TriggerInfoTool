@@ -1,4 +1,8 @@
-# HLT Trigger Info Analyzer
+# How to obtain general trigger information
+
+The EDAnalyzer in this example contains several C++ snippets on how to access trigger information such as metadata, prescales, module information, etc.
+Many of these snippets are commented out in the code, which can be found in the `src` directory.  Examples on how to access specific information can be found in other directories in ths repository.
+ 
 ## Usage Instruction
 
 First you have to create a [VM](http://opendata.cern.ch/docs/cms-virtual-machine-2011 "CMS 2011 Virtual Machines: How to install") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker). 
