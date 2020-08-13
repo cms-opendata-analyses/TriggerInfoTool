@@ -1,11 +1,11 @@
 # HLT Trigger Info Analyzer
 ## Usage Instruction
 
-First you have to create a [VM](http://opendata.cern.ch/VM/CMS "CMS Open Data Portal") from the CMS Open Data website. 
+First you have to create a [VM](http://opendata.cern.ch/docs/cms-virtual-machine-2011 "CMS 2011 Virtual Machines: How to install") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker). 
 
 Then follow these steps:
 
-- Create a CMSSW environment: 
+- Create a CMSSW environment (if using the Docker container, this step can be skipped): 
 
     ```
     cmsrel CMSSW_5_3_32
@@ -56,7 +56,7 @@ ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
 ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
 ```
 
-- Make sure the `cms-opendata-conddb.cern.ch` directory has actually expanded in your VM.  One way of doing this is executing:
+- Make sure the `cms-opendata-conddb.cern.ch` directory has actually expanded in your VM or Docker container.  One way of doing this is executing:
 
 ```
 ls -l
@@ -66,16 +66,16 @@ ls -l /cvmfs/
 You should now see the `cms-opendata-conddb.cern.ch` link in the `/cvmfs` area.
 
 
-- Run the CMSSW executable in the background
+- Run the CMSSW executable in the background and dump the output in a log file
 
 ```
 cmsRun triggerinfoanalyzer_cfg.py > full.log 2>&1 &
 ```
 
-- Check the development of the job:
+- Check the development of the job if needed:
 
 ```
-tailf full.log
+tail -f full.log
 ```
 
-*NOTE*: The first time you execute the job, it will take a long time (depending on your connection speed) to the point that it looks like it is not doing anything.  That is fine.  This is because the database payload files will be downloaded/cached locally in the VM.  Later attempts should be faster, however.
+*NOTE*: The first time you execute the job, it will take a long time (depending on your connection speed) to the point that it looks like it is not doing anything.  That is fine.  This is because the database payload files will be downloaded/cached locally in the VM/container.  Later attempts should be faster, however.
