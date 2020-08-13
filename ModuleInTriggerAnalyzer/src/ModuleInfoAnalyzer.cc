@@ -120,6 +120,20 @@ void ModuleInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& i
 
 	bool changed(true);
 	hltConfig_.init(iRun,iSetup,"HLT",changed);
+	//hltConfig_.dump("Triggers");
+	
+	if (triggerName_!="@") { // "@" means: analyze all triggers in config
+		//get the modules of the chosen trigger (from the config file, which was set to HLT_Jet190_v6, as an example)
+		//For reference, the different methods of hltConfig are available in HLTrigger/HLTcore/interface/HLTConfigProvider.h
+		vector<string> themodules = hltConfig_.moduleLabels(triggerName_);
+		//print them out
+		cout<<"The modules in trigger "<<triggerName_<<" are:"<<endl;
+		for(unsigned int i=0; i<themodules.size();++i){
+			cout<<themodules.at(i)<<endl;
+		}
+		cout<<"Note that module "<<themodules.at(themodules.size()-2)<<", which occupies slot "<<themodules.size()-2<<" out of the possible slots (from 0 to "<<themodules.size()-1<<" ), would be the last non-trivial module in the "<<triggerName_<<" trigger path."<<endl;
+	}
+	
 }//------------------- beginRun()
 
 
@@ -179,7 +193,7 @@ void ModuleInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Eve
   // Additionally, one can find which module was last run within the trigger,
   // i.e., which module was responsible for stopping the trigger path.
   // One could find the list of modules in a given trigger from the
-  // HLTConfigProvider as explained somewhere else in this code.
+  // HLTConfigProvider as explained above.
   // Get index (slot position) of module giving the decision of the path
   // as described in "DataFormats/Common/interface/HLTGlobalStatus.h"
   //Uncomment the lines below
