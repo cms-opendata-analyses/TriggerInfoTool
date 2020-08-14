@@ -10,7 +10,7 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
     #wantSummary = cms.untracked.bool(True)
 #)
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring( *(
