@@ -1,6 +1,6 @@
-# How to to get the module list of trigger and check the last active one 
+# How to get the module list of a trigger and check the last active one 
 
-This example shows a simple way to obtain the last active module (filter) of a trigger.  For this, we first choose a specific trigger (HLT_Jet190_v6 in this specific case), show how to dump all the modules in that trigger (this is done at the begining of each run through the HLTConfigProvider) and then print out the label of the last active module for each event.  If for the latter action one wants to consider all the triggers, the "@" character must be set in the configuration file.
+This example shows a simple way to obtain the last active module (filter) of a trigger.  For this, we first choose a specific trigger (HLT_Jet190_v6, in this specific case), show how to dump all the modules in that trigger (this is done at the begining of each run through the HLTConfigProvider) and then print out the label of the last active module for each event.  If for the latter action one wants to consider all the triggers, the "@" character must be set in the configuration file.
 
 ## Usage Instruction
 
@@ -81,4 +81,4 @@ cmsRun moduleinfoanalyzer_cfg.py > full.log 2>&1 &
 tail -f full.log
 ```
 
-*NOTE*: The first time you execute the job, it will take a long time (depending on your connection speed) to the point that it looks like it is not doing anything.  That is fine.  This is because the database payload files will be downloaded/cached locally in the VM.  Later attempts should be faster, however.
+*NOTE*: The first time you execute the job, it will take a long time (depending on your connection speed) to the point that it looks like it is not doing anything.  That is fine.  This is because the database payload files will be downloaded/cached locally in the VM or container.  Later attempts should be faster, however.

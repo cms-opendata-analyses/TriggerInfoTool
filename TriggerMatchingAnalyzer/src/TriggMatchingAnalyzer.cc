@@ -75,10 +75,11 @@ class TriggMatchingAnalyzer : public edm::EDAnalyzer {
 TriggMatchingAnalyzer::TriggMatchingAnalyzer(const edm::ParameterSet& iConfig)
 
 {
-//now do what ever initialization is needed
-
+	//now do what ever initialization is needed
+	//we take the filtername of interest and the reconstructed track collection
+	//from the configuration
 	filterName_ = iConfig.getParameter<std::string>("filterName");
-    trackInput = iConfig.getParameter<edm::InputTag>("TrackCollection");
+    	trackInput = iConfig.getParameter<edm::InputTag>("TrackCollection");
 }
 
 
@@ -97,17 +98,18 @@ TriggMatchingAnalyzer::~TriggMatchingAnalyzer()
 void 
 TriggMatchingAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-   using namespace edm;
-   using namespace std;
+	using namespace edm;
+   	using namespace std;
     
-InputTag trigEventTag("hltTriggerSummaryAOD","","HLT"); 
-Handle<trigger::TriggerEvent> mytrigEvent; 
-iEvent.getByLabel(trigEventTag,mytrigEvent);
-
-Handle<reco::TrackCollection> mytracks;
-iEvent.getByLabel(trackInput,mytracks);
-
-analyzeMatchingObject(iEvent,mytrigEvent,trigEventTag,mytracks);
+	//containers for the trigger stuff
+	InputTag trigEventTag("hltTriggerSummaryAOD","","HLT"); 
+	Handle<trigger::TriggerEvent> mytrigEvent; 
+	iEvent.getByLabel(trigEventTag,mytrigEvent);
+	//container for the tracks
+	Handle<reco::TrackCollection> mytracks;
+	iEvent.getByLabel(trackInput,mytracks);
+	//launch the matching code
+	analyzeMatchingObject(iEvent,mytrigEvent,trigEventTag,mytracks);
    
 return;
 }
@@ -116,35 +118,30 @@ return;
 void 
 TriggMatchingAnalyzer::analyzeMatchingObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, const edm::InputTag &trigEventTag_,const edm::Handle<reco::TrackCollection> &tracks)
 {
-	  using namespace std;
-      trigger::size_type filterIndex = trigEvent->filterIndex(edm::InputTag(filterName_,"",trigEventTag_.process())); 
-      int match=0;  
-      if(filterIndex<trigEvent->sizeFilters())
-    { 
-        const trigger::Keys& trigKeys = trigEvent->filterKeys(filterIndex); 
-        const trigger::TriggerObjectCollection & trigObjColl(trigEvent->getObjects());
-        //using reco::TrackCollection;
+	using namespace std;		
+	//This is inspired on https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideHLTAnalysis
+	trigger::size_type filterIndex = trigEvent->filterIndex(edm::InputTag(filterName_,"",trigEventTag_.process())); 
+      	int match=0;  
+      	if(filterIndex<trigEvent->sizeFilters()){
+        	const trigger::Keys& trigKeys = trigEvent->filterKeys(filterIndex); 
+        	const trigger::TriggerObjectCollection & trigObjColl(trigEvent->getObjects());
+        	//using reco::TrackCollection;
 		if(tracks.isValid()){
-			for(size_t i = 0; i < tracks->size(); ++ i) 
-			{
+			for(size_t i = 0; i < tracks->size(); ++ i){
 				const reco::Track & p = (*tracks)[i];
-     
-				// Trigger object loop starts
-				for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt)
-				{ 
+     				// Trigger object loop starts
+				for(trigger::Keys::const_iterator keyIt=trigKeys.begin();keyIt!=trigKeys.end();++keyIt){ 
 					const trigger::TriggerObject& obj = trigObjColl[*keyIt];
-					if((dR(obj,p)<0.1))
-					{
-						//if(abs(p.pdgId())== 13)
-						//{
-							match++;
-							cout<<"MATCH number:"<<match<<endl;
-						//}	
+					//calculate Delta R between the track and the trigger object
+					double mydeltaR = dR(obj,p);
+					if((mydeltaR<0.1)){
+						match++;
+						cout<<"Found a possible match in this event with DeltaR = "<<mydeltaR<<" between track with pT = "<<p.pt()<<" trigger object with pT = "<<obj.pt()<<endl;
 					}
 				}
 			}   
 		}
-     }
+     	}
 
 }
 
@@ -155,8 +152,7 @@ TriggMatchingAnalyzer::beginJob()
 {
 }
 
-double
-TriggMatchingAnalyzer::dR(const trigger::TriggerObject& obj,  const reco::Track & p )
+double TriggMatchingAnalyzer::dR(const trigger::TriggerObject& obj,  const reco::Track & p )
 {
 	        double dEta2 =pow( p.eta()-obj.eta(),2); 
 			double dPhi2 =pow( p.phi()-obj.phi(),2);

@@ -1,11 +1,10 @@
-# How to obtain general trigger information
+# How to match a trigger object to a reconstructed track 
 
-The EDAnalyzer in this example contains several C++ snippets on how to access trigger information such as metadata, prescales, module information, etc.
-Many of these snippets are commented out in the code, which can be found in the `src` directory.  Examples on how to access specific information can be found in other directories in ths repository.
- 
+Sometimes, it is necessary to match the reconstructed object (particle) to the object (particle) that actually fired the trigger.  The triggger-level information about these objects can be retrieved using the [TriggerEvent CMSSW object](https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/DataFormats/HLTReco/interface/TriggerEvent.h).  In this package we show an example on how to match reconstructed tracks to objects that fired a trigger (or possible set of triggers) that contain a specific module, hltSingleJet190Regional, for this demonstration (we specify this through configuration).
+
 ## Usage Instruction
 
-First you have to create a [VM](http://opendata.cern.ch/docs/cms-virtual-machine-2011 "CMS 2011 Virtual Machines: How to install") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker). 
+First you have to create a [VM](http://opendata.cern.ch/docs/cms-virtual-machine-2011 "CMS 2011 Virtual Machines: How to install") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker).
 
 Then follow these steps:
 
@@ -35,10 +34,10 @@ Then follow these steps:
   ```
   
 
-- Go to the TriggerInfoTool/GeneralInfoAnalyzer area.  Note that the code lives under `src`
+- Go to the TriggerInfoTool/ModuleInTriggerAnalyzer area.  Note that the code lives under `src`
 
   ```
-  cd GeneralInfoAnalyzer
+  cd ModuleInTriggerAnalyzer
   ```
 
 - Compile everything:
@@ -50,7 +49,7 @@ Then follow these steps:
 - Make a soft link to the python configuration file
 
 ```
-ln -s python/triggerinfoanalyzer_cfg.py .
+ln -s python/moduleinfoanalyzer_cfg.py.
 ```
 
 - Make symbolic links to the conditions database
@@ -73,7 +72,7 @@ You should now see the `cms-opendata-conddb.cern.ch` link in the `/cvmfs` area.
 - Run the CMSSW executable in the background and dump the output in a log file
 
 ```
-cmsRun triggerinfoanalyzer_cfg.py > full.log 2>&1 &
+cmsRun moduleinfoanalyzer_cfg.py > full.log 2>&1 &
 ```
 
 - Check the development of the job if needed:
