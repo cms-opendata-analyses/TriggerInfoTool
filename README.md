@@ -1,9 +1,9 @@
 # What is this repository about?
 
-This repository hosts a set of simple examples that show of CMSSW EDAnalyzers use to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, 2010 and 2011 (works for 2012 as well) corresponding to the CMS data that has been so far released.
-The examples are organized in packages, each of which has their own instructions.  
+This repository hosts a set of simple examples that use CMSSW EDAnalyzers to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, 2010 and 2011 (works for 2012 as well) corresponding to the CMS data that has been so far released.
+The examples are organized in packages, each of which has its own instructions.  
 
-Below is a general description of the general ingedients used for building the snippets in these examples.
+Below is a general description of the common ingedients used for building the snippets in these examples.
 
 # Trigger Info Analysis Tool
 
