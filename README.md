@@ -1,26 +1,17 @@
-# HLT Trigger Info Analyzer
+# What is this repository about?
+
+This repository hosts a set of simple examples that show of CMSSW EDAnalyzers use to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, 2010 and 2011 (works for 2012 as well) corresponding to the CMS data that has been so far released.
+The examples are organized in packages, each of which has their own instructions.  
+
+Below is a general description of the general ingedients used for building the snippets in these examples.
+
+# Trigger Info Analysis Tool
 
 ## Description
 
-This is an example of an EDAnalyzer to extract some trigger information for CMS Open/Legacy Data. The instructions below are for 2011 Data.  Similar instructions exist for [2010 Data](https://github.com/caredg/cms_legacy_data/tree/2010/TriggerInfo/TriggerInfoAnalyzer "Instructions 2010").
-
-The skeleton of this EDAnalyzer, and/or the code snippets that can be extracted from it, could be used for physics analysis.
+The skeleton of the EDAnalyzers used in this repository, and/or the code snippets that can be extracted from them, could be used for physics analysis.
 
 The code has plenty of in-line comments to make it more understandable (hopefuly) and to point potential users to the original sources. It has been put together compiling the most important pieces of already-available CMSSW software, which will be described in the section below.
-
-Also, some instructions on how to set up this example are given. The actual example snippets are commented in the code as 
-
-```
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//EXAMPLE: Description of the example
-// Some additional information
-// To check the example, uncomment the lines below
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-//Snippet lines ..
-//...
-//...
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-```
 
 ## The CMS Trigger System
 
