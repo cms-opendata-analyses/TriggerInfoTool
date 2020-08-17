@@ -1,0 +1,74 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: trigger-argo-
+spec:
+  entrypoint: trigger-argo
+  volumes:
+    - name: workdir
+      hostPath:
+        path: /mnt/data
+        type: DirectoryOrCreate
+  templates:
+  - name: trigger-argo
+  # define the different tasks
+    dag:
+      tasks:
+      - name: general-info
+        template: trigger-job
+        arguments:
+          parameters:
+          - name: config
+            value: "triggerinfoanalyzer_cfg.py"
+          - name: dir
+            value: "GeneralInfoAnalyzer"
+      - name: module-in-trigger
+        template: trigger-job
+        arguments:
+          parameters:
+          - name: config
+            value: "moduleinfoanalyzer_cfg.py"
+          - name: dir
+            value: "ModuleInTriggerAnalyzer"
+      - name: trigger-matching
+        template: trigger-job
+        arguments:
+          parameters:
+          - name: config
+            value: "triggmatchinganalyzer_cfg.py"
+          - name: dir
+            value: "TriggerMatchingAnalyzer"
+      - name: trigger-simple-prescales
+        template: trigger-job
+        arguments:
+          parameters:
+          - name: config
+            value: "simpleprescalesinfoanalyzer_cfg.py"
+          - name: dir
+            value: "TriggerSimplePrescalesAnalyzer"   
+
+  # job definitione
+  - name: trigger-job
+    inputs:
+      parameters:
+      - name: config 
+      - name: dir  
+    script:
+      image: cmsopendata/cmssw_5_3_32 
+      command: [sh]
+      source: |
+        sudo chown $USER /mnt/vol
+        source /opt/cms/entrypoint.sh
+        echo pwd `pwd`
+        git clone git://github.com/cms-opendata-analyses/TriggerInfoTool.git
+        cd TriggerInfoTool
+        cd {{inputs.parameters.dir}}
+        scram b
+        config={{inputs.parameters.config}}
+        sed -i "s/process.GlobalTag.connect/\#process.GlobalTag.connect/g" python/{{inputs.parameters.config}}
+        output="${config%analyzer*}".log
+        cmsRun python/{{inputs.parameters.config}} > $output
+        mv $output /mnt/vol
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
