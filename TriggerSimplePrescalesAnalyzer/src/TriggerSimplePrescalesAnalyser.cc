@@ -9,7 +9,7 @@
      [Notes on implementation]
 */
 //
-// Original Author:  Edgar Carrera
+// Originally put together by Edgar Carrera from official CMSSW software
 //         Created:  Mon Jul  3 15:59:18 CEST 2017
 // $Id$
 //
@@ -85,8 +85,7 @@ class TriggerSimplePrescalesAnalyzer : public edm::EDAnalyzer {
       edm::Handle<trigger::TriggerEvent> triggerEventHandle_;
       HLTConfigProvider hltConfig_;
 
-      //inspired in
-      //https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/HLTrigger/HLTfilters/interface/HLTHighLevel.h
+      //inspired by https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/HLTrigger/HLTfilters/interface/HLTHighLevel.h
       // input patterns that will be expanded into trigger names
       std::vector<std::string>  HLTPatterns_;
 
@@ -128,7 +127,7 @@ class TriggerSimplePrescalesAnalyzer : public edm::EDAnalyzer {
 // where the information is stored.  This was essentially fixed and will
 // most likely be the same always. 
 
-//To make the wildcards working we get inspired in 
+//To make the wildcards working we get inspired by
 //https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/HLTrigger/HLTfilters/src/HLTHighLevel.cc
 
 //This should match your configuration python file

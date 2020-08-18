@@ -3,8 +3,10 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("TriggerInfo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
+#if more events are activated, choose to print every 1000:
+#process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
@@ -48,9 +50,10 @@ process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.c
 process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
 
 #configure the analyzer
+#inspired by https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/HLTrigger/HLTfilters/interface/HLTHighLevel.h
 process.gettriggerinfo = cms.EDAnalyzer('TriggerSimplePrescalesAnalyzer',
                               processName = cms.string("HLT"),
-                              triggerPatterns = cms.vstring("HLT_Jet110_v*","HLT_Jet150_v*","HLT_Jet190_v*","HLT_Jet240_v*"),         
+                              triggerPatterns = cms.vstring("HLT_Jet110_v*","HLT_Jet150_v*","HLT_Jet190_v*","HLT_Jet240_v*"), #if left empty, all triggers will run        
                               triggerResults = cms.InputTag("TriggerResults","","HLT"),
                               triggerEvent   = cms.InputTag("hltTriggerSummaryAOD","","HLT")                             
                               )
