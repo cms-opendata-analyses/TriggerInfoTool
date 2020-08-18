@@ -9,7 +9,7 @@
      [Notes on implementation]
 */
 //
-// Original Author:  Edgar Carrera
+// Originally put together by  Edgar Carrera from official CMSSW software
 //         Created:  Mon Jul  3 15:59:18 CEST 2017
 // $Id$
 //

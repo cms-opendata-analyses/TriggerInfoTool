@@ -119,7 +119,7 @@ void
 TriggMatchingAnalyzer::analyzeMatchingObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, const edm::InputTag &trigEventTag_,const edm::Handle<reco::TrackCollection> &tracks)
 {
 	using namespace std;		
-	//This is inspired on https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideHLTAnalysis
+	//This is inspired by https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideHLTAnalysis
 	trigger::size_type filterIndex = trigEvent->filterIndex(edm::InputTag(filterName_,"",trigEventTag_.process())); 
       	int match=0;  
       	if(filterIndex<trigEvent->sizeFilters()){

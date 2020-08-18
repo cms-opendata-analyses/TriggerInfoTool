@@ -9,7 +9,7 @@
      [Notes on implementation]
 */
 //
-// Original Author:  Edgar Carrera
+// Originally put together from CMSSW official software by Edgar Carrera
 //         Created:  Mon Jul  3 15:59:18 CEST 2017
 // $Id$
 //
@@ -127,7 +127,7 @@ triggerEventTag_(ps.getParameter<edm::InputTag>("triggerEvent"))
   
   //Print the configuration just to check
   cout << "Here is the information passed to the constructor:" <<endl;
-  cout << "HLTEventAnalyzerAOD configuration: " << endl
+  cout << "Configuration: " << endl
        << "   ProcessName = " << processName_ << endl
        << "   TriggerName = " << triggerName_ << endl
        << "   DataSetName = " << datasetName_ << endl
@@ -180,7 +180,7 @@ void TriggerInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& 
 	const unsigned int n(hltConfig_.size());
 	const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName_));
 	if (triggerIndex>=n) {
-	  cout << "HLTEventAnalyzerAOD::analyze:"
+	  cout << "TriggerInfoAnalyzer::analyze:"
 	       << " TriggerName " << triggerName_ 
 	       << " not available in (new) config!" << endl;
 	  cout << "Available TriggerNames are: " << endl;
@@ -205,7 +205,7 @@ void TriggerInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& 
 
   
   } else {
-    cout << "HLTEventAnalyzerAOD::analyze:"
+    cout << "TriggerInfoAnalyzer::analyze:"
 	 << " config extraction failure with process name "
 	 << processName_ << endl;
   }
@@ -236,12 +236,12 @@ void TriggerInfoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
  
    iEvent.getByLabel(triggerResultsTag_,triggerResultsHandle_);
    if (!triggerResultsHandle_.isValid()) {
-     cout << "HLTEventAnalyzerAOD::analyze: Error in getting TriggerResults product from Event!" << endl;
+     cout << "TriggerInfoAnalyzer::analyze: Error in getting TriggerResults product from Event!" << endl;
      return;
    }
    iEvent.getByLabel(triggerEventTag_,triggerEventHandle_);
    if (!triggerEventHandle_.isValid()) {
-     cout << "HLTEventAnalyzerAOD::analyze: Error in getting TriggerEvent product from Event!" << endl;
+     cout << "TriggerInfoAnalyzer::analyze: Error in getting TriggerEvent product from Event!" << endl;
      return;
    }
    // sanity check
@@ -310,7 +310,7 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
   assert(triggerIndex==iEvent.triggerNames(*triggerResultsHandle_).triggerIndex(triggerName));
   // abort on invalid trigger name
   if (triggerIndex>=n) {
-    cout << "HLTEventAnalyzerAOD::analyzeTrigger: path "
+    cout << "TriggerInfoAnalyzer::analyzeTrigger: path "
 	 << triggerName << " - not found!" << endl;
     return;
   }
@@ -331,7 +331,7 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
   //Uncomment the lines below
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   const std::pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,triggerName));
-  cout << "HLTEventAnalyzerAOD::analyzeTrigger: path "
+  cout << "TriggerInfoAnalyzer::analyzeTrigger: path "
       << triggerName << " [" << triggerIndex << "] "
       << "prescales L1T,HLT: " << prescales.first << "," << prescales.second
       << endl;

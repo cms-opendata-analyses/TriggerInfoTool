@@ -3,9 +3,10 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("Demo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
+#if more events are activated, choose to print every 100:
+#process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 process.source = cms.Source("PoolSource",
     # replace 'myfile.root' with the source file you want to use
@@ -19,11 +20,12 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
 process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
 
+//This is inspired by https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideHLTAnalysis
 process.demo = cms.EDAnalyzer('TriggMatchingAnalyzer',
                  filterName = cms.string("hltSingleJet190Regional"),
                  TrackCollection = cms.InputTag("generalTracks")
                              )
-#https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideRecoDataTable
+
 
 
 
