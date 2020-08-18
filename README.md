@@ -47,7 +47,7 @@ Then follow these steps:
 - Obtain the code from git and move it to the `src` area:
 
   ```
-  git clone git://github.com/cms-legacydata-analyses/TriggerInfoTool.git
+  git clone -b 2011 git://github.com/cms-legacydata-analyses/TriggerInfoTool.git
   cd TriggerInfoTool
   ```
   
