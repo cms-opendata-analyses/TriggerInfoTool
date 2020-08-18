@@ -1,13 +1,105 @@
 # What is this repository about?
 
-This repository hosts a set of simple examples that use CMSSW EDAnalyzers to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, 2010 and 2011 (works for 2012 as well) corresponding to the CMS data that has been so far released.
-The examples are organized in packages, each of which has its own instructions. 
+This repository hosts a set of simple examples that use CMSSW EDAnalyzers to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, 2010 and 2011 (which also works for 2012), corresponding to the CMS data that has been so far released.  Please choose the one you need as instructions may vary a little.
+
+The examples are organized in packages.  Here is a summary of what they contain:
+
+* GeneralInfoAnalyzer: several C++ snippets on how to access trigger information such as metadata, prescales, module information, etc.
+* ModuleInTriggerAnalyzer: shows how to dump all the modules for a specific trigger and/or obtain the last active module (filter) of a trigger.
+* TriggerMatchingAnalyzer: how to match reconstructed tracks to objects that fired a trigger (or possible set of triggers) that contain a specific module
+* TriggerSimplePrescalesAnalyzer: use wildcards to acces different versions of the same trigger, check their L1 and HLT prescales, and whether the trigger accepted the event or not
 
 [Below](#trigger-info-analysis-tool) is a general description of the common ingredients used for building the snippets in these examples.
 
 # Continuous Integration
 
 This repository contains also [a github action](.github/workflows/main.yml), which runs the test workflows on the CMS open data container using github free resources. It sets up a minikube environment and runs a workflow defined with argo workflow engine. The ouput is returned as a github artifcat. The workflow is triggered by a pull request. The test workflows are defined in [argo-workflow.yaml](argo-workflow.yaml).
+
+# Usage instructions
+
+Usage instructions are very similar for the different example packages in this repository.  Please replace the placeholders in this instructions, which are defined right below, with the appropiate names as they fit your interest.
+
++ {packagename}: the name of a package in this repository; e.g., `TriggerSimplePrescalesAnalyzer`.
++ {configname}: the name of the config file within in the python directory in the corresponding package; e.g., `simpleprescalesinfoanalyzer_cfg.py`
+
+First, you have to create a [VM](http://opendata.cern.ch/docs/cms-virtual-machine-2011 "CMS 2011 Virtual Machines: How to install") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker). 
+
+Then follow these steps:
+
+- Create a CMSSW environment (if using the Docker container, this step can be skipped as they are release-specific): 
+
+    ```
+    cmsrel CMSSW_5_3_32
+    ```
+
+- Change to the CMSSW_5_3_32/src/ directory:
+
+    ```
+    cd CMSSW_5_3_32/src/
+    ```
+
+- Initialize the CMSSW environment:
+
+  ```
+  cmsenv
+  ```
+
+- Obtain the code from git and move it to the `src` area:
+
+  ```
+  git clone git://github.com/cms-legacydata-analyses/TriggerInfoTool.git
+  cd TriggerInfoTool
+  ```
+  
+- Go to the TriggerInfoTool/{packagename} area.  Note that the code lives under `src`
+
+  ```
+  cd {packagename}
+  ```
+
+- Compile everything:
+
+  ```
+  scram b
+  ```
+
+- Make a soft link to the python configuration file
+
+```
+ln -s python/{configname} .
+```
+
+- Make symbolic links to the conditions database
+
+```
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
+```
+
+- Make sure the `cms-opendata-conddb.cern.ch` directory has actually expanded in your VM or Docker container.  One way of doing this is executing:
+
+```
+ls -l
+ls -l /cvmfs/
+```
+
+You should now see the `cms-opendata-conddb.cern.ch` link in the `/cvmfs` area.
+
+
+- Run the CMSSW executable in the background and dump the output in a log file with any name (full.log in this case)
+
+```
+cmsRun {configname} > full.log 2>&1 &
+```
+
+- Check the development of the job if needed:
+
+```
+tail -f full.log
+```
+
+*NOTE*: The first time you execute the job, it will take a long time (depending on your connection speed) to the point that it looks like it is not doing anything.  That is fine.  This is because the database payload files will be downloaded/cached locally in the VM or container (if using cvmfs).  Later attempts should be faster, however.
+
 
 # Trigger Info Analysis Tool
 
