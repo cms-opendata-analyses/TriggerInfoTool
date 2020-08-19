@@ -46,8 +46,8 @@ process.source = cms.Source("PoolSource",
 
 #needed to get the actual prescale values used from the global tag
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
-process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
+process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_R_42_V10A_RUNA.db')
+process.GlobalTag.globaltag = 'FT_R_42_V10A::All'
 
 #configure the analyzer
 #inspired by https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/HLTrigger/HLTfilters/interface/HLTHighLevel.h
