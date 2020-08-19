@@ -22,20 +22,20 @@ Usage instructions are very similar for the different example packages in this r
 + {packagename}: the name of a package in this repository; e.g., `TriggerSimplePrescalesAnalyzer`.
 + {configname}: the name of the config file within in the python directory in the corresponding package; e.g., `simpleprescalesinfoanalyzer_cfg.py`
 
-First, you have to create a [VM](http://opendata.cern.ch/docs/cms-virtual-machine-2011 "CMS 2011 Virtual Machines: How to install") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker). 
+First, you have to create a [VM](http://opendata.cern.ch/record/250 "CMS Open Data Portal") from the CMS Open Data website or set up a [Docker container](http://opendata.cern.ch/docs/cms-guide-docker). 
 
 Then follow these steps:
 
 - Create a CMSSW environment (if using the Docker container, this step can be skipped as they are release-specific): 
 
     ```
-    cmsrel CMSSW_5_3_32
+    cmsrel CMSSWCMSSW_4_2_8
     ```
 
-- Change to the CMSSW_5_3_32/src/ directory:
+- Change to the CMSSWCMSSW_4_2_8/src/ directory:
 
     ```
-    cd CMSSW_5_3_32/src/
+    cd CMSSWCMSSW_4_2_8/src/
     ```
 
 - Initialize the CMSSW environment:
@@ -47,7 +47,7 @@ Then follow these steps:
 - Obtain the code from git and move it to the `src` area:
 
   ```
-  git clone git://github.com/cms-legacydata-analyses/TriggerInfoTool.git
+  git clone -b 2010 git://github.com/cms-legacydata-analyses/TriggerInfoTool.git
   cd TriggerInfoTool
   ```
   
@@ -72,8 +72,8 @@ ln -s python/{configname} .
 - Make symbolic links to the conditions database
 
 ```
-ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
-ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_R_42_V10A FT_R_42_V10A
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_R_42_V10A.db FT_R_42_V10A.db
 ```
 
 - Make sure the `cms-opendata-conddb.cern.ch` directory has actually expanded in your VM or Docker container.  One way of doing this is executing:
