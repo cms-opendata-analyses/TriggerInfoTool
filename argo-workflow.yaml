@@ -60,7 +60,7 @@ spec:
         sudo chown $USER /mnt/vol
         source /opt/cms/entrypoint.sh
         echo pwd `pwd`
-        git clone git://github.com/cms-opendata-analyses/TriggerInfoTool.git
+        git clone -b 2011 git://github.com/cms-opendata-analyses/TriggerInfoTool.git
         cd TriggerInfoTool
         cd {{inputs.parameters.dir}}
         scram b
