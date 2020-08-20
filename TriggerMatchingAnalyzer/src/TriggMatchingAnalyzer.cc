@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/// -*- C++ -*-
 //
 // Package:    TriggMatchingAnalyzer
 // Class:      TriggMatchingAnalyzer
@@ -47,7 +47,7 @@ class TriggMatchingAnalyzer : public edm::EDAnalyzer {
 
       virtual void endRun(edm::Run const&, edm::EventSetup const&);
       virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
-      virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&) override;
+      virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
 //declare a function to do the trigger analysis
       void analyzeMatchingObject(const edm::Event& iEvent, const edm::Handle<trigger::TriggerEvent> &trigEvent, const edm::InputTag &trigEventTag_,const edm::Handle<reco::TrackCollection> &tracks);
       
