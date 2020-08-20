@@ -10,18 +10,18 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-#        'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/SingleElectron/AOD/12Oct2013-v1/10000/1045436C-1240-E311-851B-003048D2BF1C.root'
-	'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/Jet/AOD/12Oct2013-v1/20001/948D96B8-1F3F-E311-AEE6-02163E008D66.root'
+'root://eospublic.cern.ch//eos/opendata/cms/Run2010B/Jet/AOD/Apr21ReReco-v1/0000/00052C5A-EF70-E011-B43F-00266CF32A00.root'
+	
     )
 )
 #needed to get the actual prescale values used from the global tag
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_R_42_V10A_RUNA.db')
+process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_R_42_V10A.db')
 process.GlobalTag.globaltag = 'FT_R_42_V10A::All'
 
 #This is inspired by https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideHLTAnalysis
 process.demo = cms.EDAnalyzer('TriggMatchingAnalyzer',
-                 filterName = cms.string("hltSingleJet190Regional"),
+                 filterName = cms.string("hlt1jet100U"),
                  TrackCollection = cms.InputTag("generalTracks")
                              )
 

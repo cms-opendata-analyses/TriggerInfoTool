@@ -25,7 +25,7 @@ process.GlobalTag.globaltag = 'FT_R_42_V10A::All'
 #If you need to consider all triggers, enter "@" as the triggerName. 
 process.demo = cms.EDAnalyzer('ModuleInfoAnalyzer',
                               #triggerName = cms.string("@") 
-                              triggerName = cms.string("HLT_Jet140U") 
+                              triggerName = cms.string("HLT_Jet100U") 
                              )
 
 
