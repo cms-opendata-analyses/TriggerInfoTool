@@ -9,6 +9,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 'root://eospublic.cern.ch//eos/opendata/cms/Run2010B/Mu/AOD/Apr21ReReco-v1/0000/00459D48-EB70-E011-AF09-90E6BA19A252.root'
+'file:0048DD36-6570-E011-A43C-485B39800BA2.root' 
     )
 )
 
@@ -21,7 +22,7 @@ process.GlobalTag.globaltag = 'FT_R_42_V10A::All'
 process.gettriggerinfo = cms.EDAnalyzer('TriggerInfoAnalyzer',
                               processName = cms.string("HLT"),
                               triggerName = cms.string("@"), #@ means all triggers        
-                              datasetName = cms.string("SingleMu"), #specific dataset example (for dumping info)          
+                              datasetName = cms.string("Mu"), #specific dataset example (for dumping info)          
                               triggerResults = cms.InputTag("TriggerResults","","HLT"),
                               triggerEvent   = cms.InputTag("hltTriggerSummaryAOD","","HLT")                             
                               )
