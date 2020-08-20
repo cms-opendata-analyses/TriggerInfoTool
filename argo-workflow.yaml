@@ -54,7 +54,7 @@ spec:
       - name: config 
       - name: dir  
     script:
-      image: cmsopendata/cmsswCMSSW_4_2_8 
+      image: cmsopendata/cmssw_4_2_8 
       command: [sh]
       source: |
         sudo chown $USER /mnt/vol
