@@ -13,7 +13,7 @@ The examples are organized in packages.  Here is a summary of what they contain:
 
 # Continuous Integration
 
-This repository contains also [a github action](.github/workflows/main.yml), which runs the test workflows on the CMS open data container using github free resources. It sets up a minikube environment and runs a workflow defined with argo workflow engine. The ouput is returned as a github artifcat. The workflow is triggered by a pull request. The test workflows are defined in [argo-workflow.yaml](argo-workflow.yaml).
+This repository contains also [a github workflow](.github/workflows/main.yml), which runs the test jobs on the CMS open data container using github free resources. It sets up a minikube environment and runs a workflow defined with argo workflow engine. The ouput is returned as a github artifcat. The workflow is triggered by a pull request. The test workflows are defined in [argo-workflow.yaml](argo-workflow.yaml).
 
 # Usage instructions
 
