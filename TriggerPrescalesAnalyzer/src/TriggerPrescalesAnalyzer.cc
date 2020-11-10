@@ -74,6 +74,11 @@
 #include "FWCore/Common/interface/TriggerResultsByName.h"
 #include <cassert>
 
+//From TriggMatchingAnalyzer
+#include "DataFormats/HLTReco/interface/TriggerObject.h"
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
+
 // From AOD2NanoAOD
 #include "TFile.h"
 #include "TTree.h"
@@ -93,6 +98,21 @@ public:
 	explicit TriggerPrescalesAnalyzer(const edm::ParameterSet &);
 	~TriggerPrescalesAnalyzer();
 
+	virtual void beginJob();
+	virtual void beginRun(edm::Run const &, edm::EventSetup const &);
+	//virtual void beginRun(edm::Run const&, edm::EventSetup const&, const edm::TriggerNames& triggerNames, const edm::TriggerResults& result);
+	virtual void analyze(const edm::Event &, const edm::EventSetup &);
+	virtual void endRun(edm::Run const &, edm::EventSetup const &);
+	virtual void endJob();
+
+	//Methods used for the analysis
+	bool checkTriggerPass(const edm::Event &iEvent, const std::string &triggerName); //Check if the trigger passed
+	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent,  const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, const edm::Handle<reco::TrackCollection> &tracks, TH1D *ht, TH1D *hj, const int &minPt);
+
+	virtual void beginLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
+	virtual void endLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
+	static void fillDescriptions(edm::ConfigurationDescriptions &descriptions);
+
 private:
 	TH1D *h1;
 	TH1D *H1;
@@ -105,21 +125,6 @@ private:
 
 	edm::Service<TFileService> fs; //to access the TFileService object in a framework module
 
-	virtual void beginJob();
-	virtual void beginRun(edm::Run const &, edm::EventSetup const &);
-	//virtual void beginRun(edm::Run const&, edm::EventSetup const&, const edm::TriggerNames& triggerNames, const edm::TriggerResults& result);
-	virtual void analyze(const edm::Event &, const edm::EventSetup &);
-	virtual void endRun(edm::Run const &, edm::EventSetup const &);
-	virtual void endJob();
-
-	//Methods used for the analysis
-	bool checkTriggerPass(const edm::Event &iEvent, const std::string &triggerName); //Check if the trigger passed
-	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent, const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, TH1D *ht, TH1D *hj, const int &minPt);
-
-	virtual void beginLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
-	virtual void endLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
-	static void fillDescriptions(edm::ConfigurationDescriptions &descriptions);
-
 	TTree *tree;
 
 	// Event information
@@ -131,11 +136,11 @@ private:
 	const static int max_jet = 1000;
 	UInt_t value_jet_n;
 	float value_jet_pt[max_jet];
-	// float value_jet_eta[max_jet];
-	// float value_jet_phi[max_jet];
-	// float value_jet_mass[max_jet];
-	// bool value_jet_puid[max_jet];
-	// float value_jet_btag[max_jet];
+
+	//Prescale values
+	const static int max_prescale = 1000;
+	UInt_t value_prescale_n;
+	float value_prescale[max_prescale];
 
 	string filterName1_; //declare de filter (module) of the trigger
 	string filterName2_;
@@ -143,6 +148,11 @@ private:
 	string filterName4_;
 
 	bool isData;
+
+	edm::InputTag trackInput;
+
+	//declare a function to do the trigger analysis
+	double dR(const trigger::TriggerObject &, const reco::Track &);
 
 	Handle<TriggerResults> triggerResultsHandle_;
 	HLTConfigProvider hltConfig_;
@@ -154,7 +164,8 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet &iCon
 																					   filterName2_(iConfig.getParameter<string>("filterName2")),
 																					   filterName3_(iConfig.getParameter<string>("filterName3")),
 																					   filterName4_(iConfig.getParameter<string>("filterName4")),
-																					   isData(iConfig.getParameter<bool>("isData"))
+																					   isData(iConfig.getParameter<bool>("isData")),
+																					   trackInput(iConfig.getParameter<edm::InputTag>("TrackCollection"))
 {
 	edm::Service<TFileService> fs;
 
@@ -172,13 +183,10 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet &iCon
 	// }
 
 	// Jets
-	// tree->Branch("nJet", &value_jet_n, "nJet/i");
+	tree->Branch("nJet", &value_jet_n, "nJet/i");
 	tree->Branch("Jet_pt", value_jet_pt, "Jet_pt[nJet]/F");
-	// tree->Branch("Jet_eta", value_jet_eta, "Jet_eta[nJet]/F");
-	// tree->Branch("Jet_phi", value_jet_phi, "Jet_phi[nJet]/F");
-	// tree->Branch("Jet_mass", value_jet_mass, "Jet_mass[nJet]/F");
-	// tree->Branch("Jet_puId", value_jet_puid, "Jet_puId[nJet]/O");
-	// tree->Branch("Jet_btag", value_jet_btag, "Jet_btag[nJet]/F");
+	tree->Branch("nPrescale", &value_prescale_n, "nPrescale/i");
+	tree->Branch("Prescale", value_prescale, "Prescale[nPrescale]/F");
 }
 
 TriggerPrescalesAnalyzer::~TriggerPrescalesAnalyzer()
@@ -233,6 +241,9 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 	Handle<reco::PFJetCollection> jets;
 	iEvent.getByLabel("ak5PFJets", jets);
 
+	Handle<reco::TrackCollection> mytracks;
+	iEvent.getByLabel(trackInput,mytracks);
+
 	if (!triggerResultsHandle_.isValid() || !triggerEventHandle_.isValid() || !jets.isValid())
 	{
 		cout << "HLTEventAnalyzerAOD::analyze: Error in getting product/s from Event!" << endl;
@@ -263,8 +274,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, h1, H1, 60);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, mytracks, h1, H1, 60);
 			}
 		} //end filter size check
 
@@ -272,8 +282,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, h2, H2, 80);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, mytracks, h2, H2, 80);
 			}
 		} //end filter size check
 
@@ -281,8 +290,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, h3, H3, 110);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, mytracks, h3, H3, 110);
 			}
 		} //end filter size check
 
@@ -290,13 +298,12 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, h4, H4, 150);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, mytracks, h4, H4, 150);
 			}
 		} //end filter size check
 	}
 
-	tree->Fill();
+		tree->Fill();
 
 	return;
 } //------------------------------------------------------------analyze()
@@ -318,6 +325,7 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 												const std::string &filterName,
 												const edm::InputTag &trigEventTag,
 												const edm::Handle<reco::PFJetCollection> &myjets,
+												const edm::Handle<reco::TrackCollection> &tracks,
 												TH1D *ht,
 												TH1D *hj,
 												const int &minPt)
@@ -336,22 +344,39 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 		const Keys &trigKeys = trigEvent->filterKeys(filterIndex);
 		const TriggerObjectCollection &trigObjColl(trigEvent->getObjects());
 		//now loop of the trigger objects passing filter
-		for (trigger::Keys::const_iterator keyIt = trigKeys.begin(); keyIt != trigKeys.end(); ++keyIt)
+		if (tracks.isValid())
 		{
-			const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
-			if (trigobj.pt() >= TriggPt)
+			for (size_t i = 0; i < tracks->size(); ++i)
 			{
-				TriggPt = trigobj.pt();
+				const reco::Track &p = (*tracks)[i];
+				// Trigger object loop starts
+				double mydeltaR;
+				for (trigger::Keys::const_iterator keyIt = trigKeys.begin(); keyIt != trigKeys.end(); ++keyIt)
+				{
+					const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
+					if (trigobj.pt() >= TriggPt)
+					{
+						TriggPt = trigobj.pt();
+						mydeltaR = dR(trigobj, p);
+					}
+				}
+				if (mydeltaR < 0.1)
+				{
+					ht->Fill(TriggPt, prescales.first * prescales.second);
+					cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
+					cout << "Found a possible match in this event with DeltaR = " << mydeltaR << endl;
+				}
+				else
+				{
+					// cout << "No possible match" << endl;
+				}
 			}
 		}
-		ht->Fill(TriggPt, prescales.first * prescales.second);
-		cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
 	}
 	float JetPt = -999;
 	value_jet_n = 0;
 	for (reco::PFJetCollection::const_iterator itjet = myjets->begin(); itjet != myjets->end(); ++itjet)
 	{
-
 		if (itjet->pt() > JetPt)
 		{
 			JetPt = itjet->pt();
@@ -360,14 +385,19 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 	if (JetPt >= minPt)
 	{
 		hj->Fill(JetPt, prescales.first * prescales.second);
-		for (auto i = value; i < count; i++)
-		{
-			/* code */
-		}
-		
-		value_jet_pt[value_jet_n] = itjet->pt() * prescales.first * prescales.second;
+		value_jet_pt[value_jet_n] = JetPt;
+		value_prescale[value_jet_n] = prescales.first * prescales.second;
+		value_jet_n++;
 	}
 	cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
+}
+
+double TriggerPrescalesAnalyzer::dR(const trigger::TriggerObject &obj, const reco::Track &p)
+{
+	double dEta2 = pow(p.eta() - obj.eta(), 2);
+	double dPhi2 = pow(p.phi() - obj.phi(), 2);
+	double dR = sqrt(dPhi2 + dEta2);
+	return dR;
 }
 
 // ------------ method called when ending the processing of a run  ------------
