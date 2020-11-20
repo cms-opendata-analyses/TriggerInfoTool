@@ -107,7 +107,7 @@ public:
 
 	//Methods used for the analysis
 	bool checkTriggerPass(const edm::Event &iEvent, const std::string &triggerName); //Check if the trigger passed
-	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent,  const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, const edm::Handle<reco::TrackCollection> &tracks, TH1D *ht, TH1D *hj, const int &minPt);
+	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent, const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, TH1D *ht, TH1D *hj, const int &minPt);
 
 	virtual void beginLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
 	virtual void endLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
@@ -132,7 +132,7 @@ private:
 	UInt_t value_lumi_block;
 	ULong64_t value_event;
 
-	// Jets
+	// Jet
 	const static int max_jet = 1000;
 	UInt_t value_jet_n;
 	float value_jet_pt[max_jet];
@@ -141,6 +141,11 @@ private:
 	const static int max_prescale = 1000;
 	UInt_t value_prescale_n;
 	float value_prescale[max_prescale];
+
+	// Trigger
+	const static int max_trigger = 1000;
+	UInt_t value_trigger_n;
+	float value_trigger_pt[max_trigger];
 
 	string filterName1_; //declare de filter (module) of the trigger
 	string filterName2_;
@@ -152,7 +157,7 @@ private:
 	edm::InputTag trackInput;
 
 	//declare a function to do the trigger analysis
-	double dR(const trigger::TriggerObject &, const reco::Track &);
+	double dR(const trigger::TriggerObject &, reco::PFJetCollection::const_iterator itjet);
 
 	Handle<TriggerResults> triggerResultsHandle_;
 	HLTConfigProvider hltConfig_;
@@ -164,8 +169,7 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet &iCon
 																					   filterName2_(iConfig.getParameter<string>("filterName2")),
 																					   filterName3_(iConfig.getParameter<string>("filterName3")),
 																					   filterName4_(iConfig.getParameter<string>("filterName4")),
-																					   isData(iConfig.getParameter<bool>("isData")),
-																					   trackInput(iConfig.getParameter<edm::InputTag>("TrackCollection"))
+																					   isData(iConfig.getParameter<bool>("isData"))
 {
 	edm::Service<TFileService> fs;
 
@@ -176,17 +180,17 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet &iCon
 	tree->Branch("luminosityBlock", &value_lumi_block);
 	tree->Branch("event", &value_event);
 
-	// // Trigger
-	// for (size_t i = 0; i < interestingTriggers.size(); i++)
-	// {
-	// 	tree->Branch(interestingTriggers[i].c_str(), value_trig + i, (interestingTriggers[i] + "/O").c_str());
-	// }
-
-	// Jets
+	// Jet
 	tree->Branch("nJet", &value_jet_n, "nJet/i");
 	tree->Branch("Jet_pt", value_jet_pt, "Jet_pt[nJet]/F");
+
+	// Prescale values
 	tree->Branch("nPrescale", &value_prescale_n, "nPrescale/i");
 	tree->Branch("Prescale", value_prescale, "Prescale[nPrescale]/F");
+
+	// Trigger
+	tree->Branch("nTrigger", &value_trigger_n, "nTrigger/i");
+	tree->Branch("Trigger_pt", value_trigger_pt, "Trigger_pt[nTrigger]/F");
 }
 
 TriggerPrescalesAnalyzer::~TriggerPrescalesAnalyzer()
@@ -242,7 +246,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 	iEvent.getByLabel("ak5PFJets", jets);
 
 	Handle<reco::TrackCollection> mytracks;
-	iEvent.getByLabel(trackInput,mytracks);
+	iEvent.getByLabel(trackInput, mytracks);
 
 	if (!triggerResultsHandle_.isValid() || !triggerEventHandle_.isValid() || !jets.isValid())
 	{
@@ -274,7 +278,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, mytracks, h1, H1, 60);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, h1, H1, 60);
 			}
 		} //end filter size check
 
@@ -282,7 +286,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, mytracks, h2, H2, 80);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, h2, H2, 80);
 			}
 		} //end filter size check
 
@@ -290,7 +294,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, mytracks, h3, H3, 110);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, h3, H3, 110);
 			}
 		} //end filter size check
 
@@ -298,12 +302,12 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, mytracks, h4, H4, 150);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, h4, H4, 150);
 			}
 		} //end filter size check
 	}
 
-		tree->Fill();
+	tree->Fill();
 
 	return;
 } //------------------------------------------------------------analyze()
@@ -325,7 +329,6 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 												const std::string &filterName,
 												const edm::InputTag &trigEventTag,
 												const edm::Handle<reco::PFJetCollection> &myjets,
-												const edm::Handle<reco::TrackCollection> &tracks,
 												TH1D *ht,
 												TH1D *hj,
 												const int &minPt)
@@ -338,64 +341,98 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 		 << "The total prescale value is: " << prescales.first * prescales.second << endl;
 
 	size_type filterIndex = trigEvent->filterIndex(InputTag(filterName, "", trigEventTag.process()));
-	float TriggPt = -999;
+
+	value_trigger_n = 0;
+	float TriggPt = -9999;
+
+	value_jet_n = 0;
+	float JetPt = -9999;
+
+	double minDR = 9999;
+	trigger::TriggerObject bestTriggerObj;
+	reco::PFJetCollection::const_iterator bestJet;
+
 	if (filterIndex < trigEvent->sizeFilters())
 	{
 		const Keys &trigKeys = trigEvent->filterKeys(filterIndex);
 		const TriggerObjectCollection &trigObjColl(trigEvent->getObjects());
 		//now loop of the trigger objects passing filter
-		if (tracks.isValid())
+		for (trigger::Keys::const_iterator keyIt = trigKeys.begin(); keyIt != trigKeys.end(); ++keyIt)
 		{
-			for (size_t i = 0; i < tracks->size(); ++i)
+			const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
+			for (reco::PFJetCollection::const_iterator itjet = myjets->begin(); itjet != myjets->end(); ++itjet)
 			{
-				const reco::Track &p = (*tracks)[i];
-				// Trigger object loop starts
-				double mydeltaR;
-				for (trigger::Keys::const_iterator keyIt = trigKeys.begin(); keyIt != trigKeys.end(); ++keyIt)
-				{
-					const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
-					if (trigobj.pt() >= TriggPt)
-					{
-						TriggPt = trigobj.pt();
-						mydeltaR = dR(trigobj, p);
-					}
-				}
-				if (mydeltaR < 0.1)
-				{
-					ht->Fill(TriggPt, prescales.first * prescales.second);
-					cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
-					cout << "Found a possible match in this event with DeltaR = " << mydeltaR << endl;
-				}
-				else
-				{
-					// cout << "No possible match" << endl;
+				double thisDR = dR(trigobj, itjet);
+				if(thisDR < minDR){
+					minDR = thisDR;
+					bestJet = itjet;
+					bestTriggerObj = trigobj;
 				}
 			}
 		}
+		if(minDR < 0.1){
+			TriggPt = bestTriggerObj.pt();
+			JetPt = bestJet->pt();
+			value_trigger_pt[value_trigger_n] = TriggPt;
+			value_trigger_n++;
+			value_jet_pt[value_jet_n] = JetPt;
+			value_jet_n++;
+			value_prescale[value_jet_n] = prescales.first * prescales.second;
+			ht->Fill(TriggPt, prescales.first * prescales.second);
+			hj->Fill(JetPt, prescales.first * prescales.second);
+		}			
+		cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
+		cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
+		cout << "Found a possible match in this event with DeltaR = " << minDR << endl;
 	}
-	float JetPt = -999;
-	value_jet_n = 0;
-	for (reco::PFJetCollection::const_iterator itjet = myjets->begin(); itjet != myjets->end(); ++itjet)
-	{
-		if (itjet->pt() > JetPt)
-		{
-			JetPt = itjet->pt();
-		}
-	}
-	if (JetPt >= minPt)
-	{
-		hj->Fill(JetPt, prescales.first * prescales.second);
-		value_jet_pt[value_jet_n] = JetPt;
-		value_prescale[value_jet_n] = prescales.first * prescales.second;
-		value_jet_n++;
-	}
-	cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
+
+	
+	// float TriggPt = -999;
+	// value_trigger_n = 0;
+	// if (filterIndex < trigEvent->sizeFilters())
+	// {
+	// 	const Keys &trigKeys = trigEvent->filterKeys(filterIndex);
+	// 	const TriggerObjectCollection &trigObjColl(trigEvent->getObjects());
+	// 	//now loop of the trigger objects passing filter
+	// 	for (trigger::Keys::const_iterator keyIt = trigKeys.begin(); keyIt != trigKeys.end(); ++keyIt)
+	// 	{
+	// 		const trigger::TriggerObject trigobj = trigObjColl[*keyIt];
+	// 		if (trigobj.pt() >= TriggPt)
+	// 		{
+	// 			TriggPt = trigobj.pt();
+	// 		}
+	// 	}
+	// 	value_trigger_pt[value_trigger_n] = TriggPt;
+	// 	value_trigger_n++;
+	// 	ht->Fill(TriggPt, prescales.first * prescales.second);
+	// 	cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
+	// 	// cout << "Found a possible match in this event with DeltaR = " << mydeltaR << endl;
+	// }
+
+	// float JetPt = -999;
+	// value_jet_n = 0;
+
+	// for (reco::PFJetCollection::const_iterator itjet = myjets->begin(); itjet != myjets->end(); ++itjet)
+	// {
+	// 	if (itjet->pt() > JetPt)
+	// 	{
+	// 		JetPt = itjet->pt();
+	// 	}
+	// }
+	// if (JetPt >= minPt)
+	// {
+	// 	hj->Fill(JetPt, prescales.first * prescales.second);
+	// 	value_jet_pt[value_jet_n] = JetPt;
+	// 	value_prescale[value_jet_n] = prescales.first * prescales.second;
+	// 	value_jet_n++;
+	// }
+	// cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
 }
 
-double TriggerPrescalesAnalyzer::dR(const trigger::TriggerObject &obj, const reco::Track &p)
+double TriggerPrescalesAnalyzer::dR(const trigger::TriggerObject &obj, reco::PFJetCollection::const_iterator itjet)
 {
-	double dEta2 = pow(p.eta() - obj.eta(), 2);
-	double dPhi2 = pow(p.phi() - obj.phi(), 2);
+	double dEta2 = pow(itjet->eta() - obj.eta(), 2);
+	double dPhi2 = pow(itjet->phi() - obj.phi(), 2);
 	double dR = sqrt(dPhi2 + dEta2);
 	return dR;
 }
