@@ -60,7 +60,6 @@ process.demo = cms.EDAnalyzer('TriggerPrescalesAnalyzer'
     # ,filterName4 = cms.string("hltSingleJet370Regional")
     # ,filterName4 = cms.string("hltSingleJet800Regional")
     ,isData = cms.bool(True)
-    ,TrackCollection = cms.InputTag("generalTracks")
 )
                               
 #configure the TFileservice, in order to save histograms.

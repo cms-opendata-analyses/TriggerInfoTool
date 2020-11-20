@@ -107,7 +107,7 @@ public:
 
 	//Methods used for the analysis
 	bool checkTriggerPass(const edm::Event &iEvent, const std::string &triggerName); //Check if the trigger passed
-	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent, const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, TH1D *ht, TH1D *hj, const int &minPt);
+	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent, const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, const int &minPt);
 
 	virtual void beginLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
 	virtual void endLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
@@ -123,7 +123,7 @@ private:
 	TH1D *h4;
 	TH1D *H4;
 
-	edm::Service<TFileService> fs; //to access the TFileService object in a framework module
+	// edm::Service<TFileService> fs; //to access the TFileService object in a framework module
 
 	TTree *tree;
 
@@ -153,8 +153,6 @@ private:
 	string filterName4_;
 
 	bool isData;
-
-	edm::InputTag trackInput;
 
 	//declare a function to do the trigger analysis
 	double dR(const trigger::TriggerObject &, reco::PFJetCollection::const_iterator itjet);
@@ -202,14 +200,14 @@ TriggerPrescalesAnalyzer::~TriggerPrescalesAnalyzer()
 // -----method called once each job just before starting event loop-----
 void TriggerPrescalesAnalyzer::beginJob() //Everything ROOT related
 {
-	h1 = fs->make<TH1D>("h1", "obj pt 60 ", 100, 0, 300);
-	H1 = fs->make<TH1D>("H1", "obj pt 60 ", 100, 0, 300);
-	h2 = fs->make<TH1D>("h2", "obj pt 110 ", 100, 0, 300);
-	H2 = fs->make<TH1D>("H2", "obj pt 110 ", 100, 0, 300);
-	h3 = fs->make<TH1D>("h3", "obj pt 150 ", 100, 0, 300);
-	H3 = fs->make<TH1D>("H3", "obj pt 150 ", 100, 0, 300);
-	h4 = fs->make<TH1D>("h4", "obj pt 190 ", 100, 0, 300);
-	H4 = fs->make<TH1D>("H4", "obj pt 190 ", 100, 0, 300);
+	// h1 = fs->make<TH1D>("h1", "obj pt 60 ", 100, 0, 300);
+	// H1 = fs->make<TH1D>("H1", "obj pt 60 ", 100, 0, 300);
+	// h2 = fs->make<TH1D>("h2", "obj pt 110 ", 100, 0, 300);
+	// H2 = fs->make<TH1D>("H2", "obj pt 110 ", 100, 0, 300);
+	// h3 = fs->make<TH1D>("h3", "obj pt 150 ", 100, 0, 300);
+	// H3 = fs->make<TH1D>("H3", "obj pt 150 ", 100, 0, 300);
+	// h4 = fs->make<TH1D>("h4", "obj pt 190 ", 100, 0, 300);
+	// H4 = fs->make<TH1D>("H4", "obj pt 190 ", 100, 0, 300);
 } //-----------------------------------------------------------beginJob()
 
 // ------------ method called when starting to processes a run  --------
@@ -245,9 +243,6 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 	Handle<reco::PFJetCollection> jets;
 	iEvent.getByLabel("ak5PFJets", jets);
 
-	Handle<reco::TrackCollection> mytracks;
-	iEvent.getByLabel(trackInput, mytracks);
-
 	if (!triggerResultsHandle_.isValid() || !triggerEventHandle_.isValid() || !jets.isValid())
 	{
 		cout << "HLTEventAnalyzerAOD::analyze: Error in getting product/s from Event!" << endl;
@@ -278,7 +273,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, h1, H1, 60);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, 60);
 			}
 		} //end filter size check
 
@@ -286,7 +281,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, h2, H2, 80);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, 80);
 			}
 		} //end filter size check
 
@@ -294,7 +289,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, h3, H3, 110);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, 110);
 			}
 		} //end filter size check
 
@@ -302,7 +297,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, h4, H4, 150);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, 150);
 			}
 		} //end filter size check
 	}
@@ -329,8 +324,8 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 												const std::string &filterName,
 												const edm::InputTag &trigEventTag,
 												const edm::Handle<reco::PFJetCollection> &myjets,
-												TH1D *ht,
-												TH1D *hj,
+												// TH1D *ht,
+												// TH1D *hj,
 												const int &minPt)
 {
 
@@ -363,30 +358,31 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 			for (reco::PFJetCollection::const_iterator itjet = myjets->begin(); itjet != myjets->end(); ++itjet)
 			{
 				double thisDR = dR(trigobj, itjet);
-				if(thisDR < minDR){
+				if (thisDR < minDR)
+				{
 					minDR = thisDR;
 					bestJet = itjet;
 					bestTriggerObj = trigobj;
 				}
 			}
 		}
-		if(minDR < 0.1){
+		if (minDR < 0.1)
+		{
 			TriggPt = bestTriggerObj.pt();
 			JetPt = bestJet->pt();
 			value_trigger_pt[value_trigger_n] = TriggPt;
 			value_trigger_n++;
 			value_jet_pt[value_jet_n] = JetPt;
-			value_jet_n++;
 			value_prescale[value_jet_n] = prescales.first * prescales.second;
-			ht->Fill(TriggPt, prescales.first * prescales.second);
-			hj->Fill(JetPt, prescales.first * prescales.second);
-		}			
-		cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
-		cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
-		cout << "Found a possible match in this event with DeltaR = " << minDR << endl;
+			value_jet_n++;
+			// ht->Fill(TriggPt, prescales.first * prescales.second);
+			// hj->Fill(JetPt, prescales.first * prescales.second);
+			cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
+			cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
+			cout << "Found a possible match in this event with DeltaR = " << minDR << endl;
+		}
 	}
 
-	
 	// float TriggPt = -999;
 	// value_trigger_n = 0;
 	// if (filterIndex < trigEvent->sizeFilters())
