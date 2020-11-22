@@ -49,8 +49,6 @@
 
 #include <iosfwd>
 
-//**
-
 // system include files
 #include <memory>
 
@@ -76,8 +74,8 @@
 
 //From TriggMatchingAnalyzer
 #include "DataFormats/HLTReco/interface/TriggerObject.h"
-#include "DataFormats/TrackReco/interface/Track.h"
-#include "DataFormats/TrackReco/interface/TrackFwd.h"
+// #include "DataFormats/TrackReco/interface/Track.h"
+// #include "DataFormats/TrackReco/interface/TrackFwd.h"
 
 // From AOD2NanoAOD
 #include "TFile.h"
@@ -107,21 +105,26 @@ public:
 
 	//Methods used for the analysis
 	bool checkTriggerPass(const edm::Event &iEvent, const std::string &triggerName); //Check if the trigger passed
-	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup, const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent, const std::string &filterName, const edm::InputTag &trigEventTag, const edm::Handle<reco::PFJetCollection> &jets, const int &minPt);
+	double dR(const trigger::TriggerObject &, reco::PFJetCollection::const_iterator itjet);
+	void analyzePrescales(const edm::Event &iEvent, const edm::EventSetup &iSetup,
+						  const std::string &tname, const edm::Handle<trigger::TriggerEvent> &trigEvent,
+						  const std::string &filterName, const edm::InputTag &trigEventTag,
+						  const edm::Handle<reco::PFJetCollection> &jets,
+						  UInt_t jet_n, float *arjetPt, float *artriggerPt, float *arprescaleValue);
 
 	virtual void beginLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
 	virtual void endLuminosityBlock(edm::LuminosityBlock const &, edm::EventSetup const &);
 	static void fillDescriptions(edm::ConfigurationDescriptions &descriptions);
 
 private:
-	TH1D *h1;
-	TH1D *H1;
-	TH1D *h2;
-	TH1D *H2;
-	TH1D *h3;
-	TH1D *H3;
-	TH1D *h4;
-	TH1D *H4;
+	// TH1D *h1;
+	// TH1D *H1;
+	// TH1D *h2;
+	// TH1D *H2;
+	// TH1D *h3;
+	// TH1D *H3;
+	// TH1D *h4;
+	// TH1D *H4;
 
 	// edm::Service<TFileService> fs; //to access the TFileService object in a framework module
 
@@ -134,18 +137,28 @@ private:
 
 	// Jet
 	const static int max_jet = 1000;
-	UInt_t value_jet_n;
-	float value_jet_pt[max_jet];
+	UInt_t value_jet60_n;
+	float value_jet60_pt[max_jet];
+	UInt_t value_jet80_n;
+	float value_jet80_pt[max_jet];
+	UInt_t value_jet110_n;
+	float value_jet110_pt[max_jet];
+	UInt_t value_jet150_n;
+	float value_jet150_pt[max_jet];
 
 	//Prescale values
 	const static int max_prescale = 1000;
-	UInt_t value_prescale_n;
-	float value_prescale[max_prescale];
+	float value_prescale60[max_prescale];
+	float value_prescale80[max_prescale];
+	float value_prescale110[max_prescale];
+	float value_prescale150[max_prescale];
 
 	// Trigger
 	const static int max_trigger = 1000;
-	UInt_t value_trigger_n;
-	float value_trigger_pt[max_trigger];
+	float value_trigger60_pt[max_trigger];
+	float value_trigger80_pt[max_trigger];
+	float value_trigger110_pt[max_trigger];
+	float value_trigger150_pt[max_trigger];
 
 	string filterName1_; //declare de filter (module) of the trigger
 	string filterName2_;
@@ -155,7 +168,6 @@ private:
 	bool isData;
 
 	//declare a function to do the trigger analysis
-	double dR(const trigger::TriggerObject &, reco::PFJetCollection::const_iterator itjet);
 
 	Handle<TriggerResults> triggerResultsHandle_;
 	HLTConfigProvider hltConfig_;
@@ -178,17 +190,44 @@ TriggerPrescalesAnalyzer::TriggerPrescalesAnalyzer(const edm::ParameterSet &iCon
 	tree->Branch("luminosityBlock", &value_lumi_block);
 	tree->Branch("event", &value_event);
 
-	// Jet
-	tree->Branch("nJet", &value_jet_n, "nJet/i");
-	tree->Branch("Jet_pt", value_jet_pt, "Jet_pt[nJet]/F");
+	// Jet60
+	tree->Branch("nJet", &value_jet60_n, "nJet/i");
+	tree->Branch("Jet_pt", value_jet60_pt, "Jet_pt[nJet]/F");
+	// Jet80
+	tree->Branch("nJet", &value_jet80_n, "nJet/i");
+	tree->Branch("Jet_pt", value_jet80_pt, "Jet_pt[nJet]/F");
+	// Jet110
+	tree->Branch("nJet", &value_jet110_n, "nJet/i");
+	tree->Branch("Jet_pt", value_jet110_pt, "Jet_pt[nJet]/F");
+	// Jet150
+	tree->Branch("nJet", &value_jet150_n, "nJet/i");
+	tree->Branch("Jet_pt", value_jet150_pt, "Jet_pt[nJet]/F");
 
-	// Prescale values
-	tree->Branch("nPrescale", &value_prescale_n, "nPrescale/i");
-	tree->Branch("Prescale", value_prescale, "Prescale[nPrescale]/F");
+	// Prescale values 60
+	tree->Branch("nPrescale", &value_jet60_n, "nPrescale/i");
+	tree->Branch("Prescale", value_prescale60, "Prescale[nPrescale]/F");
+	// Prescale values 80
+	tree->Branch("nPrescale", &value_jet80_n, "nPrescale/i");
+	tree->Branch("Prescale", value_prescale80, "Prescale[nPrescale]/F");
+	// Prescale values 110
+	tree->Branch("nPrescale", &value_jet110_n, "nPrescale/i");
+	tree->Branch("Prescale", value_prescale110, "Prescale[nPrescale]/F");
+	// Prescale values 150
+	tree->Branch("nPrescale", &value_jet150_n, "nPrescale/i");
+	tree->Branch("Prescale", value_prescale150, "Prescale[nPrescale]/F");
 
-	// Trigger
-	tree->Branch("nTrigger", &value_trigger_n, "nTrigger/i");
-	tree->Branch("Trigger_pt", value_trigger_pt, "Trigger_pt[nTrigger]/F");
+	// Trigger 60
+	tree->Branch("nTrigger", &value_jet60_n, "nTrigger/i");
+	tree->Branch("Trigger_pt", value_trigger60_pt, "Trigger_pt[nTrigger]/F");
+	// Trigger 80
+	tree->Branch("nTrigger", &value_jet80_n, "nTrigger/i");
+	tree->Branch("Trigger_pt", value_trigger80_pt, "Trigger_pt[nTrigger]/F");
+	// Trigger 110
+	tree->Branch("nTrigger", &value_jet110_n, "nTrigger/i");
+	tree->Branch("Trigger_pt", value_trigger110_pt, "Trigger_pt[nTrigger]/F");
+	// Trigger 150
+	tree->Branch("nTrigger", &value_jet150_n, "nTrigger/i");
+	tree->Branch("Trigger_pt", value_trigger150_pt, "Trigger_pt[nTrigger]/F");
 }
 
 TriggerPrescalesAnalyzer::~TriggerPrescalesAnalyzer()
@@ -273,7 +312,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, 60);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName1_, triggerEventTag_, jets, value_jet60_n, value_jet60_pt, value_trigger60_pt, value_prescale60);
 			}
 		} //end filter size check
 
@@ -281,7 +320,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, 80);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName2_, triggerEventTag_, jets, value_jet80_n, value_jet80_pt, value_trigger80_pt, value_prescale80);
 			}
 		} //end filter size check
 
@@ -289,7 +328,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, 110);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName3_, triggerEventTag_, jets, value_jet110_n, value_jet110_pt, value_trigger110_pt, value_prescale110);
 			}
 		} //end filter size check
 
@@ -297,7 +336,7 @@ void TriggerPrescalesAnalyzer::analyze(const edm::Event &iEvent,
 		{
 			if (checkTriggerPass(iEvent, name))
 			{
-				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, 150);
+				analyzePrescales(iEvent, iSetup, name, triggerEventHandle_, filterName4_, triggerEventTag_, jets, value_jet150_n, value_jet150_pt, value_trigger150_pt, value_prescale150);
 			}
 		} //end filter size check
 	}
@@ -317,6 +356,14 @@ bool TriggerPrescalesAnalyzer::checkTriggerPass(const edm::Event &iEvent,
 	return acceptedTrigger;
 } //---------------------------------------------------checkTriggerPass()
 
+double TriggerPrescalesAnalyzer::dR(const trigger::TriggerObject &obj, reco::PFJetCollection::const_iterator itjet)
+{
+	double dEta2 = pow(itjet->eta() - obj.eta(), 2);
+	double dPhi2 = pow(itjet->phi() - obj.phi(), 2);
+	double dR = sqrt(dPhi2 + dEta2);
+	return dR;
+}
+
 void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 												const edm::EventSetup &iSetup,
 												const std::string &tname,
@@ -324,24 +371,25 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 												const std::string &filterName,
 												const edm::InputTag &trigEventTag,
 												const edm::Handle<reco::PFJetCollection> &myjets,
+												UInt_t jet_n, float *arjetPt, float *artriggerPt, float *arprescaleValue
 												// TH1D *ht,
 												// TH1D *hj,
-												const int &minPt)
+												// const int &minPt
+)
 {
 
 	const pair<int, int> prescales(hltConfig_.prescaleValues(iEvent, iSetup, tname));
 
-	cout << "The trigger: " << tname << " has prescale values L1T,HLT: "
-		 << prescales.first << "," << prescales.second << endl
-		 << "The total prescale value is: " << prescales.first * prescales.second << endl;
+	// cout << "The trigger: " << tname << " has prescale values L1T,HLT: "
+	// 	 << prescales.first << "," << prescales.second << endl
+	// 	 << "The total prescale value is: " << prescales.first * prescales.second << endl;
 
-	size_type filterIndex = trigEvent->filterIndex(InputTag(filterName, "", trigEventTag.process()));
+	size_type filterIndex = trigEvent->filterIndex(InputTag(filterName, "", trigEventTag.process())); // Pasar el índice del módulo para obtener el índice del nombre del trigger
 
-	value_trigger_n = 0;
-	float TriggPt = -9999;
-
-	value_jet_n = 0;
+	jet_n = 0;
 	float JetPt = -9999;
+
+	float TriggPt = -9999;
 
 	double minDR = 9999;
 	trigger::TriggerObject bestTriggerObj;
@@ -370,16 +418,20 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 		{
 			TriggPt = bestTriggerObj.pt();
 			JetPt = bestJet->pt();
-			value_trigger_pt[value_trigger_n] = TriggPt;
-			value_trigger_n++;
-			value_jet_pt[value_jet_n] = JetPt;
-			value_prescale[value_jet_n] = prescales.first * prescales.second;
-			value_jet_n++;
-			// ht->Fill(TriggPt, prescales.first * prescales.second);
-			// hj->Fill(JetPt, prescales.first * prescales.second);
+
+			arjetPt[jet_n] = JetPt;
+			artriggerPt[jet_n] = TriggPt;
+			arprescaleValue[jet_n] = prescales.first * prescales.second;
+			jet_n++;
+
+			// value_trigger_pt[value_trigger_n] = TriggPt;
+			// value_trigger_n++;
+			// value_jet_pt[value_jet_n] = JetPt;
+			// value_prescale[value_jet_n] = prescales.first * prescales.second;
+			// value_jet_n++;
 			cout << "Fired trigger Pt value: " << TriggPt << " with weight: " << prescales.first * prescales.second << endl;
 			cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
-			cout << "Found a possible match in this event with DeltaR = " << minDR << endl;
+			cout << "Found a possible match in this event with DeltaR = " << minDR << endl << endl;
 		}
 	}
 
@@ -423,14 +475,6 @@ void TriggerPrescalesAnalyzer::analyzePrescales(const edm::Event &iEvent,
 	// 	value_jet_n++;
 	// }
 	// cout << "Jet Pt value: " << JetPt << " with weight: " << prescales.first * prescales.second << endl;
-}
-
-double TriggerPrescalesAnalyzer::dR(const trigger::TriggerObject &obj, reco::PFJetCollection::const_iterator itjet)
-{
-	double dEta2 = pow(itjet->eta() - obj.eta(), 2);
-	double dPhi2 = pow(itjet->phi() - obj.phi(), 2);
-	double dR = sqrt(dPhi2 + dEta2);
-	return dR;
 }
 
 // ------------ method called when ending the processing of a run  ------------

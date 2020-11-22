@@ -1,5 +1,5 @@
 import FWCore.ParameterSet.Config as cms
-import FWCore.Utilities.FileUtils as FileUtils ###
+import FWCore.Utilities.FileUtils as FileUtils
 import FWCore.PythonUtilities.LumiList as LumiList 
 import FWCore.ParameterSet.Types as CfgTypes
 
