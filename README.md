@@ -1,7 +1,8 @@
 # What is this repository about?
 
-This repository hosts a set of simple examples that use CMSSW EDAnalyzers to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, 2010 and 2011 (which also works for 2012), corresponding to the CMS data that has been so far released.
-The `master` branch is currently in development and correspondos to information extraction from AOD for Run II data.  
+This repository hosts a set of simple examples that use CMSSW EDAnalyzers to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, `2010` and `2011` (which also works for 2012 data), corresponding to the CMS data that has been so far released for Run I.
+
+The `master` branch is currently under development and corresponds to information extraction from AOD for Run II data (this branch is not ready for general use yet).  
 Please choose the one you need as instructions may vary a little.
 
 The examples are organized in packages.  Here is a summary of what they contain:
