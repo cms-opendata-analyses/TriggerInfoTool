@@ -10,7 +10,7 @@
 */
 //
 // Originally put together from CMSSW official software by Edgar Carrera
-//         Created:  Mon Jul  3 15:59:18 CEST 2017
+//         Created:  Nov 23, 2021
 // $Id$
 //
 //
@@ -20,45 +20,45 @@
 #include <memory>
 
 // user include files
-#include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDAnalyzer.h"
-
-#include "FWCore/Framework/interface/Event.h"
-#include "FWCore/Framework/interface/MakerMacros.h"
-
-#include "FWCore/ParameterSet/interface/ParameterSet.h"
-
 //Following the HLTEventAnalyzerAOD.h, 
 //include the following headers:
-#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
+#include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/Frameworkfwd.h"
+#include "FWCore/Framework/interface/stream/EDAnalyzer.h"
+#include "FWCore/ParameterSet/interface/ParameterSet.h"
+#include "HLTrigger/HLTcore/interface/HLTPrescaleProvider.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "DataFormats/HLTReco/interface/TriggerEvent.h"
-
 //Also include headers from  HLTEventAnalyzerAOD.cc
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "FWCore/Common/interface/TriggerResultsByName.h"
+#include "FWCore/MessageLogger/interface/MessageLogger.h"
+#include "FWCore/ParameterSet/interface/ConfigurationDescriptions.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 #include <cassert>
+//to declare as a plugin
+#include "FWCore/Framework/interface/MakerMacros.h"
+
 
 
 //
 // class declaration
 //
 
-class TriggerInfoAnalyzer : public edm::EDAnalyzer {
+class TriggerInfoAnalyzer : public edm::stream::EDAnalyzer< > {
    public:
       explicit TriggerInfoAnalyzer(const edm::ParameterSet&);
       ~TriggerInfoAnalyzer();
-
-      virtual void beginRun(edm::Run const&, edm::EventSetup const&);
-      virtual void analyze(const edm::Event&, const edm::EventSetup&);
+      virtual void endRun(edm::Run const&, edm::EventSetup const&) override;   
+      virtual void beginRun(edm::Run const&, edm::EventSetup const&) override;
+      virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
       virtual void analyzeTrigger(const edm::Event&, const edm::EventSetup&, const std::string& triggerName);
       //the follwing are not being used here
-      virtual void beginJob() ;
-      virtual void endJob() ;
-      virtual void endRun(edm::Run const&, edm::EventSetup const&);
-      virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
-      virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
-      static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
+      //virtual void beginJob() ;
+      //virtual void endJob() ;
+      //virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
+      //virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
+      //static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
    private:
      
@@ -68,7 +68,9 @@ class TriggerInfoAnalyzer : public edm::EDAnalyzer {
       std::string   triggerName_;
       std::string   datasetName_;
       edm::InputTag triggerResultsTag_;
+      const edm::EDGetTokenT<edm::TriggerResults>   triggerResultsToken_;
       edm::InputTag triggerEventTag_;
+      const edm::EDGetTokenT<trigger::TriggerEvent> triggerEventToken_;
 
 
       // additional class data memebers
@@ -76,8 +78,7 @@ class TriggerInfoAnalyzer : public edm::EDAnalyzer {
       // the trigger information
       edm::Handle<edm::TriggerResults>   triggerResultsHandle_;
       edm::Handle<trigger::TriggerEvent> triggerEventHandle_;
-      HLTConfigProvider hltConfig_;
-
+      HLTPrescaleProvider hltPrescaleProvider_;
 
 
       // ----------member data ---------------------------
@@ -119,7 +120,10 @@ processName_(ps.getParameter<std::string>("processName")),
 triggerName_(ps.getParameter<std::string>("triggerName")),
 datasetName_(ps.getParameter<std::string>("datasetName")),
 triggerResultsTag_(ps.getParameter<edm::InputTag>("triggerResults")),
-triggerEventTag_(ps.getParameter<edm::InputTag>("triggerEvent"))
+triggerResultsToken_(consumes<edm::TriggerResults>(triggerResultsTag_)),
+triggerEventTag_(ps.getParameter<edm::InputTag>("triggerEvent")),
+triggerEventToken_(consumes<trigger::TriggerEvent>(triggerEventTag_)),
+hltPrescaleProvider_(ps, consumesCollector(), *this)
 {
    //now do what ever initialization is needed
   using namespace std;
@@ -151,6 +155,9 @@ TriggerInfoAnalyzer::~TriggerInfoAnalyzer()
 //
 
 
+// ------------ method called when ending the processing of a run  ------------
+void TriggerInfoAnalyzer::endRun(edm::Run const&, edm::EventSetup const&) {}
+
 
 
 // ------------ method called when starting to processes a run  ------------
@@ -172,20 +179,25 @@ void TriggerInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& 
   ///   "init" return value indicates whether intitialisation has succeeded
   ///   "changed" parameter indicates whether the config has actually changed
 
+  
+
   bool changed(true);
-  if (hltConfig_.init(iRun,iSetup,processName_,changed)) {
+  if (hltPrescaleProvider_.init(iRun,iSetup,processName_,changed)) {
+
+      HLTConfigProvider const&  hltConfig = hltPrescaleProvider_.hltConfigProvider(); 
+
     if (changed) {
       // check if trigger name in (new) config
       if (triggerName_!="@") { // "@" means: analyze all triggers in config
-	const unsigned int n(hltConfig_.size());
-	const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName_));
-	if (triggerIndex>=n) {
-	  cout << "TriggerInfoAnalyzer::analyze:"
-	       << " TriggerName " << triggerName_ 
-	       << " not available in (new) config!" << endl;
-	  cout << "Available TriggerNames are: " << endl;
-	  hltConfig_.dump("Triggers");
-	}
+	        const unsigned int n(hltConfig.size());
+	        const unsigned int triggerIndex(hltConfig.triggerIndex(triggerName_));
+	        if (triggerIndex>=n) {
+	            cout << "TriggerInfoAnalyzer::beginRun:"
+	            << " TriggerName " << triggerName_ 
+	            << " not available in (new) config!" << endl;
+	            cout << "Available TriggerNames are: " << endl;
+	            hltConfig.dump("Triggers");
+	        }
       }
 
       //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,17 +207,14 @@ void TriggerInfoAnalyzer::beginRun(edm::Run const& iRun, edm::EventSetup const& 
       //For details see the header of the class,HLTConfigProvider.h
       //To check the example, uncomment the lines below
       //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      //hltConfig_.dump("Streams");
-      //hltConfig_.dump("Datasets"); 
-      //hltConfig_.dump("PrescaleTable");
-      //hltConfig_.dump("ProcessPSet");
+      //hltConfig.dump("Streams");
+      //hltConfig.dump("Datasets"); 
+      //hltConfig.dump("PrescaleTable");
+      //hltConfig.dump("ProcessPSet");
       //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     }
-
-
-  
-  } else {
-    cout << "TriggerInfoAnalyzer::analyze:"
+    } else {
+    cout << "TriggerInfoAnalyzer::beginRun:"
 	 << " config extraction failure with process name "
 	 << processName_ << endl;
   }
@@ -234,18 +243,21 @@ void TriggerInfoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
  
    // After that, a simple sanity check is done.
  
-   iEvent.getByLabel(triggerResultsTag_,triggerResultsHandle_);
-   if (!triggerResultsHandle_.isValid()) {
-     cout << "TriggerInfoAnalyzer::analyze: Error in getting TriggerResults product from Event!" << endl;
-     return;
-   }
-   iEvent.getByLabel(triggerEventTag_,triggerEventHandle_);
-   if (!triggerEventHandle_.isValid()) {
-     cout << "TriggerInfoAnalyzer::analyze: Error in getting TriggerEvent product from Event!" << endl;
-     return;
-   }
+   iEvent.getByToken(triggerResultsToken_,triggerResultsHandle_);
+  if (!triggerResultsHandle_.isValid()) {
+    LogVerbatim("TriggerInfoAnalyzer") << "TriggerInfoAnalyzer::analyze: Error in getting TriggerResults product from Event!" << endl;
+    return;
+  }
+  iEvent.getByToken(triggerEventToken_,triggerEventHandle_);
+  if (!triggerEventHandle_.isValid()) {
+    LogVerbatim("TriggerInfoAnalyzer") << "TriggerInfoAnalyzer::analyze: Error in getting TriggerEvent product from Event!" << endl;
+    return;
+  }
+
+  HLTConfigProvider const&  hltConfig = hltPrescaleProvider_.hltConfigProvider();
+
    // sanity check
-   assert(triggerResultsHandle_->size()==hltConfig_.size());
+   assert(triggerResultsHandle_->size()==hltConfig.size());
    
 
    //The following two examples should be used separately or somehow
@@ -255,14 +267,14 @@ void TriggerInfoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
    //EXAMPLE: analyze this event for triggers requested at config time
    //Uncomment the lines below
    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   //if (triggerName_=="@") {
-   //  const unsigned int n(hltConfig_.size());
-   //  for (unsigned int i=0; i!=n; ++i) {
-   //    analyzeTrigger(iEvent,iSetup,hltConfig_.triggerName(i));
-   //  }
-   //} else {
-   //  analyzeTrigger(iEvent,iSetup,triggerName_);
-   //}
+   if (triggerName_=="@") {
+     const unsigned int n(hltConfig.size());
+     for (unsigned int i=0; i!=n; ++i) {
+       analyzeTrigger(iEvent,iSetup,hltConfig.triggerName(i));
+     }
+   } else {
+     analyzeTrigger(iEvent,iSetup,triggerName_);
+   }
    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -273,14 +285,14 @@ void TriggerInfoAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetu
    //EXAMPLE: analyze this event for triggers that make up the dataset
    //selected at configuration time.
    //Notice that we can find out which triggers go into any stream
-   //and/or dataset using the hltConfig_
+   //and/or dataset using the hltConfig
    //Uncomment the lines below
    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    //Get all the trigger populating the datasetName_ dataset
-   const vector<string> triggerNamesInDS = hltConfig_.datasetContent(datasetName_);
-   for (unsigned i = 0; i < triggerNamesInDS.size(); i++) {
-     analyzeTrigger(iEvent,iSetup,triggerNamesInDS[i]);
-   }
+   //const vector<string> triggerNamesInDS = hltConfig.datasetContent(datasetName_);
+   //for (unsigned i = 0; i < triggerNamesInDS.size(); i++) {
+   //  analyzeTrigger(iEvent,iSetup,triggerNamesInDS[i]);
+  // }
    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   return;
@@ -302,10 +314,12 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
 
   cout<<"Currently analyzing trigger "<<triggerName<<endl;
 
+  HLTConfigProvider const&  hltConfig = hltPrescaleProvider_.hltConfigProvider();
+
   //Check the current configuration to see how many total triggers there are
-  const unsigned int n(hltConfig_.size());
+  const unsigned int n(hltConfig.size());
   //Get the trigger index for the current trigger
-  const unsigned int triggerIndex(hltConfig_.triggerIndex(triggerName));
+  const unsigned int triggerIndex(hltConfig.triggerIndex(triggerName));
   //check that the trigger in the event and in the configuration agree
   assert(triggerIndex==iEvent.triggerNames(*triggerResultsHandle_).triggerIndex(triggerName));
   // abort on invalid trigger name
@@ -330,11 +344,24 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
   // This can make the job very slow at the very begining....
   //Uncomment the lines below
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  const std::pair<int,int> prescales(hltConfig_.prescaleValues(iEvent,iSetup,triggerName));
+  const std::pair<int,int> prescales(hltPrescaleProvider_.prescaleValues(iEvent,iSetup,triggerName));
   cout << "TriggerInfoAnalyzer::analyzeTrigger: path "
       << triggerName << " [" << triggerIndex << "] "
       << "prescales L1T,HLT: " << prescales.first << "," << prescales.second
       << endl;
+
+  const std::pair<std::vector<std::pair<std::string,int> >,int> prescalesInDetail(hltPrescaleProvider_.prescaleValuesInDetail(iEvent,iSetup,triggerName));
+  std::ostringstream message;
+  for (unsigned int i=0; i<prescalesInDetail.first.size(); ++i) {
+    message << " " << i << ":" << prescalesInDetail.first[i].first << "/" << prescalesInDetail.first[i].second;
+  }
+  cout << "TriggerInfoAnalyzer::analyzeTrigger: path "
+       << triggerName << " [" << triggerIndex << "] "
+       << endl
+       << "prescales L1T: " << prescalesInDetail.first.size() <<  message.str()
+       << endl
+       << "prescale  HLT: " << prescalesInDetail.second
+       << endl;
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -368,11 +395,11 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
   // as described in "DataFormats/Common/interface/HLTGlobalStatus.h"
   //Uncomment the lines below
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  const unsigned int m(hltConfig_.size(triggerIndex));
-  const vector<string>& moduleLabels(hltConfig_.moduleLabels(triggerIndex));
+  const unsigned int m(hltConfig.size(triggerIndex));
+  const vector<string>& moduleLabels(hltConfig.moduleLabels(triggerIndex));
   const unsigned int moduleIndex(triggerResultsHandle_->index(triggerIndex));
   cout << " Last active module - label/type: "
-       << moduleLabels[moduleIndex] << "/" << hltConfig_.moduleType(moduleLabels[moduleIndex])
+       << moduleLabels[moduleIndex] << "/" << hltConfig.moduleType(moduleLabels[moduleIndex])
        << " [" << moduleIndex << " out of 0-" << (m-1) << " on this path]"
        << endl;
   assert (moduleIndex<m);
@@ -391,7 +418,7 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  //  for (unsigned int j=0; j<=moduleIndex; ++j) {
 //     const string& moduleLabel(moduleLabels[j]);
-//     const string  moduleType(hltConfig_.moduleType(moduleLabel));
+//     const string  moduleType(hltConfig.moduleType(moduleLabel));
 //     // check whether the module is packed up in TriggerEvent product
 //     // find index of filter in data-member vector from filter tag
 //     // Look at DataFormats/HLTReco/interface/TriggerEvent.h
@@ -423,45 +450,42 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
 
 
 // ------------ method called once each job just before starting event loop  ------------
-void 
-TriggerInfoAnalyzer::beginJob()
-{
-}
+//void 
+//TriggerInfoAnalyzer::beginJob()
+//{
+//}
 
 // ------------ method called once each job just after ending the event loop  ------------
-void 
-TriggerInfoAnalyzer::endJob() 
-{
-}
+//void 
+//TriggerInfoAnalyzer::endJob() 
+//{
+//}
 
 
-// ------------ method called when ending the processing of a run  ------------
-void TriggerInfoAnalyzer::endRun(edm::Run const&, edm::EventSetup const&)
-{
-}
+
 
 
 // ------------ method called when starting to processes a luminosity block  ------------
-void 
-TriggerInfoAnalyzer::beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
-{
-}
+//void 
+//TriggerInfoAnalyzer::beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
+//{
+//}
 
 // ------------ method called when ending the processing of a luminosity block  ------------
-void 
-TriggerInfoAnalyzer::endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
-{
-}
+//void 
+//TriggerInfoAnalyzer::endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&)
+//{
+//}
 
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
-void
-TriggerInfoAnalyzer::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
-  //The following says we do not know what parameters are allowed so do no validation
-  // Please change this to state exactly what you do use, even if it is no parameters
-  edm::ParameterSetDescription desc;
-  desc.setUnknown();
-  descriptions.addDefault(desc);
-}
+//void
+//TriggerInfoAnalyzer::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
+//  //The following says we do not know what parameters are allowed so do no validation
+//  // Please change this to state exactly what you do use, even if it is no parameters
+//  edm::ParameterSetDescription desc;
+//  desc.setUnknown();
+//  descriptions.addDefault(desc);
+//}
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(TriggerInfoAnalyzer);
