@@ -3,7 +3,8 @@
 This repository hosts a set of simple examples that use CMSSW EDAnalyzers to extract trigger information for CMS Open/Legacy Data. Currently, this repository has two main branches, `2010` and `2011` (which also works for 2012 data), corresponding to the CMS data that has been so far released for Run I.
 
 The `master` branch is currently under development and corresponds to information extraction from AOD for Run II data (this branch is not ready for general use yet).  
-Please choose the one you need as instructions may vary a little.
+
+Please make sure you choose the correct branch for your needs.
 
 The examples are organized in packages.  Here is a summary of what they contain:
 
@@ -32,13 +33,13 @@ Then follow these steps:
 - Create a CMSSW environment (if using the Docker container, this step can be skipped as they are release-specific): 
 
     ```
-    cmsrel CMSSW_5_3_32
+    cmsrel CMSSW_7_6_7
     ```
 
-- Change to the CMSSW_5_3_32/src/ directory:
+- Change to the CMSSW_7_6_7/src/ directory:
 
     ```
-    cd CMSSW_5_3_32/src/
+    cd CMSSW_7_6_7/src/
     ```
 
 - Initialize the CMSSW environment:
@@ -72,14 +73,7 @@ Then follow these steps:
 ln -s python/{configname} .
 ```
 
-- Make symbolic links to the conditions database
-
-```
-ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
-ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
-```
-
-- Make sure the `cms-opendata-conddb.cern.ch` directory has actually expanded in your VM or Docker container.  One way of doing this is executing:
+- If using `cvmfs` acces, make sure the `cms-opendata-conddb.cern.ch` directory has actually expanded in your VM or Docker container.  One way of doing this is executing:
 
 ```
 ls -l
@@ -163,6 +157,12 @@ the python subdirectory - or copy relevant code pieces into your modules.
 - HLTEventAnalyzerAOD: analyser combining the information from TriggerResults and TriggerEvent products
 
 The HLTEventAnalyzer plugin make use of the helper class [HLTConfigProvider](https://github.com/cms-sw/cmssw/blob/CMSSW_5_3_X/HLTrigger/HLTcore/interface/HLTConfigProvider.h "HLTConfigProvider") (also in [HLTrigger/HLTcore](https://github.com/cms-sw/cmssw/tree/CMSSW_5_3_X/HLTrigger/HLTcore "HLTrigger/HLTcore")), which extracts the HLT configuration (paths, modules) from the provenance. 
+
+
+
+In Run 2, there is a new [HLTPrescaleProvider](https://github.com/cms-sw/cmssw/blob/CMSSW_7_6_X/HLTrigger/HLTcore/interface/HLTPrescaleProvider.h) helper class, which
+provides access routines to get hold of the HLT Configuration.  Originally the functions in here were in HLTConfigProvider. The functions that use L1GtUtils 
+and get products from the Event were moved into this class in 2015 when the consumes function calls were added.
 
 Note: this helper class must be initialised calling it's init(...) 
 from the beginRun() method of your plugin using this helper class. The reason 

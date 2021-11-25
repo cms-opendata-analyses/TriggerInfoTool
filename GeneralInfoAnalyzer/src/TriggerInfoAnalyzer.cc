@@ -353,14 +353,14 @@ void TriggerInfoAnalyzer::analyzeTrigger(const edm::Event& iEvent, const edm::Ev
   const std::pair<std::vector<std::pair<std::string,int> >,int> prescalesInDetail(hltPrescaleProvider_.prescaleValuesInDetail(iEvent,iSetup,triggerName));
   std::ostringstream message;
   for (unsigned int i=0; i<prescalesInDetail.first.size(); ++i) {
-    message << " " << i << ":" << prescalesInDetail.first[i].first << "/" << prescalesInDetail.first[i].second;
+    cout << " " << i << ":" << prescalesInDetail.first[i].first << "/" << prescalesInDetail.first[i].second<<endl;
   }
   cout << "TriggerInfoAnalyzer::analyzeTrigger: path "
        << triggerName << " [" << triggerIndex << "] "
        << endl
-       << "prescales L1T: " << prescalesInDetail.first.size() <<  message.str()
+       << "prescales (in detail) L1T: " << prescalesInDetail.first.size() <<  message.str()
        << endl
-       << "prescale  HLT: " << prescalesInDetail.second
+       << "prescale (in detail)  HLT: " << prescalesInDetail.second
        << endl;
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
